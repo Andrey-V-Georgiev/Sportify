@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Login</title>
+</head>
+
+<body>
+
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+
+    <div class="jumbotron col-3">
+            <form class="w-100 mx-0" th:action="@{/login}" th:method="post">
+                <div class="btn-group-vertical w-100">
+                    <input name="username" type="email" class="btn btn-block border text-left"  placeholder="Email">
+                    <input name="password" type="password" class="btn btn-block border text-left"  placeholder="Password">
+                    <button type="submit" class="btn btn-block btn-success border text-left">Login</button>
+                </div>
+            </form>
+    </div>
+
+</main>
+
+</body>
+</html>
