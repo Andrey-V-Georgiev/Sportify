@@ -1,10 +1,9 @@
 package com.softuni.sportify.config;
 
-import com.softuni.sportify.mappings.MappingInitializer;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -12,16 +11,9 @@ import javax.validation.Validator;
 @Configuration
 public class AppBeanConfig {
 
-    static ModelMapper mapper;
-
-    static {
-        mapper = new ModelMapper();
-        MappingInitializer.initMappings(mapper);
-    }
-
     @Bean
-    public ModelMapper modelMapper() {
-        return mapper;
+    public SpringSecurityDialect springSecurityDialect() {
+        return new SpringSecurityDialect();
     }
 
     @Bean

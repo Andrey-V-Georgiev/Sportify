@@ -47,9 +47,9 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Role.class)
     @JoinTable(
-            name = "user-roles",
+            name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
@@ -84,4 +84,5 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

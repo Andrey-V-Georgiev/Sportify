@@ -25,6 +25,7 @@
                 <input name="confirmPassword" type="password" class="btn btn-block border text-left"  placeholder="Confirm Password">
                 <button type="submit" class="btn btn-block btn-warning border ">Register</button>
             </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         </form>
     </div>
 
