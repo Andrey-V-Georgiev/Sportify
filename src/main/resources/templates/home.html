@@ -14,7 +14,7 @@
 
 <main class="d-flex justify-content-center">
 
-    <div class="jumbotron col-6">
+    <div class="col-6">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -23,13 +23,13 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="https://images.caricos.com/p/porsche/2018_porsche_911_gt2_rs/images/1024x768/2018_porsche_911_gt2_rs_1_1024x768.jpg" class="col-12" alt="...">
+                    <img th:src="${image1}" class="col-12" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://wallpapermemory.com/uploads/592/ford-mustang-background-hd-1024x768-204799.jpg" class="col-12" alt="...">
+                    <img th:src="${image2}" class="col-12" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="https://www.wallpapersbrowse.com/images/xr/xrmxost.jpg" class="col-12" alt="...">
+                    <img th:src="${image3}" class="col-12" alt="...">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
