@@ -29,20 +29,6 @@ public class AuthController {
 
     }
 
-    @GetMapping("/")
-    @PreAuthorize("isAnonymous()")
-    public ModelAndView index(ModelAndView modelAndView) {
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
-
-    @GetMapping("/home")
-
-    public ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.setViewName("home");
-        return modelAndView;
-    }
-
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
     public ModelAndView register(ModelAndView modelAndView) {

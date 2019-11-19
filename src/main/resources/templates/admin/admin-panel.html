@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Admin Panel</title>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+
+    <div class="jumbotron col-8 shadow-lg bg-white">
+        <h3 class="text-left mb-5 ml-4">Admin panel</h3>
+
+        <div class="row my-3">
+            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img class="card-img" th:src="${usersImage}" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body py-1">
+
+                            <h5 class="my-3">Users</h5>
+
+                            <div class="btn-group-vertical btn-block my-2">
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Create new user
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    List all users
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Empty
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img class="card-img" th:src="${imagesImage}" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body py-1">
+
+                            <h5 class="my-3">Images</h5>
+
+                            <div class="btn-group-vertical btn-block my-2">
+                                <a th:href="@{/admin/create-image}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Create new image
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    List all images
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Empty
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img class="card-img" th:src="${sportCentersImage}" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body py-1 h-100">
+
+                            <h5 class="my-3">Sport Centers</h5>
+
+                            <div class="btn-group-vertical btn-block my-2">
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Add new sport center
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    List all sport centers
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Empty
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img class="card-img" th:src="${sportsImage}" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body py-1">
+
+                            <h5 class="my-3">Sports</h5>
+
+                            <div class="btn-group-vertical btn-block my-2">
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Add new sport
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    List all sports
+                                </a>
+                                <a th:href="@{/admin/panel}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Empty
+                                </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+</main>
+</body>
+</html>
