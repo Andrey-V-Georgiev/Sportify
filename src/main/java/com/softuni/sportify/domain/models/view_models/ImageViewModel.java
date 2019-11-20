@@ -1,6 +1,6 @@
-package com.softuni.sportify.domain.models.service_models;
+package com.softuni.sportify.domain.models.view_models;
 
-public class ImageServiceModel extends BaseServiceModel {
+public class ImageViewModel extends BaseViewModel {
 
     private String name;
     private String imageURL;
@@ -8,7 +8,7 @@ public class ImageServiceModel extends BaseServiceModel {
     private int width;
     private int height;
 
-    public ImageServiceModel() {
+    public ImageViewModel() {
     }
 
     public String getName() {
