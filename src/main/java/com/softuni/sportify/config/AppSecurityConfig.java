@@ -42,7 +42,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/vendor/**","/fonts/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**","/vendor/**","/fonts/**");
     }
 
     private CsrfTokenRepository csrfTokenRepository() {

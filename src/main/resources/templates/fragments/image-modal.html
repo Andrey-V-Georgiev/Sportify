@@ -4,9 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<div id="mybtn" type="button" data-toggle="modal" th:data-target="'#a' + ${image.getId()}">
+<div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${image.getId()}">
     <img th:src="${image.getImageURL()}"
-         class="mw-100 mh-100" style="width: 200px; height: 150px;" alt="...">
+         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
 </div>
 
 <!-- Modal -->
@@ -21,25 +21,36 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <h6 class="col-2">Name: </h6>
-                    <p class="col-9" th:text="${image.getName()}"></p>
+                    <div class="col-4">
+                        <div class="row">
+                            <h6 class="col-3">Name: </h6>
+                            <p class="col-9" th:text="${image.getName()}"></p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <h6 class="col-3">Location: </h6>
+                            <p class="col-9" th:text="${image.getLocation()}"></p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <h6 class="col-3">Size: </h6>
+                            <p class="col-9" th:text="${image.getWidth()} + ' x ' + ${image.getHeight()}"></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <h6 class="col-2">Location: </h6>
-                    <p class="col-9" th:text="${image.getLocation()}"></p>
+                <div class="wm-100 d-flex justify-content-center">
+                    <img th:src="${image.getImageURL()}"
+                         class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
-                <div class="row">
-                    <h6 class="col-2">Size: </h6>
-                    <p class="col-9" th:text="${image.getWidth()} + ' x ' + ${image.getHeight()}"></p>
-                </div>
-                <img th:src="${image.getImageURL()}"
-                     class="mw-100 mh-100 mt-2" alt="...">
+
             </div>
             <div class="modal-footer">
-                <form>
+                <form th:action="@{/images/edit/{id}(id=${image.getId()})}" th:method="get">
                     <button class="btn btn-outline-warning">Edit</button>
                 </form>
-                <form>
+                <form th:action="@{/images/delete/{id}(id=${image.getId()})}" th:method="post">
                     <button class="btn btn-outline-danger">Delete</button>
                 </form>
             </div>

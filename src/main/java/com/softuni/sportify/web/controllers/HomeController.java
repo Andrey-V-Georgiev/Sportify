@@ -25,9 +25,9 @@ public class HomeController {
     @PreAuthorize("isAnonymous()")
     public ModelAndView index(ModelAndView modelAndView) {
 
-        ImageServiceModel image1 = this.imageService.findImageByName("lebron3");
-        ImageServiceModel image2 = this.imageService.findImageByName("messi");
-        ImageServiceModel image3 = this.imageService.findImageByName("federer");
+        ImageServiceModel image1 = this.imageService.findImageByName("tennis");
+        ImageServiceModel image2 = this.imageService.findImageByName("pool");
+        ImageServiceModel image3 = this.imageService.findImageByName("stadium");
 
         modelAndView.addObject("image1", image1.getImageURL());
         modelAndView.addObject("image2", image2.getImageURL());
@@ -41,9 +41,9 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView home(ModelAndView modelAndView) {
 
-        ImageServiceModel image1 = this.imageService.findImageByName("lebron3");
-        ImageServiceModel image2 = this.imageService.findImageByName("messi");
-        ImageServiceModel image3 = this.imageService.findImageByName("federer");
+        ImageServiceModel image1 = this.imageService.findImageByName("tennis");
+        ImageServiceModel image2 = this.imageService.findImageByName("pool");
+        ImageServiceModel image3 = this.imageService.findImageByName("stadium");
 
         modelAndView.addObject("image1", image1.getImageURL());
         modelAndView.addObject("image2", image2.getImageURL());

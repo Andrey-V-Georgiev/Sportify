@@ -4,6 +4,7 @@ public class ImageViewModel extends BaseViewModel {
 
     private String name;
     private String imageURL;
+    private String publicID;
     private String location;
     private int width;
     private int height;
@@ -29,6 +30,14 @@ public class ImageViewModel extends BaseViewModel {
 
     public String getLocation() {
         return location;
+    }
+
+    public String getPublicID() {
+        return publicID;
+    }
+
+    public void setPublicID(String publicID) {
+        this.publicID = publicID;
     }
 
     public void setLocation(String location) {

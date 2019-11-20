@@ -1,16 +1,15 @@
 package com.softuni.sportify.domain.models.binding_models;
 
-import org.springframework.web.multipart.MultipartFile;
-
-public class ImageBindingModel {
+public class ImageEditBindingModel extends BaseBindingModel {
 
     private String name;
-    private MultipartFile image;
+    private String imageURL;
+    private String publicID;
     private String location;
     private int width;
     private int height;
 
-    public ImageBindingModel() {
+    public ImageEditBindingModel() {
     }
 
     public String getName() {
@@ -21,12 +20,20 @@ public class ImageBindingModel {
         this.name = name;
     }
 
-    public MultipartFile getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(MultipartFile image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getPublicID() {
+        return publicID;
+    }
+
+    public void setPublicID(String publicID) {
+        this.publicID = publicID;
     }
 
     public String getLocation() {

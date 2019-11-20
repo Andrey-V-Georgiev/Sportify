@@ -1,24 +1,19 @@
-package com.softuni.sportify.domain.entities;
+package com.softuni.sportify.domain.models.binding_models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.springframework.web.multipart.MultipartFile;
 
-@Entity
-@Table(name ="images")
-public class Image extends BaseEntity {
+public class ImageCreateBindingModel extends BaseBindingModel {
 
     private String name;
-    private String imageURL;
+    private MultipartFile image;
     private String publicID;
     private String location;
     private int width;
     private int height;
 
-    public Image() {
+    public ImageCreateBindingModel() {
     }
 
-    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -27,16 +22,14 @@ public class Image extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "image_url", nullable = false)
-    public String getImageURL() {
-        return imageURL;
+    public MultipartFile getImage() {
+        return image;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
-    @Column(name = "public_id", nullable = false)
     public String getPublicID() {
         return publicID;
     }
@@ -45,7 +38,6 @@ public class Image extends BaseEntity {
         this.publicID = publicID;
     }
 
-    @Column(name = "location", nullable = false)
     public String getLocation() {
         return location;
     }
@@ -54,7 +46,6 @@ public class Image extends BaseEntity {
         this.location = location;
     }
 
-    @Column(name = "width", nullable = false)
     public int getWidth() {
         return width;
     }
@@ -63,7 +54,6 @@ public class Image extends BaseEntity {
         this.width = width;
     }
 
-    @Column(name = "height", nullable = false)
     public int getHeight() {
         return height;
     }

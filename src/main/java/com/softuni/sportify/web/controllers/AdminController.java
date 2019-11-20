@@ -26,10 +26,10 @@ public class AdminController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView adminPanel(ModelAndView modelAndView) {
 
-        ImageServiceModel usersImage = this.imageService.findImageByName("users2");
-        ImageServiceModel imagesImage = this.imageService.findImageByName("images3");
-        ImageServiceModel sportCentersImage = this.imageService.findImageByName("sport-centers3");
-        ImageServiceModel sportsImage = this.imageService.findImageByName("sports2");
+        ImageServiceModel usersImage = this.imageService.findImageByName("users");
+        ImageServiceModel imagesImage = this.imageService.findImageByName("images");
+        ImageServiceModel sportCentersImage = this.imageService.findImageByName("sport-centers");
+        ImageServiceModel sportsImage = this.imageService.findImageByName("sports");
 
         modelAndView.addObject("usersImage", usersImage.getImageURL());
         modelAndView.addObject("imagesImage", imagesImage.getImageURL());

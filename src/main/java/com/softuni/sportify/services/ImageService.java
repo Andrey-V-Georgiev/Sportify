@@ -10,7 +10,15 @@ public interface ImageService {
 
     ImageServiceModel createImage(ImageServiceModel imageServiceModel);
 
+    ImageServiceModel editImage(ImageServiceModel imageServiceModel);
+
+    void deleteImage(String id);
+
     ImageServiceModel findImageByName(String name);
 
+    ImageServiceModel findImageByID(String id);
+
     List<ImageServiceModel> findAll();
+
+    String obtainPublicID(String imageURL);
 }
