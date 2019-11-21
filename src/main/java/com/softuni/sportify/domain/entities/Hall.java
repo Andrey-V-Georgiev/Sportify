@@ -1,5 +1,11 @@
 package com.softuni.sportify.domain.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "halls")
 public class Hall extends BaseEntity {
 
     private String name;
@@ -9,6 +15,7 @@ public class Hall extends BaseEntity {
     public Hall() {
     }
 
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -17,6 +24,7 @@ public class Hall extends BaseEntity {
         this.name = name;
     }
 
+    @Column(name = "section", nullable = false)
     public String getSection() {
         return section;
     }
@@ -25,6 +33,7 @@ public class Hall extends BaseEntity {
         this.section = section;
     }
 
+    @Column(name = "floor", nullable = false)
     public int getFloor() {
         return floor;
     }

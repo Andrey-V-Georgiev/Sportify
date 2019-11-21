@@ -1,25 +1,31 @@
 package com.softuni.sportify.domain.entities;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Entity
+@Table(name = "shopping_carts")
 public class ShoppingCart extends BaseEntity {
 
-    private User user;
+    private Account account;
     private LocalDateTime expiryDate;
     private Set<Order> orders;
 
     public ShoppingCart() {
     }
 
-    public User getUser() {
-        return user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
+    @Column(name = "expiry_date", nullable = false)
     public LocalDateTime getExpiryDate() {
         return expiryDate;
     }
@@ -28,6 +34,8 @@ public class ShoppingCart extends BaseEntity {
         this.expiryDate = expiryDate;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "shopping_cart_id")
     public Set<Order> getOrders() {
         return orders;
     }

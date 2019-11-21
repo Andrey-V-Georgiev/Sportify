@@ -12,6 +12,7 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
+    private Account account;
     private Set<Role> authorities;
 
     public User() {
@@ -44,6 +45,16 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

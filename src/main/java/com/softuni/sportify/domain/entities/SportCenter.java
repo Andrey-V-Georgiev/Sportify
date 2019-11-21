@@ -1,18 +1,22 @@
 package com.softuni.sportify.domain.entities;
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "sport_centers")
 public class SportCenter extends BaseEntity {
 
     private String name;
-    private Location location;
+    private Address address;
     private Set<Sport> sports;
-    private Set<Event> calendar;
+    private Set<Event> events;
     private Set<Image> images;
 
     public SportCenter() {
     }
 
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -21,14 +25,21 @@ public class SportCenter extends BaseEntity {
         this.name = name;
     }
 
-    public Location getLocation() {
-        return location;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="sport_center_id")
+    public Address getAddress() {
+        return address;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "sport_center_sports",
+            joinColumns = @JoinColumn(name = "sport_center_id"),
+            inverseJoinColumns = @JoinColumn(name = "sport_id")
+    )
     public Set<Sport> getSports() {
         return sports;
     }
@@ -37,14 +48,21 @@ public class SportCenter extends BaseEntity {
         this.sports = sports;
     }
 
-    public Set<Event> getCalendar() {
-        return calendar;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sport_center_id", nullable = false)
+    public Set<Event> getEvents() {
+        return events;
     }
 
-    public void setCalendar(Set<Event> calendar) {
-        this.calendar = calendar;
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "sport_center_images",
+            joinColumns = @JoinColumn(name = "sport_center_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
     public Set<Image> getImages() {
         return images;
     }

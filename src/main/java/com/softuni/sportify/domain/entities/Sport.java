@@ -1,7 +1,11 @@
 package com.softuni.sportify.domain.entities;
 
+
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "sports")
 public class Sport extends BaseEntity {
 
     private String name;
@@ -11,6 +15,7 @@ public class Sport extends BaseEntity {
     public Sport() {
     }
 
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -19,6 +24,8 @@ public class Sport extends BaseEntity {
         this.name = name;
     }
 
+    @OneToMany(cascade= CascadeType.ALL)
+    @JoinColumn(name="sport_id", nullable=false)
     public Set<Image> getImages() {
         return images;
     }
@@ -27,6 +34,7 @@ public class Sport extends BaseEntity {
         this.images = images;
     }
 
+    @ManyToMany(mappedBy = "sports")
     public Set<SportCenter> getSportCenters() {
         return sportCenters;
     }

@@ -1,35 +1,34 @@
 package com.softuni.sportify.domain.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "locations")
 public class Location extends BaseEntity {
 
-    private Address address;
-    private Hall hall;
     private SportCenter sportCenter;
+    private Hall hall;
 
     public Location() {
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Hall getHall() {
-        return hall;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
-    }
-
+    @ManyToOne(optional = false)
+    @JoinColumn(name="sport_center_id", nullable=false)
     public SportCenter getSportCenter() {
         return sportCenter;
     }
 
     public void setSportCenter(SportCenter sportCenter) {
         this.sportCenter = sportCenter;
+    }
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
     }
 }

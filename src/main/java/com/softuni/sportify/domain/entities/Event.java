@@ -2,8 +2,11 @@ package com.softuni.sportify.domain.entities;
 
 import com.softuni.sportify.constants.Level;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "events")
 public class Event extends BaseEntity {
 
     private String name;
@@ -18,6 +21,7 @@ public class Event extends BaseEntity {
     public Event() {
     }
 
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -26,6 +30,8 @@ public class Event extends BaseEntity {
         this.name = name;
     }
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name="sport_id", nullable=false)
     public Sport getSport() {
         return sport;
     }
@@ -34,6 +40,8 @@ public class Event extends BaseEntity {
         this.sport = sport;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "level", nullable = false)
     public Level getLevel() {
         return level;
     }
@@ -42,6 +50,8 @@ public class Event extends BaseEntity {
         this.level = level;
     }
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name="location_id", nullable=false)
     public Location getLocation() {
         return location;
     }
@@ -50,6 +60,7 @@ public class Event extends BaseEntity {
         this.location = location;
     }
 
+    @Column(name = "start_time", nullable = false)
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -58,6 +69,7 @@ public class Event extends BaseEntity {
         this.startTime = startTime;
     }
 
+    @Column(name = "end_time", nullable = false)
     public LocalDateTime getEndTime() {
         return endTime;
     }
@@ -66,6 +78,7 @@ public class Event extends BaseEntity {
         this.endTime = endTime;
     }
 
+    @Column(name = "max_capacity", nullable = false)
     public int getMaxCapacity() {
         return maxCapacity;
     }
@@ -74,6 +87,7 @@ public class Event extends BaseEntity {
         this.maxCapacity = maxCapacity;
     }
 
+    @Column(name = "free_places", nullable = false)
     public int getFreePlaces() {
         return freePlaces;
     }
