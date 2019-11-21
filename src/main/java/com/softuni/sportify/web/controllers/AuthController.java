@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.softuni.sportify.constants.AuthConstants.IS_ANONYMOUS;
+import static com.softuni.sportify.constants.AuthControllerConstants.*;
+
 @Controller
 public class AuthController {
 
@@ -26,40 +29,31 @@ public class AuthController {
                           ModelMapper modelMapper ) {
         this.userService = userService;
         this.modelMapper = modelMapper;
-
     }
 
     @GetMapping("/register")
-    @PreAuthorize("isAnonymous()")
+    @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView register(ModelAndView modelAndView) {
-        modelAndView.setViewName("register");
+        modelAndView.setViewName(VIEW_REGISTER);
         return modelAndView;
     }
 
     @PostMapping("/register")
-    @PreAuthorize("isAnonymous()")
+    @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView registerConfirm(@ModelAttribute(name = "model") UserRegisterBindingModel model,
                                         BindingResult bindingResult,
                                         ModelAndView modelAndView) {
 
-
-        if (bindingResult.hasErrors()) {
-            model.setPassword(null);
-            model.setConfirmPassword(null);
-            modelAndView.addObject("model", model);
-            modelAndView.setViewName("register");
-            return modelAndView;
-        }
         UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);
-        modelAndView.setViewName("login");
+        modelAndView.setViewName(REDIRECT_TO_LOGIN);
         return modelAndView;
     }
 
     @GetMapping("/login")
-    @PreAuthorize("isAnonymous()")
+    @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView login(ModelAndView modelAndView) {
-        modelAndView.setViewName("login");
+        modelAndView.setViewName(VIEW_LOGIN);
         return modelAndView;
     }
 }

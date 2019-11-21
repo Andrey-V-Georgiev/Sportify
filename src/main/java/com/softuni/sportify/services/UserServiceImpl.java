@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.softuni.sportify.services.RoleServiceImpl.ROLE_USER;
+import static com.softuni.sportify.constants.RoleConstants.ROLE_USER;
 
 @Service
 public class UserServiceImpl implements UserService {

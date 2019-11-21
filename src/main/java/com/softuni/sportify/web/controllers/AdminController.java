@@ -1,15 +1,15 @@
 package com.softuni.sportify.web.controllers;
 
-import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
-import com.softuni.sportify.services.CloudinaryService;
 import com.softuni.sportify.services.ImageService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import static com.softuni.sportify.constants.AdminControllerConstants.*;
+import static com.softuni.sportify.constants.AuthConstants.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,20 +23,15 @@ public class AdminController {
     }
 
     @GetMapping("/panel")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView adminPanel(ModelAndView modelAndView) {
 
-        ImageServiceModel usersImage = this.imageService.findImageByName("users");
-        ImageServiceModel imagesImage = this.imageService.findImageByName("images");
-        ImageServiceModel sportCentersImage = this.imageService.findImageByName("sport-centers");
-        ImageServiceModel sportsImage = this.imageService.findImageByName("sports");
+        modelAndView.addObject("usersImage", ADMIN_PANEL_USERS_IMAGE);
+        modelAndView.addObject("imagesImage", ADMIN_PANEL_IMAGES_IMAGE);
+        modelAndView.addObject("sportCentersImage", ADMIN_PANEL_SPORT_CENTERS_IMAGE);
+        modelAndView.addObject("sportsImage", ADMIN_PANEL_SPORT_IMAGE);
 
-        modelAndView.addObject("usersImage", usersImage.getImageURL());
-        modelAndView.addObject("imagesImage", imagesImage.getImageURL());
-        modelAndView.addObject("sportCentersImage", sportCentersImage.getImageURL());
-        modelAndView.addObject("sportsImage", sportsImage.getImageURL());
-
-        modelAndView.setViewName("admin/admin-panel");
+        modelAndView.setViewName(VIEW_ADMIN_PANEL);
         return modelAndView;
     }
 

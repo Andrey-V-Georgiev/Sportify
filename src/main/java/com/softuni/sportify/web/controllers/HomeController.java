@@ -1,6 +1,5 @@
 package com.softuni.sportify.web.controllers;
 
-import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.services.ImageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import static com.softuni.sportify.constants.AuthConstants.*;
+import static com.softuni.sportify.constants.HomeControllerConstants.*;
 
 @Controller
 public class HomeController {
@@ -22,34 +24,26 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("isAnonymous()")
+    @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView index(ModelAndView modelAndView) {
 
-        ImageServiceModel image1 = this.imageService.findImageByName("tennis");
-        ImageServiceModel image2 = this.imageService.findImageByName("pool");
-        ImageServiceModel image3 = this.imageService.findImageByName("stadium");
+        modelAndView.addObject("image1", HOME_PAGE_CAROUSEL_IMAGE_1);
+        modelAndView.addObject("image2", HOME_PAGE_CAROUSEL_IMAGE_2);
+        modelAndView.addObject("image3", HOME_PAGE_CAROUSEL_IMAGE_3);
 
-        modelAndView.addObject("image1", image1.getImageURL());
-        modelAndView.addObject("image2", image2.getImageURL());
-        modelAndView.addObject("image3", image3.getImageURL());
-
-        modelAndView.setViewName("index");
+        modelAndView.setViewName(VIEW_INDEX);
         return modelAndView;
     }
 
     @GetMapping("/home")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize(IS_AUTHENTICATED)
     public ModelAndView home(ModelAndView modelAndView) {
 
-        ImageServiceModel image1 = this.imageService.findImageByName("tennis");
-        ImageServiceModel image2 = this.imageService.findImageByName("pool");
-        ImageServiceModel image3 = this.imageService.findImageByName("stadium");
+        modelAndView.addObject("image1", HOME_PAGE_CAROUSEL_IMAGE_1);
+        modelAndView.addObject("image2", HOME_PAGE_CAROUSEL_IMAGE_2);
+        modelAndView.addObject("image3", HOME_PAGE_CAROUSEL_IMAGE_3);
 
-        modelAndView.addObject("image1", image1.getImageURL());
-        modelAndView.addObject("image2", image2.getImageURL());
-        modelAndView.addObject("image3", image3.getImageURL());
-
-        modelAndView.setViewName("home");
+        modelAndView.setViewName(VIEW_HOME);
         return modelAndView;
     }
 }

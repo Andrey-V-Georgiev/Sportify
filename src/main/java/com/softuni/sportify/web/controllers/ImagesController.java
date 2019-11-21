@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.softuni.sportify.constants.ImagesControllerConstants.*;
+import static com.softuni.sportify.constants.AuthConstants.*;
+
 @Controller
 @RequestMapping("/images")
 public class ImagesController {
@@ -34,14 +37,14 @@ public class ImagesController {
     }
 
     @GetMapping("/create-image")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createImage(ModelAndView modelAndView) {
-        modelAndView.setViewName("images/create-image");
+        modelAndView.setViewName(VIEW_CREATE_IMAGE);
         return modelAndView;
     }
 
     @PostMapping("/create-image")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createImageConfirmed(@ModelAttribute ImageCreateBindingModel model,
                                              ModelAndView modelAndView) throws IOException {
 
@@ -52,12 +55,12 @@ public class ImagesController {
 
         this.imageService.createImage(imageServiceModel);
 
-        modelAndView.setViewName("redirect:/images/all-images");
+        modelAndView.setViewName(REDIRECT_TO_ALL_IMAGES);
         return modelAndView;
     }
 
     @GetMapping("/all-images")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView allImages(ModelAndView modelAndView) {
 
         List<ImageViewModel> imageViewModels = this.imageService.findAll()
@@ -66,12 +69,12 @@ public class ImagesController {
                 .collect(Collectors.toList());
         modelAndView.addObject("imageViewModels", imageViewModels);
 
-        modelAndView.setViewName("images/all-images");
+        modelAndView.setViewName(VIEW_ALL_IMAGES);
         return modelAndView;
     }
 
     @GetMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editImage(@PathVariable(name = "id") String id,
                                   @ModelAttribute ImageEditBindingModel imageEditBindingModel,
                                   ModelAndView modelAndView) {
@@ -80,28 +83,28 @@ public class ImagesController {
         this.modelMapper.map(imageServiceModel, imageEditBindingModel);
         modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
 
-        modelAndView.setViewName("images/edit-image");
+        modelAndView.setViewName(VIEW_EDIT_IMAGE);
         return modelAndView;
     }
 
     @PostMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editImageConfirmed(@PathVariable(name = "id") String id,
                                            @ModelAttribute ImageEditBindingModel imageEditBindingModel,
                                            BindingResult bindingResult,
                                            ModelAndView modelAndView) throws IOException {
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
-        modelAndView.setViewName("redirect:/images/all-images");
+        modelAndView.setViewName(REDIRECT_TO_ALL_IMAGES);
         return modelAndView;
     }
 
     @PostMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteImage(@PathVariable(name = "id") String id,
                                     ModelAndView modelAndView) {
         this.imageService.deleteImage(id);
-        modelAndView.setViewName("redirect:/images/all-images");
+        modelAndView.setViewName(REDIRECT_TO_ALL_IMAGES);
         return modelAndView;
     }
 }

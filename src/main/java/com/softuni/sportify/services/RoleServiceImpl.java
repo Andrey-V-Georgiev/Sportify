@@ -10,12 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.softuni.sportify.constants.RoleConstants.*;
+
 @Service
 public class RoleServiceImpl implements RoleService {
-
-    static final String ROLE_USER = "ROLE_USER";
-    static final String ROLE_ADMIN = "ROLE_ADMIN";
-    static final String ROLE_ROOT = "ROLE_ROOT";
 
     private final ModelMapper modelMapper;
     private final RoleRepository roleRepository;
