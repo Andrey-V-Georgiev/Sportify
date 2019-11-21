@@ -3,6 +3,7 @@ package com.softuni.sportify.services;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -12,7 +13,7 @@ public interface ImageService {
 
     ImageServiceModel editImage(ImageServiceModel imageServiceModel);
 
-    void deleteImage(String id);
+    void deleteImage(String id) throws Exception;
 
     ImageServiceModel findImageByName(String name);
 

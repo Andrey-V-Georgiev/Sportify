@@ -102,7 +102,7 @@ public class ImagesController {
     @PostMapping("/delete/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteImage(@PathVariable(name = "id") String id,
-                                    ModelAndView modelAndView) {
+                                    ModelAndView modelAndView) throws Exception {
         this.imageService.deleteImage(id);
         modelAndView.setViewName(REDIRECT_TO_ALL_IMAGES);
         return modelAndView;

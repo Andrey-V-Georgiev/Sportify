@@ -8,22 +8,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static com.softuni.sportify.constants.ImagesControllerConstants.*;
 
 @Service
 public class ImageServiceImpl implements ImageService {
 
     private final ModelMapper modelMapper;
     private final ImageRepository imageRepository;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
     public ImageServiceImpl(ModelMapper modelMapper,
-                            ImageRepository imageRepository) {
+                            ImageRepository imageRepository, CloudinaryService cloudinaryService) {
         this.modelMapper = modelMapper;
         this.imageRepository = imageRepository;
+        this.cloudinaryService = cloudinaryService;
+    }
+
+    @Override
+    public String obtainPublicID(String imageURL) {
+
+        Pattern pattern = Pattern.compile(OBTAIN_PUBLIC_ID_REGEX_PATTERN);
+        Matcher matcher = pattern.matcher(imageURL);
+        String publicID = "";
+        while (matcher.find()) {
+            publicID = imageURL.substring(matcher.start(), matcher.end());
+        }
+        return publicID;
     }
 
     @Override
@@ -50,9 +65,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void deleteImage(String id) {
+    public void deleteImage(String id) throws Exception {
         Image image = this.imageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Image with this id is not found!"));
+        ImageServiceModel imageServiceModel = this.modelMapper.map(image, ImageServiceModel.class);
+        this.cloudinaryService.deleteImage(imageServiceModel.getPublicID());
+
         this.imageRepository.delete(image);
     }
 
@@ -83,17 +101,4 @@ public class ImageServiceImpl implements ImageService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public String obtainPublicID(String imageURL) {
-        String patternStr = "(?<=upload/).*(?=\\.jpg)";
-        Pattern pattern = Pattern.compile(patternStr);
-        Matcher matcher = pattern.matcher(imageURL);
-        boolean matches = Pattern.matches(imageURL, patternStr);
-        String publicID = "";
-        while (matcher.find()) {
-            publicID = imageURL.substring(matcher.start(), matcher.end());
-        }
-
-        return publicID;
-    }
 }
