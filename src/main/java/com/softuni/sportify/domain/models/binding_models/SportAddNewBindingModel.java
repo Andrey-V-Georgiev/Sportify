@@ -1,22 +1,20 @@
-package com.softuni.sportify.domain.entities;
+package com.softuni.sportify.domain.models.binding_models;
 
+import com.softuni.sportify.domain.entities.Image;
+import com.softuni.sportify.domain.entities.SportCenter;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "sports")
-public class Sport extends BaseEntity {
+public class SportAddNewBindingModel extends BaseBindingModel {
 
     private String name;
     private String description;
     private Set<Image> images;
     private Set<SportCenter> sportCenters;
 
-    public Sport() {
+    public SportAddNewBindingModel() {
     }
 
-    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -25,7 +23,6 @@ public class Sport extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -34,8 +31,6 @@ public class Sport extends BaseEntity {
         this.description = description;
     }
 
-    @OneToMany(cascade= CascadeType.ALL)
-    @JoinColumn(name="sport_id", nullable=false)
     public Set<Image> getImages() {
         return images;
     }
@@ -44,7 +39,6 @@ public class Sport extends BaseEntity {
         this.images = images;
     }
 
-    @ManyToMany(mappedBy = "sports")
     public Set<SportCenter> getSportCenters() {
         return sportCenters;
     }

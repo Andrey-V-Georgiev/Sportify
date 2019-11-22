@@ -39,7 +39,7 @@ public class ImagesController {
     @GetMapping("/create-image")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createImage(ModelAndView modelAndView) {
-        modelAndView.setViewName(VIEW_CREATE_IMAGE);
+        modelAndView.setViewName(VIEW_CREATE_SETTINGS_IMAGE);
         return modelAndView;
     }
 
