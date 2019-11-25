@@ -2,6 +2,7 @@ package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -13,6 +14,7 @@ public class ShoppingCart extends BaseEntity {
     private Set<Order> orders;
 
     public ShoppingCart() {
+        this.orders = new LinkedHashSet<>();
     }
 
     @OneToOne(fetch = FetchType.LAZY)

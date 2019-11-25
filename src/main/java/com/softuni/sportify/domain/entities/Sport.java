@@ -2,6 +2,7 @@ package com.softuni.sportify.domain.entities;
 
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,8 @@ public class Sport extends BaseEntity {
     private Set<SportCenter> sportCenters;
 
     public Sport() {
+        this.images = new LinkedHashSet<>();
+        this.sportCenters = new LinkedHashSet<>();
     }
 
     @Column(name = "name", nullable = false)
@@ -34,8 +37,12 @@ public class Sport extends BaseEntity {
         this.description = description;
     }
 
-    @OneToMany(cascade= CascadeType.ALL)
-    @JoinColumn(name="sport_id", nullable=false)
+    @ManyToMany(targetEntity = Image.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="sport_images",
+            joinColumns = {@JoinColumn( name="sport_id")},
+            inverseJoinColumns = {@JoinColumn( name="image_id")}
+    )
     public Set<Image> getImages() {
         return images;
     }

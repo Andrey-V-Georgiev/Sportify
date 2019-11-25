@@ -2,6 +2,7 @@ package com.softuni.sportify.domain.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -71,4 +72,5 @@ public class Image extends BaseEntity {
     public void setHeight(int height) {
         this.height = height;
     }
+
 }

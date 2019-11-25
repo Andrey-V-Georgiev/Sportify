@@ -3,6 +3,7 @@ package com.softuni.sportify.domain.entities;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,7 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Role> authorities;
 
     public User() {
+        this.authorities = new LinkedHashSet<>();
     }
 
     @Override

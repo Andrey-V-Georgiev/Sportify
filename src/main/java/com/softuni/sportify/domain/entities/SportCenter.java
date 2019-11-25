@@ -1,6 +1,7 @@
 package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,9 @@ public class SportCenter extends BaseEntity {
     private Set<Image> images;
 
     public SportCenter() {
+        this.sports = new LinkedHashSet<>();
+        this.events = new LinkedHashSet<>();
+        this.images = new LinkedHashSet<>();
     }
 
     @Column(name = "name", nullable = false)

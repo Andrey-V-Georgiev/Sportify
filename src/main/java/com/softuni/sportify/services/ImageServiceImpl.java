@@ -30,28 +30,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public String obtainPublicID(String imageURL) {
-
-        Pattern pattern = Pattern.compile(OBTAIN_PUBLIC_ID_REGEX_PATTERN);
-        Matcher matcher = pattern.matcher(imageURL);
-        String publicID = "";
-        while (matcher.find()) {
-            publicID = imageURL.substring(matcher.start(), matcher.end());
-        }
-        return publicID;
-    }
-
-    @Override
     public ImageServiceModel createImage(ImageServiceModel imageServiceModel) {
-        Image checkImage = this.imageRepository.findByName(imageServiceModel.getName()).orElse(null);
 
-        if (checkImage != null) {
-            throw new IllegalArgumentException("Image with this name already exists!");
-        }
-
+        imageServiceModel.setPublicID(this.obtainPublicID(imageServiceModel.getImageURL()));
         Image image = this.modelMapper.map(imageServiceModel, Image.class);
-        this.imageRepository.saveAndFlush(image);
-        return this.modelMapper.map(image, ImageServiceModel.class);
+
+        return this.modelMapper.map(this.imageRepository.saveAndFlush(image), ImageServiceModel.class);
     }
 
     @Override
@@ -101,4 +85,15 @@ public class ImageServiceImpl implements ImageService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public String obtainPublicID(String imageURL) {
+
+        Pattern pattern = Pattern.compile(OBTAIN_PUBLIC_ID_REGEX_PATTERN);
+        Matcher matcher = pattern.matcher(imageURL);
+        String publicID = "";
+        while (matcher.find()) {
+            publicID = imageURL.substring(matcher.start(), matcher.end());
+        }
+        return publicID;
+    }
 }

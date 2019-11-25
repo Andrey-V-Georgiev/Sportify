@@ -23,14 +23,14 @@ import static com.softuni.sportify.constants.AuthConstants.*;
 
 @Controller
 @RequestMapping("/images")
-public class ImagesController {
+public class SettingsController {
 
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
     private final ImageService imageService;
 
     @Autowired
-    public ImagesController(ModelMapper modelMapper, CloudinaryService cloudinaryService, ImageService imageService) {
+    public SettingsController(ModelMapper modelMapper, CloudinaryService cloudinaryService, ImageService imageService) {
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
         this.imageService = imageService;
@@ -45,14 +45,11 @@ public class ImagesController {
 
     @PostMapping("/create-image")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView createImageConfirmed(@ModelAttribute ImageCreateBindingModel model,
+    public ModelAndView createImageConfirmed(@ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
                                              ModelAndView modelAndView) throws IOException {
 
-        ImageServiceModel imageServiceModel = this.modelMapper.map(model, ImageServiceModel.class);
-
-        imageServiceModel.setImageURL(this.cloudinaryService.uploadImage(model.getImage()));
-        imageServiceModel.setPublicID(this.imageService.obtainPublicID(imageServiceModel.getImageURL()));
-
+        ImageServiceModel imageServiceModel = this.modelMapper.map(imageCreateBindingModel, ImageServiceModel.class);
+        imageServiceModel.setImageURL(this.cloudinaryService.uploadImage(imageCreateBindingModel.getImage()));
         this.imageService.createImage(imageServiceModel);
 
         modelAndView.setViewName(REDIRECT_TO_ALL_IMAGES);

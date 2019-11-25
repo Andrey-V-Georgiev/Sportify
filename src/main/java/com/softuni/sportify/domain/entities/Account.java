@@ -3,6 +3,7 @@ package com.softuni.sportify.domain.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,7 @@ public class Account extends BaseEntity {
     private Set<Order> ordersHistory;
 
     public Account() {
+        this.ordersHistory = new LinkedHashSet<>();
     }
 
     @OneToOne(fetch = FetchType.LAZY)
