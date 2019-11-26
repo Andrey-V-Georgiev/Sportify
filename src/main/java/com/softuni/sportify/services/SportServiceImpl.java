@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,27 +48,25 @@ public class SportServiceImpl implements SportService {
 
         Image image = this.modelMapper.map(imageServiceModel, Image.class);
         Sport sport = this.sportRepository.findById(id).orElse(null);
-        sport.getImages().add(image);
+        sport.getSportImages().add(image);
 
-        sport.setImages(sport.getImages());
-        try {
+        sport.setSportImages(sport.getSportImages());
+
             this.sportRepository.saveAndFlush(sport);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
 
-    @Override
-    public void deleteImage(String sportID, String imageID) throws Exception {
-        Sport sport = this.sportRepository.findById(sportID).orElse(null);
-        SportServiceModel sportServiceModel = this.modelMapper.map(sport, SportServiceModel.class);
-        Set<Image> updatedImagesSet = sportServiceModel.getImages()
-                .stream()
-                .filter(i -> !i.getId().equals(imageID))
-                .collect(Collectors.toSet());
-        sport.setImages(updatedImagesSet);
-        this.sportRepository.saveAndFlush(sport);
-        this.imageService.deleteImage(imageID);
-    }
+//    @Override
+//    public void deleteImage(String sportID, String imageID) throws Exception {
+//        Sport sport = this.sportRepository.findById(sportID).orElse(null);
+//        SportServiceModel sportServiceModel = this.modelMapper.map(sport, SportServiceModel.class);
+//        List<Image> updatedImagesSet = sportServiceModel.getImages()
+//                .stream()
+//                .filter(i -> !i.getId().equals(imageID))
+//                .collect(Collectors.toList());
+//        sport.setSportImages(updatedImagesSet);
+//        this.sportRepository.saveAndFlush(sport);
+//        this.imageService.deleteImage(imageID);
+//    }
 }

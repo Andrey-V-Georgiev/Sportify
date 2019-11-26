@@ -12,9 +12,6 @@ public class Image extends BaseEntity {
     private String name;
     private String imageURL;
     private String publicID;
-    private String location;
-    private int width;
-    private int height;
 
     public Image() {
     }
@@ -44,33 +41,6 @@ public class Image extends BaseEntity {
 
     public void setPublicID(String publicID) {
         this.publicID = publicID;
-    }
-
-    @Column(name = "location", nullable = false)
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    @Column(name = "width", nullable = false)
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    @Column(name = "height", nullable = false)
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 
 }

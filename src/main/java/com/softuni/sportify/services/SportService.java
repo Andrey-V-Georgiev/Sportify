@@ -13,5 +13,5 @@ public interface SportService {
 
     SportServiceModel addSportImage(String id, ImageServiceModel imageServiceModel);
 
-    void deleteImage(String sportID, String imageID) throws Exception;
+//    void deleteImage(String sportID, String imageID) throws Exception;
 }

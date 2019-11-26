@@ -90,15 +90,15 @@ public class SportsController {
         return modelAndView;
     }
 
-    @PostMapping("/delete-image")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView deleteImage(@RequestParam(name = "sportID") String sportID,
-                                    @RequestParam(name = "imageID") String imageID,
-                                    ModelAndView modelAndView) throws Exception {
-        this.sportService.deleteImage(sportID, imageID);
-        modelAndView.setViewName(REDIRECT_TO_CREATE_SPORT_IMAGE + sportID);
-        return modelAndView;
-    }
+//    @PostMapping("/delete-image")
+//    @PreAuthorize(HAS_ROLE_ADMIN)
+//    public ModelAndView deleteImage(@RequestParam(name = "sportID") String sportID,
+//                                    @RequestParam(name = "imageID") String imageID,
+//                                    ModelAndView modelAndView) throws Exception {
+//        this.sportService.deleteImage(sportID, imageID);
+//        modelAndView.setViewName(REDIRECT_TO_CREATE_SPORT_IMAGE + sportID);
+//        return modelAndView;
+//    }
 
 
     @GetMapping("/list-all")

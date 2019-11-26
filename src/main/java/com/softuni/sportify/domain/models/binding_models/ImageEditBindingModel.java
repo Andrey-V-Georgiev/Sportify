@@ -5,9 +5,6 @@ public class ImageEditBindingModel extends BaseBindingModel {
     private String name;
     private String imageURL;
     private String publicID;
-    private String location;
-    private int width;
-    private int height;
 
     public ImageEditBindingModel() {
     }
@@ -36,27 +33,4 @@ public class ImageEditBindingModel extends BaseBindingModel {
         this.publicID = publicID;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
 }

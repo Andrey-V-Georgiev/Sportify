@@ -9,7 +9,7 @@ public class SportServiceModel extends BaseServiceModel {
 
     private String name;
     private String description;
-    private Set<Image> images;
+    private Set<String> images;
     private Set<SportCenter> sportCenters;
 
     public SportServiceModel() {
@@ -31,11 +31,11 @@ public class SportServiceModel extends BaseServiceModel {
         this.description = description;
     }
 
-    public Set<Image> getImages() {
+    public Set<String> getImages() {
         return images;
     }
 
-    public void setImages(Set<Image> images) {
+    public void setImages(Set<String> images) {
         this.images = images;
     }
 

@@ -2,7 +2,9 @@ package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,10 +13,10 @@ public class ShoppingCart extends BaseEntity {
 
     private Account account;
     private LocalDateTime expiryDate;
-    private Set<Order> orders;
+    private List<Order> orders;
 
     public ShoppingCart() {
-        this.orders = new LinkedHashSet<>();
+        this.orders = new ArrayList<>();
     }
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -38,11 +40,11 @@ public class ShoppingCart extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "shopping_cart_id")
-    public Set<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(Set<Order> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 }

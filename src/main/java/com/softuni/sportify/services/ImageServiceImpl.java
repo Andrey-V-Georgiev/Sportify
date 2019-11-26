@@ -6,13 +6,15 @@ import com.softuni.sportify.repositories.ImageRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.softuni.sportify.constants.ImagesControllerConstants.*;
+import static com.softuni.sportify.constants.SettingsControllerConstants.*;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -36,6 +38,16 @@ public class ImageServiceImpl implements ImageService {
         Image image = this.modelMapper.map(imageServiceModel, Image.class);
 
         return this.modelMapper.map(this.imageRepository.saveAndFlush(image), ImageServiceModel.class);
+    }
+
+    @Override
+    public ImageServiceModel createImageMultipartFile(MultipartFile multipartFile, String name) throws IOException {
+
+        ImageServiceModel imageServiceModel = new ImageServiceModel();
+        imageServiceModel.setName(name);
+        imageServiceModel.setImageURL(this.cloudinaryService.uploadImage(multipartFile));
+        imageServiceModel.setPublicID(this.obtainPublicID(imageServiceModel.getImageURL()));
+        return this.createImage(imageServiceModel);
     }
 
     @Override
@@ -73,6 +85,13 @@ public class ImageServiceImpl implements ImageService {
         if (image == null) {
             return new ImageServiceModel();
         }
+        return this.modelMapper.map(image, ImageServiceModel.class);
+    }
+
+    @Override
+    public ImageServiceModel findByImageURL(String imageURL) {
+
+        Image image = this.imageRepository.findByImageURL(imageURL).orElse(null);
         return this.modelMapper.map(image, ImageServiceModel.class);
     }
 

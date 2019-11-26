@@ -3,7 +3,9 @@ package com.softuni.sportify.domain.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,10 +17,10 @@ public class Account extends BaseEntity {
     private BigDecimal moneyBalance;
     private LocalDateTime creationDate;
     private ShoppingCart shoppingCart;
-    private Set<Order> ordersHistory;
+    private List<Order> ordersHistory;
 
     public Account() {
-        this.ordersHistory = new LinkedHashSet<>();
+        this.ordersHistory = new ArrayList<>();
     }
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -71,11 +73,11 @@ public class Account extends BaseEntity {
     }
 
     @OneToMany(mappedBy = "account")
-    public Set<Order> getOrdersHistory() {
+    public List<Order> getOrdersHistory() {
         return ordersHistory;
     }
 
-    public void setOrdersHistory(Set<Order> ordersHistory) {
+    public void setOrdersHistory(List<Order> ordersHistory) {
         this.ordersHistory = ordersHistory;
     }
 }

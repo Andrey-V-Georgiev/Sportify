@@ -5,9 +5,6 @@ public class ImageServiceModel extends BaseServiceModel {
     private String name;
     private String imageURL;
     private String publicID;
-    private String location;
-    private int width;
-    private int height;
 
     public ImageServiceModel() {
     }
@@ -36,27 +33,4 @@ public class ImageServiceModel extends BaseServiceModel {
         this.publicID = publicID;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
 }
