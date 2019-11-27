@@ -77,4 +77,21 @@ public class SettingsServiceImpl implements SettingsService {
         setting.setHomeCarouselImages(homeImages);
         this.settingsRepository.save(setting);
     }
+
+    @Override
+    public void addAdminPanelImages(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel) {
+        settingServiceModel.getAdminPanelImages().add(imageServiceModel);
+        Setting setting = this.modelMapper.map(settingServiceModel, Setting.class);
+        List<Image> adminPaneImages = settingServiceModel.getAdminPanelImages()
+                .stream()
+                .map(i -> this.imageRepository.findByImageURL(i.getImageURL()).orElse(null))
+                .collect(Collectors.toList());
+        setting.setAdminPanelImages(adminPaneImages);
+
+        try {
+            this.settingsRepository.save(setting);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

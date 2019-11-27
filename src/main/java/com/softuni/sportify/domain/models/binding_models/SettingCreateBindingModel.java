@@ -1,7 +1,7 @@
 package com.softuni.sportify.domain.models.binding_models;
 
 import com.softuni.sportify.domain.entities.Image;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +9,14 @@ import java.util.List;
 public class SettingCreateBindingModel {
 
     private String name;
-    private List<Image> indexCarousel;
-    private List<Image> homeCarousel;
-    private List<Image> settingsImages;
+    private List<Image> indexCarouselImages;
+    private List<Image> homeCarouselImages;
+    private List<Image> adminPanelImages;
 
     public SettingCreateBindingModel() {
-        this.indexCarousel = new ArrayList<>();
-        this.homeCarousel = new ArrayList<>();
-        this.settingsImages = new ArrayList<>();
+        this.indexCarouselImages = new ArrayList<>();
+        this.homeCarouselImages = new ArrayList<>();
+        this.adminPanelImages = new ArrayList<>();
     }
 
     public String getName() {
@@ -27,27 +27,27 @@ public class SettingCreateBindingModel {
         this.name = name;
     }
 
-    public List<Image> getIndexCarousel() {
-        return indexCarousel;
+    public List<Image> getIndexCarouselImages() {
+        return indexCarouselImages;
     }
 
-    public void setIndexCarousel(List<Image> indexCarousel) {
-        this.indexCarousel = indexCarousel;
+    public void setIndexCarouselImages(List<Image> indexCarouselImages) {
+        this.indexCarouselImages = indexCarouselImages;
     }
 
-    public List<Image> getHomeCarousel() {
-        return homeCarousel;
+    public List<Image> getHomeCarouselImages() {
+        return homeCarouselImages;
     }
 
-    public void setHomeCarousel(List<Image> homeCarousel) {
-        this.homeCarousel = homeCarousel;
+    public void setHomeCarouselImages(List<Image> homeCarouselImages) {
+        this.homeCarouselImages = homeCarouselImages;
     }
 
-    public List<Image> getSettingsImages() {
-        return settingsImages;
+    public List<Image> getAdminPanelImages() {
+        return adminPanelImages;
     }
 
-    public void setSettingsImages(List<Image> settingsImages) {
-        this.settingsImages = settingsImages;
+    public void setAdminPanelImages(List<Image> adminPanelImages) {
+        this.adminPanelImages = adminPanelImages;
     }
 }

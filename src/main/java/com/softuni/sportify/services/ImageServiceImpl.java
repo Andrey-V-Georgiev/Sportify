@@ -57,6 +57,7 @@ public class ImageServiceImpl implements ImageService {
                 .orElseThrow(() -> new IllegalArgumentException("Image with this id is not found!"));
         this.modelMapper.map(imageServiceModel, image);
         Image editedImage = this.imageRepository.saveAndFlush(image);
+
         return this.modelMapper.map(editedImage, ImageServiceModel.class);
     }
 

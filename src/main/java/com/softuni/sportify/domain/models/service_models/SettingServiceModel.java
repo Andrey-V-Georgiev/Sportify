@@ -8,12 +8,12 @@ public class SettingServiceModel extends BaseServiceModel {
     private String name;
     private List<ImageServiceModel> indexCarouselImages;
     private List<ImageServiceModel> homeCarouselImages;
-    private List<ImageServiceModel> images;
+    private List<ImageServiceModel> adminPanelImages;
 
     public SettingServiceModel() {
         this.indexCarouselImages = new ArrayList<>();
         this.homeCarouselImages = new ArrayList<>();
-        this.images = new ArrayList<>();
+        this.adminPanelImages = new ArrayList<>();
     }
 
     public String getName() {
@@ -40,11 +40,11 @@ public class SettingServiceModel extends BaseServiceModel {
         this.homeCarouselImages = homeCarouselImages;
     }
 
-    public List<ImageServiceModel> getImages() {
-        return images;
+    public List<ImageServiceModel> getAdminPanelImages() {
+        return adminPanelImages;
     }
 
-    public void setImages(List<ImageServiceModel> images) {
-        this.images = images;
+    public void setAdminPanelImages(List<ImageServiceModel> adminPanelImages) {
+        this.adminPanelImages = adminPanelImages;
     }
 }

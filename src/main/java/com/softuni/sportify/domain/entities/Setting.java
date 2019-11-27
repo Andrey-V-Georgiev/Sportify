@@ -10,7 +10,7 @@ public class Setting extends BaseEntity {
     private String name;
     private List<Image> indexCarouselImages;
     private List<Image> homeCarouselImages;
-    private List<Image> images;
+    private List<Image> adminPanelImages;
 
     public Setting() {
     }
@@ -53,15 +53,15 @@ public class Setting extends BaseEntity {
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "settings_images",
-            joinColumns = {@JoinColumn(name = "settings_id")},
+    @JoinTable(name = "admin_panel_images",
+            joinColumns = {@JoinColumn(name = "admin_panel_id")},
             inverseJoinColumns = {@JoinColumn(name = "image_id")}
     )
-    public List<Image> getImages() {
-        return images;
+    public List<Image> getAdminPanelImages() {
+        return adminPanelImages;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setAdminPanelImages(List<Image> adminPanelImages) {
+        this.adminPanelImages = adminPanelImages;
     }
 }

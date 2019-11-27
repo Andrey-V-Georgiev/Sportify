@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Setting details</title>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+    <div class="jumbotron col-9 shadow-lg bg-white">
+        <h1>Setting details</h1>
+        <hr>
+        <div class="row">
+            <h5 class="mx-3">Name:</h5>
+            <h5 th:text="${settingServiceModel.getName()}"></h5>
+        </div>
+        <hr>
+
+        <h5>Index carousel images:</h5>
+        <div class="d-flex flex-wrap">
+            <th:block th:each="image, iter : ${settingServiceModel.getIndexCarouselImages()}">
+                <th:block th:include="~{fragments/setting-details-image-modal}"></th:block>
+            </th:block>
+        </div>
+        <hr>
+
+        <h5>Home carousel images:</h5>
+        <div class="d-flex flex-wrap">
+            <th:block th:each="image, iter : ${settingServiceModel.getHomeCarouselImages()}">
+                <th:block th:include="~{fragments/setting-details-image-modal}"></th:block>
+            </th:block>
+        </div>
+        <hr>
+
+        <h5>Admin panel images:</h5>
+        <div class="d-flex flex-wrap">
+            <th:block th:each="image, iter : ${settingServiceModel.getAdminPanelImages()}">
+                <th:block th:include="~{fragments/setting-details-image-modal}"></th:block>
+            </th:block>
+        </div>
+        <hr>
+
+    </div>
+</main>
+<script>
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+</body>
+</html>

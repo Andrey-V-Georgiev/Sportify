@@ -5,8 +5,6 @@ import com.softuni.sportify.domain.models.binding_models.ImageEditBindingModel;
 import com.softuni.sportify.domain.models.binding_models.SettingCreateBindingModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SettingServiceModel;
-import com.softuni.sportify.domain.models.view_models.ImageViewModel;
-import com.softuni.sportify.services.CloudinaryService;
 import com.softuni.sportify.services.ImageService;
 import com.softuni.sportify.services.SettingsService;
 import org.modelmapper.ModelMapper;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.softuni.sportify.constants.SettingsControllerConstants.*;
 import static com.softuni.sportify.constants.AuthConstants.*;
@@ -30,17 +27,14 @@ import static com.softuni.sportify.constants.AuthConstants.*;
 public class SettingsController {
 
     private final ModelMapper modelMapper;
-    private final CloudinaryService cloudinaryService;
     private final ImageService imageService;
     private final SettingsService settingsService;
 
     @Autowired
     public SettingsController(ModelMapper modelMapper,
-                              CloudinaryService cloudinaryService,
                               ImageService imageService,
                               SettingsService settingsService) {
         this.modelMapper = modelMapper;
-        this.cloudinaryService = cloudinaryService;
         this.imageService = imageService;
         this.settingsService = settingsService;
     }
@@ -97,7 +91,7 @@ public class SettingsController {
     @GetMapping("/add-images-home-carousel/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addImagesHomeCarousel(@PathVariable String id,
-                                               ModelAndView modelAndView) {
+                                              ModelAndView modelAndView) {
         SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
         modelAndView.addObject("settingServiceModel", settingServiceModel);
 
@@ -108,8 +102,8 @@ public class SettingsController {
     @PostMapping("/add-images-home-carousel/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addImagesHomeCarouselConfirm(@PathVariable String id,
-                                                      @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
-                                                      ModelAndView modelAndView) throws IOException {
+                                                     @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+                                                     ModelAndView modelAndView) throws IOException {
 
         MultipartFile multipartFile = imageCreateBindingModel.getImage();
         ImageServiceModel imageServiceModel = this.imageService
@@ -122,43 +116,82 @@ public class SettingsController {
         return modelAndView;
     }
 
-    @GetMapping("/all-setting-images")
+    @GetMapping("/add-admin-panel-images/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView allImages(ModelAndView modelAndView) {
+    public ModelAndView addAdminPanelImages(@PathVariable String id,
+                                            ModelAndView modelAndView) {
+        SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
+        modelAndView.addObject("settingServiceModel", settingServiceModel);
 
-        List<ImageViewModel> imageViewModels = this.imageService.findAll()
-                .stream()
-                .map(i -> this.modelMapper.map(i, ImageViewModel.class))
-                .collect(Collectors.toList());
-        modelAndView.addObject("imageViewModels", imageViewModels);
-
-        modelAndView.setViewName(VIEW_ALL_IMAGES);
+        modelAndView.setViewName(VIEW_ADD_ADMIN_PANEL_IMAGES);
         return modelAndView;
     }
 
-    @GetMapping("/edit/{id}")
+    @PostMapping("/add-admin-panel-images/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editImage(@PathVariable(name = "id") String id,
-                                  @ModelAttribute ImageEditBindingModel imageEditBindingModel,
-                                  ModelAndView modelAndView) {
+    public ModelAndView addAdminPanelImagesConfirm(@PathVariable String id,
+                                                   @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+                                                   ModelAndView modelAndView) throws IOException {
 
-        ImageServiceModel imageServiceModel = this.imageService.findImageByID(id);
+        MultipartFile multipartFile = imageCreateBindingModel.getImage();
+        ImageServiceModel imageServiceModel = this.imageService
+                .createImageMultipartFile(multipartFile, imageCreateBindingModel.getName());
+
+        SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
+        this.settingsService.addAdminPanelImages(settingServiceModel, imageServiceModel);
+
+        modelAndView.setViewName("redirect:/settings/add-admin-panel-images/" + settingServiceModel.getId());
+        return modelAndView;
+    }
+
+    @GetMapping("/show-all-settings")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView showAllSettings(ModelAndView modelAndView) {
+
+        List<SettingServiceModel> allSettingServiceModels = this.settingsService.findAll();
+        modelAndView.addObject("allSettingServiceModels", allSettingServiceModels);
+
+        modelAndView.setViewName(VIEW_SHOW_ALL_SETTINGS);
+        return modelAndView;
+    }
+
+    @GetMapping("/show-setting-details/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView showSettingDetails(@PathVariable String id,
+                                           ModelAndView modelAndView) {
+
+        SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
+        modelAndView.addObject("settingServiceModel", settingServiceModel);
+
+        modelAndView.setViewName(VIEW_SETTING_DETAILS);
+        return modelAndView;
+    }
+
+
+    @GetMapping("/edit-setting-image/{settingID}/{imageID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView editSettingImage(@PathVariable("settingID") String settingID,
+                                         @PathVariable("imageID") String imageID,
+                                         @ModelAttribute ImageEditBindingModel imageEditBindingModel,
+                                         ModelAndView modelAndView) {
+
+        ImageServiceModel imageServiceModel = this.imageService.findImageByID(imageID);
         this.modelMapper.map(imageServiceModel, imageEditBindingModel);
+        imageEditBindingModel.setOwnerObjectID(settingID);
         modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
 
         modelAndView.setViewName(VIEW_EDIT_IMAGE);
         return modelAndView;
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/edit-setting-image")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editImageConfirmed(@PathVariable(name = "id") String id,
-                                           @ModelAttribute ImageEditBindingModel imageEditBindingModel,
-                                           BindingResult bindingResult,
-                                           ModelAndView modelAndView) throws IOException {
+    public ModelAndView editSettingImageConfirmed(@ModelAttribute ImageEditBindingModel imageEditBindingModel,
+                                                  ModelAndView modelAndView) throws IOException {
+
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
-        modelAndView.setViewName(REDIRECT_TO_ALL_IMAGES);
+        modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + imageEditBindingModel.getOwnerObjectID());
         return modelAndView;
     }
 

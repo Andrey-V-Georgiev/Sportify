@@ -18,6 +18,8 @@ public interface SettingsService {
     void addIndexCarouselImage(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
 
     void addHomeCarouselImage(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
+
+    void addAdminPanelImages(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
 }
 
 

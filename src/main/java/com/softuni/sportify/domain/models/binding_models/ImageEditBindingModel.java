@@ -5,6 +5,7 @@ public class ImageEditBindingModel extends BaseBindingModel {
     private String name;
     private String imageURL;
     private String publicID;
+    private String ownerObjectID;
 
     public ImageEditBindingModel() {
     }
@@ -33,4 +34,11 @@ public class ImageEditBindingModel extends BaseBindingModel {
         this.publicID = publicID;
     }
 
+    public String getOwnerObjectID() {
+        return ownerObjectID;
+    }
+
+    public void setOwnerObjectID(String ownerObjectID) {
+        this.ownerObjectID = ownerObjectID;
+    }
 }

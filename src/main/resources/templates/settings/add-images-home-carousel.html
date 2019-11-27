@@ -15,7 +15,7 @@
 <main class="d-flex justify-content-center">
     <div class="jumbotron col-6 shadow-lg bg-white">
         <div class="row">
-            <h3 class="ml-3">Add images to home carousel</h3>
+            <h3 class="ml-3">Home carousel</h3>
         </div>
         <hr>
 
@@ -29,14 +29,14 @@
                             <input name="name" type="text" class="btn btn-block border text-left"
                                    placeholder="Image name...">
                         </div>
-                        <p class="my-3">Carousel images must be 1600 x 600 px</p>
+                        <p class="my-3 text-danger">Images must be 1600 x 600 px</p>
                         <input name="image" type="file" class="mb-4">
 
 
                         <button type="submit" class="btn btn-lg btn-block btn-success my-2">Add image</button>
                     </div>
                     <div th:if="${settingServiceModel.getHomeCarouselImages().size() == 3}">
-                        <a th:href="@{/settings/add-images-home-carousel/{id}(id=${settingServiceModel.getId()})}"
+                        <a th:href="@{/settings/add-admin-panel-images/{id}(id=${settingServiceModel.getId()})}"
                            class="btn btn-lg btn-block btn-warning my-2">Continue</a>
                     </div>
 
@@ -44,7 +44,7 @@
                 </form>
             </div>
 
-            <div class="col-6 mt-3 border rounded">
+            <div class="col-6 mt-3">
                 <div class="d-flex flex-wrap">
 
                     <th:block th:each="image, iter : ${settingServiceModel.getHomeCarouselImages()}">
