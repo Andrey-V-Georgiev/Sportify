@@ -22,6 +22,8 @@ public interface SettingsService {
     void addAdminPanelImages(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
 
     void deleteImage(String settingID, String imageID);
+
+    void deleteSetting(String id);
 }
 
 

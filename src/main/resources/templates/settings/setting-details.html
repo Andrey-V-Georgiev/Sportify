@@ -67,10 +67,17 @@
         <th:block th:if="${settingServiceModel.getIndexCarouselImages().size() == 3 &&
                        settingServiceModel.getHomeCarouselImages().size() == 3 &&
                        settingServiceModel.getAdminPanelImages().size() == 4}">
-        <a th:href="@{/settings/show-all-settings}" class="btn btn-lg btn-outline-success mt-3">
-            Show all settings
-        </a>
+            <a th:href="@{/settings/show-all-settings}" class="btn btn-lg btn-outline-success mt-3">
+                Show all settings
+            </a>
         </th:block>
+        <hr>
+                     <th:block th:include="~{fragments/settings/delete-setting-modal}"></th:block>
+<!--        <form th:action="@{/settings/delete-setting/{id}(id=${settingServiceModel.getId()})}" th:method="post">-->
+<!--            <button class="btn btn-lg btn-outline-danger">Delete</button>-->
+<!--        </form>-->
+
+        <hr>
     </div>
 </main>
 <script>

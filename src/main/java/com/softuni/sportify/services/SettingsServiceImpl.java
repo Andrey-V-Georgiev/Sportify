@@ -121,4 +121,9 @@ public class SettingsServiceImpl implements SettingsService {
 
         this.settingsRepository.save(setting);
     }
+
+    @Override
+    public void deleteSetting(String id) {
+        this.settingsRepository.deleteById(id);
+    }
 }

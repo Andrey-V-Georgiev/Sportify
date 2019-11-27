@@ -172,4 +172,14 @@ public class SettingsController {
         modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + settingID);
         return modelAndView;
     }
+
+    @PostMapping("/delete-setting/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView deleteSetting(@PathVariable String id,
+                                      ModelAndView modelAndView) throws Exception {
+
+        this.settingsService.deleteSetting(id);
+        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SETTINGS);
+        return modelAndView;
+    }
 }
