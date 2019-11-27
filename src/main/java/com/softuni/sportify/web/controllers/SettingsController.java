@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,18 +55,7 @@ public class SettingsController {
 
         SettingServiceModel newSettingServiceModel = this.settingsService.createNewSetting(settingServiceModel);
 
-        modelAndView.setViewName(REDIRECT_TO_ADD_IMAGES_INDEX_CAROUSEL + newSettingServiceModel.getId());
-        return modelAndView;
-    }
-
-    @GetMapping("/add-images-index-carousel/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView addImagesIndexCarousel(@PathVariable String id,
-                                               ModelAndView modelAndView) {
-        SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
-        modelAndView.addObject("settingServiceModel", settingServiceModel);
-
-        modelAndView.setViewName(VIEW_ADD_IMAGES_INDEX_CAROUSEL);
+        modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + newSettingServiceModel.getId());
         return modelAndView;
     }
 
@@ -84,18 +72,7 @@ public class SettingsController {
         SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
         this.settingsService.addIndexCarouselImage(settingServiceModel, imageServiceModel);
 
-        modelAndView.setViewName(REDIRECT_TO_ADD_IMAGES_INDEX_CAROUSEL + settingServiceModel.getId());
-        return modelAndView;
-    }
-
-    @GetMapping("/add-images-home-carousel/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView addImagesHomeCarousel(@PathVariable String id,
-                                              ModelAndView modelAndView) {
-        SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
-        modelAndView.addObject("settingServiceModel", settingServiceModel);
-
-        modelAndView.setViewName(VIEW_ADD_IMAGES_HOME_CAROUSEL);
+        modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + settingServiceModel.getId());
         return modelAndView;
     }
 
@@ -112,18 +89,7 @@ public class SettingsController {
         SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
         this.settingsService.addHomeCarouselImage(settingServiceModel, imageServiceModel);
 
-        modelAndView.setViewName(REDIRECT_TO_ADD_IMAGES_HOME_CAROUSEL + settingServiceModel.getId());
-        return modelAndView;
-    }
-
-    @GetMapping("/add-admin-panel-images/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView addAdminPanelImages(@PathVariable String id,
-                                            ModelAndView modelAndView) {
-        SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
-        modelAndView.addObject("settingServiceModel", settingServiceModel);
-
-        modelAndView.setViewName(VIEW_ADD_ADMIN_PANEL_IMAGES);
+        modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + settingServiceModel.getId());
         return modelAndView;
     }
 
@@ -140,7 +106,7 @@ public class SettingsController {
         SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
         this.settingsService.addAdminPanelImages(settingServiceModel, imageServiceModel);
 
-        modelAndView.setViewName("redirect:/settings/add-admin-panel-images/" + settingServiceModel.getId());
+        modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + settingServiceModel.getId());
         return modelAndView;
     }
 
@@ -195,12 +161,15 @@ public class SettingsController {
         return modelAndView;
     }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/delete-setting-image/{settingID}/{imageID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView deleteImage(@PathVariable(name = "id") String id,
+    public ModelAndView deleteImage(@PathVariable("settingID") String settingID,
+                                    @PathVariable("imageID") String imageID,
                                     ModelAndView modelAndView) throws Exception {
-        this.imageService.deleteImage(id);
-        modelAndView.setViewName(REDIRECT_TO_ALL_IMAGES);
+
+        this.settingsService.deleteImage(settingID, imageID);
+        this.imageService.deleteImage(imageID);
+        modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + settingID);
         return modelAndView;
     }
 }

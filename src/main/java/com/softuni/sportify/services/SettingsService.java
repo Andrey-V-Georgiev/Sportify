@@ -20,6 +20,8 @@ public interface SettingsService {
     void addHomeCarouselImage(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
 
     void addAdminPanelImages(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
+
+    void deleteImage(String settingID, String imageID);
 }
 
 

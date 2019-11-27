@@ -94,4 +94,31 @@ public class SettingsServiceImpl implements SettingsService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void deleteImage(String settingID, String imageID) {
+        Setting setting = this.settingsRepository.findById(settingID).orElse(null);
+        Image image = this.imageRepository.findById(imageID).orElse(null);
+
+        List<Image> indexCarouselImages = setting.getIndexCarouselImages()
+                .stream()
+                .filter(i -> !i.getId().equals(image.getId()))
+                .collect(Collectors.toList());
+
+        List<Image> homeCarouselImages = setting.getHomeCarouselImages()
+                .stream()
+                .filter(i -> !i.getId().equals(image.getId()))
+                .collect(Collectors.toList());
+
+        List<Image> adminPanelImages = setting.getAdminPanelImages()
+                .stream()
+                .filter(i -> !i.getId().equals(image.getId()))
+                .collect(Collectors.toList());
+
+        setting.setIndexCarouselImages(indexCarouselImages);
+        setting.setHomeCarouselImages(homeCarouselImages);
+        setting.setAdminPanelImages(adminPanelImages);
+
+        this.settingsRepository.save(setting);
+    }
 }

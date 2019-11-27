@@ -5,8 +5,26 @@
 
 <!-- Button trigger modal -->
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${image.getId()}">
-    <img th:src="${image.getImageURL()}"
-         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
+    <div class="card mx-2" style="width: 8rem;">
+        <img th:src="${image.getImageURL()}"
+             class="card-img-top" style="height: 150px;" alt="...">
+        <div class="card-body pl-3 pr-0 py-3">
+            <th:block th:switch="${iter.index}">
+                <div th:case="0">
+                    <p class="card-text">Users</p>
+                </div>
+                <div th:case="1">
+                    <p class="card-text">Settings</p>
+                </div>
+                <div th:case="2">
+                    <p class="card-text">Sport Centers</p>
+                </div>
+                <div th:case="3">
+                    <p class="card-text">Sports</p>
+                </div>
+            </th:block>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -36,12 +54,16 @@
 
             </div>
             <div class="modal-footer">
-<!--                <form th:action="@{/images/edit/{id}(id=${image.getId()})}" th:method="get">-->
-<!--                    <button class="btn btn-outline-warning">Edit</button>-->
-<!--                </form>-->
-<!--                <form th:action="@{/sports/delete-image(sportID=${sportServiceModel.getId()}, imageID=${image.getId()})}" th:method="post">-->
-<!--                    <button class="btn btn-outline-danger">Delete</button>-->
-<!--                </form>-->
+                <form th:action="@{/settings/edit-setting-image/{settingID}/{imageID}
+                (settingID=${settingServiceModel.getId()}, imageID=${image.getId()})}"
+                      th:method="get">
+                    <button class="btn btn-warning">Edit image</button>
+                </form>
+                <form th:action="@{/settings/delete-setting-image/{settingID}/{imageID}
+                (settingID=${settingServiceModel.getId()}, imageID=${image.getId()})}"
+                      th:method="post">
+                    <button class="btn btn-danger">Delete image</button>
+                </form>
             </div>
         </div>
     </div>
