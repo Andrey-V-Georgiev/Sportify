@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -51,8 +50,13 @@ public class SettingsController {
     public ModelAndView createImageConfirmed(@ModelAttribute SettingCreateBindingModel settingCreateBindingModel,
                                              ModelAndView modelAndView) throws IOException {
 
+        SettingServiceModel settingServiceModel = this.modelMapper
+                .map(settingCreateBindingModel, SettingServiceModel.class);
+        ImageServiceModel imageServiceModel = this.imageService
+                .createImageMultipartFile(settingCreateBindingModel.getIconImage(), settingCreateBindingModel.getName());
+
         SettingServiceModel newSettingServiceModel = this.settingsService
-                .createNewSetting(this.modelMapper.map(settingCreateBindingModel, SettingServiceModel.class));
+                .createNewSetting(settingServiceModel, imageServiceModel);
         modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + newSettingServiceModel.getId());
         return modelAndView;
     }
@@ -162,7 +166,7 @@ public class SettingsController {
                                     @PathVariable("imageID") String imageID,
                                     ModelAndView modelAndView) throws Exception {
 
-        this.settingsService.deleteImage(settingID, imageID);
+        this.settingsService.deleteSettingImage(settingID, imageID);
         this.imageService.deleteImage(imageID);
         modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + settingID);
         return modelAndView;

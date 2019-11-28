@@ -6,6 +6,7 @@ import java.util.List;
 public class SettingServiceModel extends BaseServiceModel {
 
     private String name;
+    private ImageServiceModel iconImage;
     private List<ImageServiceModel> indexCarouselImages;
     private List<ImageServiceModel> homeCarouselImages;
     private List<ImageServiceModel> adminPanelImages;
@@ -20,6 +21,14 @@ public class SettingServiceModel extends BaseServiceModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ImageServiceModel getIconImage() {
+        return iconImage;
+    }
+
+    public void setIconImage(ImageServiceModel iconImage) {
+        this.iconImage = iconImage;
     }
 
     public List<ImageServiceModel> getIndexCarouselImages() {

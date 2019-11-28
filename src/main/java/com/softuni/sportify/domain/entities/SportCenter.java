@@ -11,6 +11,8 @@ public class SportCenter extends BaseEntity {
     private String name;
     private Address address;
     private String sportCenterDescription;
+    private Image descriptionImage;
+    private Image iconImage;
     private List<Image> sportCenterImages;
     private List<Sport> sports;
     private List<Event> events;
@@ -49,6 +51,26 @@ public class SportCenter extends BaseEntity {
         this.sportCenterDescription = sportCenterDescription;
     }
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name="sport_center_description_image_id")
+    public Image getDescriptionImage() {
+        return descriptionImage;
+    }
+
+    public void setDescriptionImage(Image descriptionImage) {
+        this.descriptionImage = descriptionImage;
+    }
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name="sport_center_icon_image_id")
+    public Image getIconImage() {
+        return iconImage;
+    }
+
+    public void setIconImage(Image iconImage) {
+        this.iconImage = iconImage;
+    }
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sport_center_images",
             joinColumns = @JoinColumn(name = "sport_center_id"),
@@ -62,7 +84,7 @@ public class SportCenter extends BaseEntity {
         this.sportCenterImages = sportCenterImages;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sport_center_sports",
             joinColumns = @JoinColumn(name = "sport_center_id"),
             inverseJoinColumns = @JoinColumn(name = "sport_id")

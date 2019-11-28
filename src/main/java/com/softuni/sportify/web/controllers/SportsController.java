@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.softuni.sportify.constants.AuthConstants.HAS_ROLE_ADMIN;
 import static com.softuni.sportify.constants.SportsControllerConstants.*;
@@ -109,15 +110,25 @@ public class SportsController {
         return modelAndView;
     }
 
-//    @PostMapping("/delete-image")
-//    @PreAuthorize(HAS_ROLE_ADMIN)
-//    public ModelAndView deleteImage(@RequestParam(name = "sportID") String sportID,
-//                                    @RequestParam(name = "imageID") String imageID,
-//                                    ModelAndView modelAndView) throws Exception {
-//        this.sportService.deleteImage(sportID, imageID);
-//        modelAndView.setViewName(REDIRECT_TO_CREATE_SPORT_IMAGE + sportID);
-//        return modelAndView;
-//    }
+    @GetMapping("/show-all-sports")
+    public ModelAndView showAllSports(ModelAndView modelAndView) {
+
+        List<SportServiceModel> allSportServiceModels = this.sportService.findAllSports();
+        modelAndView.addObject("allSportServiceModels", allSportServiceModels);
+
+        modelAndView.setViewName(VIEW_SHOW_ALL_SPORTS);
+        return modelAndView;
+    }
+
+    @PostMapping("/delete-sport/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView deleteImage(@PathVariable String id,
+                                    ModelAndView modelAndView) throws Exception {
+
+        this.sportService.deleteSport(id);
+        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SPORTS);
+        return modelAndView;
+    }
 
 
 }

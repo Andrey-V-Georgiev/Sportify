@@ -14,7 +14,6 @@ public class SportServiceModel extends BaseServiceModel {
     private ImageServiceModel descriptionImage;
     private ImageServiceModel iconImage;
     private List<ImageServiceModel> sportImages;
-    private List<SportCenter> sportCenters;
 
     public SportServiceModel() {
 
@@ -60,11 +59,4 @@ public class SportServiceModel extends BaseServiceModel {
         this.sportImages = sportImages;
     }
 
-    public List<SportCenter> getSportCenters() {
-        return sportCenters;
-    }
-
-    public void setSportCenters(List<SportCenter> sportCenters) {
-        this.sportCenters = sportCenters;
-    }
 }

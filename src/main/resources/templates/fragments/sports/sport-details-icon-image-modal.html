@@ -4,13 +4,13 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${setting.getIconImage().getId()}">
-    <img th:src="${setting.getIconImage().getImageURL()}"
+<div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sportServiceModel.getIconImage().getId()}">
+    <img th:src="${sportServiceModel.getIconImage().getImageURL()}"
          class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
 </div>
 
 <!-- Modal -->
-<div class="modal fade" th:id="'a' + ${setting.getIconImage().getId()}" tabindex="-1" role="dialog"
+<div class="modal fade" th:id="'a' + ${sportServiceModel.getIconImage().getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -21,24 +21,25 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="row">
-                            <h6 class="col-3 pr-0">Setting name: </h6>
-                            <p class="col-3" th:text="${setting.getName()}"></p>
+                            <h6 class="col-3">Name: </h6>
+                            <p class="col-9" th:text="${sportServiceModel.getIconImage().getName()}"></p>
                         </div>
                     </div>
 
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
-                    <img th:src="${setting.getIconImage().getImageURL()}"
+                    <img th:src="${sportServiceModel.getIconImage().getImageURL()}"
                          class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
 
             </div>
             <div class="modal-footer">
-                <form th:action="@{/settings/show-setting-details/{id}(id=${setting.getId()})}"
-                      th:method="get" class="w-100">
-                    <button class="btn btn-block btn-outline-success">Show setting details</button>
+                <form th:action="@{/settings/edit-setting-image/{settingID}/{imageID}
+                (settingID=${sportServiceModel.getId()}, imageID=${sportServiceModel.getIconImage().getId()})}"
+                      th:method="get">
+                    <button class="btn btn-warning">Edit image</button>
                 </form>
             </div>
         </div>

@@ -9,11 +9,7 @@
 
 <body>
 <header>
-    <th:block th:if="${settingServiceModel.getIndexCarouselImages().size() == 3 &&
-                       settingServiceModel.getHomeCarouselImages().size() == 3 &&
-                       settingServiceModel.getAdminPanelImages().size() == 4}">
-        <th:block th:include="~{fragments/navbar}"></th:block>
-    </th:block>
+    <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 
 <main class="d-flex justify-content-center">
@@ -23,6 +19,14 @@
         <div class="row">
             <h5 class="mx-3">Name:</h5>
             <h5 th:text="${settingServiceModel.getName()}"></h5>
+        </div>
+        <hr>
+
+        <h5>Icon image:</h5>
+        <div class="row">
+            <div class="col-4">
+                <th:block th:include="~{fragments/settings/setting-details-icon-image-modal}"></th:block>
+            </div>
         </div>
         <hr>
 
@@ -64,13 +68,13 @@
             </div>
         </div>
         <hr>
-        <th:block th:if="${settingServiceModel.getIndexCarouselImages().size() == 3 &&
-                       settingServiceModel.getHomeCarouselImages().size() == 3 &&
-                       settingServiceModel.getAdminPanelImages().size() == 4}">
-            <a th:href="@{/settings/show-all-settings}" class="btn btn-lg btn-outline-success mt-3">
-                Show all settings
-            </a>
-        </th:block>
+        <form th:action="@{/admin/panel}" th:method="get">
+            <button class="btn btn-lg btn-outline-success">Go to admin panel</button>
+        </form>
+        <hr>
+        <a th:href="@{/settings/show-all-settings}" class="btn btn-lg btn-outline-success mt-3">
+            Show all settings
+        </a>
         <hr>
         <th:block th:include="~{fragments/settings/delete-setting-modal}"></th:block>
         <hr>

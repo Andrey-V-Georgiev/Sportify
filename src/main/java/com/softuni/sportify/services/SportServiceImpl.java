@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SportServiceImpl implements SportService {
 
@@ -68,6 +71,21 @@ public class SportServiceImpl implements SportService {
         sport.getSportImages().add(image);
         Sport updatedSport = this.sportRepository.saveAndFlush(sport);
         return this.modelMapper.map(updatedSport, SportServiceModel.class);
+    }
+
+    @Override
+    public void deleteSport(String id) {
+
+        this.sportRepository.deleteById(id);
+    }
+
+    @Override
+    public List<SportServiceModel> findAllSports() {
+
+        return this.sportRepository.findAll()
+                .stream()
+                .map(s -> this.modelMapper.map(s, SportServiceModel.class))
+                .collect(Collectors.toList());
     }
 
 //    @Override

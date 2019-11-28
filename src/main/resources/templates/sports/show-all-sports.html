@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
-    <title>Show all settings</title>
+    <title>Show all sports</title>
 </head>
 
 <body>
@@ -14,18 +14,18 @@
 
 <main class="d-flex justify-content-center">
     <div class="jumbotron col-10 shadow-lg bg-white">
-        <h1>Show all settings</h1>
+        <h1>Show all sports</h1>
         <hr>
         <div class="d-flex flex-wrap">
 
-            <th:block th:each="setting, iter : ${allSettingServiceModels}">
-                <th:block th:include="~{fragments/settings/show-all-settings-image-modal}"></th:block>
+            <th:block th:each="sport, iter : ${allSportServiceModels}">
+                <th:block th:include="~{fragments/sports/show-all-sports-image-modal}"></th:block>
             </th:block>
 
         </div>
         <hr>
         <form th:action="@{/admin/panel}" th:method="get">
-            <button class="btn btn-lg btn-outline-success">Go to admin panel</button>
+            <button class="btn btn-lg btn-outline-success">Admin panel</button>
         </form>
 
     </div>

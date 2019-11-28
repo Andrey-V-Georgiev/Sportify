@@ -30,10 +30,18 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
     @Override
-    public SettingServiceModel createNewSetting(SettingServiceModel settingServiceModel) {
+    public SettingServiceModel createNewSetting(SettingServiceModel settingServiceModel,
+                                                ImageServiceModel imageServiceModel) {
 
         Setting setting = this.modelMapper.map(settingServiceModel, Setting.class);
-        Setting savedSetting = this.settingsRepository.saveAndFlush(setting);
+        Image image = this.modelMapper.map(imageServiceModel, Image.class);
+        setting.setIconImage(image);
+        Setting savedSetting = null;
+        try {
+            savedSetting = this.settingsRepository.saveAndFlush(setting);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return this.modelMapper.map(savedSetting, SettingServiceModel.class);
     }
@@ -96,7 +104,7 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
     @Override
-    public void deleteImage(String settingID, String imageID) {
+    public void deleteSettingImage(String settingID, String imageID) {
         Setting setting = this.settingsRepository.findById(settingID).orElse(null);
         Image image = this.imageRepository.findById(imageID).orElse(null);
 

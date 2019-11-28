@@ -8,6 +8,7 @@ import java.util.List;
 public class Setting extends BaseEntity {
 
     private String name;
+    private Image iconImage;
     private List<Image> indexCarouselImages;
     private List<Image> homeCarouselImages;
     private List<Image> adminPanelImages;
@@ -24,7 +25,15 @@ public class Setting extends BaseEntity {
         this.name = name;
     }
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name="setting_icon_image_id")
+    public Image getIconImage() {
+        return iconImage;
+    }
 
+    public void setIconImage(Image iconImage) {
+        this.iconImage = iconImage;
+    }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "index_carousel_images",

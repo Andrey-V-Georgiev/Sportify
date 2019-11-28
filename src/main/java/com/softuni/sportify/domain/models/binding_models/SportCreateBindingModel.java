@@ -13,11 +13,9 @@ public class SportCreateBindingModel extends BaseBindingModel {
     private MultipartFile descriptionImage;
     private MultipartFile iconImage;
     private List<MultipartFile> sportImages;
-    private List<SportCenter> sportCenters;
 
     public SportCreateBindingModel() {
         this.sportImages = new ArrayList<>();
-        this.sportCenters = new ArrayList<>();
     }
 
     public String getName() {
@@ -60,11 +58,4 @@ public class SportCreateBindingModel extends BaseBindingModel {
         this.sportImages = sportImages;
     }
 
-    public List<SportCenter> getSportCenters() {
-        return sportCenters;
-    }
-
-    public void setSportCenters(List<SportCenter> sportCenters) {
-        this.sportCenters = sportCenters;
-    }
 }

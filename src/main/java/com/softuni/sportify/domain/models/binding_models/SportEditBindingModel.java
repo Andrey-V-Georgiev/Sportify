@@ -13,7 +13,6 @@ public class SportEditBindingModel {
     private ImageServiceModel descriptionImage;
     private ImageServiceModel iconImage;
     private List<ImageServiceModel> sportImages;
-    private List<SportCenter> sportCenters;
 
     public SportEditBindingModel() {
     }
@@ -58,11 +57,4 @@ public class SportEditBindingModel {
         this.sportImages = sportImages;
     }
 
-    public List<SportCenter> getSportCenters() {
-        return sportCenters;
-    }
-
-    public void setSportCenters(List<SportCenter> sportCenters) {
-        this.sportCenters = sportCenters;
-    }
 }

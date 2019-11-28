@@ -12,7 +12,6 @@ public class Sport extends BaseEntity {
     private Image descriptionImage;
     private Image iconImage;
     private List<Image> sportImages;
-    private List<SportCenter> sportCenters;
 
     public Sport() {
     }
@@ -36,7 +35,7 @@ public class Sport extends BaseEntity {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="description_image_id")
+    @JoinColumn(name="sport_description_image_id")
     public Image getDescriptionImage() {
         return descriptionImage;
     }
@@ -46,7 +45,7 @@ public class Sport extends BaseEntity {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="icon_image_id")
+    @JoinColumn(name="sport_icon_image_id")
     public Image getIconImage() {
         return iconImage;
     }
@@ -69,12 +68,4 @@ public class Sport extends BaseEntity {
         this.sportImages = sportImages;
     }
 
-    @ManyToMany(mappedBy = "sports")
-    public List<SportCenter> getSportCenters() {
-        return sportCenters;
-    }
-
-    public void setSportCenters(List<SportCenter> sportCenters) {
-        this.sportCenters = sportCenters;
-    }
 }

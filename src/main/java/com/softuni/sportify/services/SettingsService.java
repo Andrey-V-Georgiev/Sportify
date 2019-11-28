@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface SettingsService {
 
-    SettingServiceModel createNewSetting(SettingServiceModel settingServiceModel);
+    SettingServiceModel createNewSetting(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
 
     List<SettingServiceModel> findAll();
 
@@ -21,7 +21,7 @@ public interface SettingsService {
 
     void addAdminPanelImages(SettingServiceModel settingServiceModel, ImageServiceModel imageServiceModel);
 
-    void deleteImage(String settingID, String imageID);
+    void deleteSettingImage(String settingID, String imageID);
 
     void deleteSetting(String id);
 }

@@ -4,6 +4,8 @@ import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface SportService {
 
@@ -16,6 +18,10 @@ public interface SportService {
     SportServiceModel updateSportDescription(SportServiceModel sportServiceModel);
 
     SportServiceModel addSportImage(SportServiceModel sportServiceModel, ImageServiceModel imageServiceModel);
+
+    void deleteSport(String id);
+
+    List<SportServiceModel> findAllSports();
 
 
 //    void deleteImage(String sportID, String imageID) throws Exception;

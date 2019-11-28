@@ -25,21 +25,21 @@
         <h5>Description image:</h5>
         <div class="row">
             <div class="col-4">
-                <th:block th:include="~{fragments/sport/sport-details-description-image-modal}"></th:block>
+                <th:block th:include="~{fragments/sports/sport-details-description-image-modal}"></th:block>
             </div>
         </div>
         <hr>
 
         <h5>Description:</h5>
         <div class="row">
-            <th:block th:include="~{fragments/sport/form-sport-description}"></th:block>
+            <th:block th:include="~{fragments/sports/form-sport-description}"></th:block>
         </div>
         <hr>
 
         <h5>Icon image:</h5>
         <div class="row">
             <div class="col-4">
-                <th:block th:include="~{fragments/sport/sport-details-icon-image-modal}"></th:block>
+                <th:block th:include="~{fragments/sports/sport-details-icon-image-modal}"></th:block>
             </div>
         </div>
         <hr>
@@ -47,16 +47,25 @@
         <h5>Sport images:</h5>
         <div class="row">
             <div class="col-3">
-                <th:block th:include="~{fragments/sport/form-add-sport-images}"></th:block>
+                <th:block th:include="~{fragments/sports/form-add-sport-images}"></th:block>
             </div>
             <div class="col d-flex flex-wrap pt-2 px-0">
                 <th:block th:each="image, iter : ${sportServiceModel.getSportImages()}">
-                    <th:block th:include="~{fragments/sport/sport-details-image-modal}"></th:block>
+                    <th:block th:include="~{fragments/sports/sport-details-image-modal}"></th:block>
                 </th:block>
             </div>
         </div>
         <hr>
-
+        <form th:action="@{/admin/panel}" th:method="get">
+            <button class="btn btn-lg btn-outline-success">Go to admin panel</button>
+        </form>
+        <hr>
+        <a th:href="@{/sports/show-all-sports}" class="btn btn-lg btn-outline-success mt-3">
+            Show all sports
+        </a>
+        <hr>
+        <th:block th:include="~{fragments/sports/delete-sport-modal}"></th:block>
+        <hr>
     </div>
 </main>
 <script type="text/javascript">
@@ -74,7 +83,7 @@
                 return true;
             }
             return false;
-        }
+        };
         $(document).ready(function () {
             $('select').scrollPosReaload();
         });
