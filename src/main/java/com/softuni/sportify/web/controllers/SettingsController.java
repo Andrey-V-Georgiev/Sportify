@@ -145,7 +145,7 @@ public class SettingsController {
         imageEditBindingModel.setOwnerObjectID(settingID);
         modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
 
-        modelAndView.setViewName(VIEW_EDIT_IMAGE);
+        modelAndView.setViewName(VIEW_EDIT_SETTING_IMAGE);
         return modelAndView;
     }
 

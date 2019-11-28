@@ -4,6 +4,7 @@ import com.softuni.sportify.domain.entities.Image;
 import com.softuni.sportify.domain.entities.Sport;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
+import com.softuni.sportify.repositories.ImageRepository;
 import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +18,15 @@ public class SportServiceImpl implements SportService {
 
     private final ModelMapper modelMapper;
     private final SportRepository sportRepository;
-    private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
     @Autowired
     public SportServiceImpl(ModelMapper modelMapper,
                             SportRepository sportRepository,
-                            ImageService imageService) {
+                            ImageRepository imageRepository) {
         this.modelMapper = modelMapper;
         this.sportRepository = sportRepository;
-        this.imageService = imageService;
+        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class SportServiceImpl implements SportService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  this.modelMapper.map(newSport, SportServiceModel.class);
+        return this.modelMapper.map(newSport, SportServiceModel.class);
     }
 
     @Override
@@ -52,7 +53,6 @@ public class SportServiceImpl implements SportService {
         Sport sport = this.sportRepository.findById(id).orElse(null);
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
-
 
 
     @Override
@@ -88,16 +88,20 @@ public class SportServiceImpl implements SportService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public void deleteImage(String sportID, String imageID) throws Exception {
-//        Sport sport = this.sportRepository.findById(sportID).orElse(null);
-//        SportServiceModel sportServiceModel = this.modelMapper.map(sport, SportServiceModel.class);
-//        List<Image> updatedImagesSet = sportServiceModel.getImages()
-//                .stream()
-//                .filter(i -> !i.getId().equals(imageID))
-//                .collect(Collectors.toList());
-//        sport.setSportImages(updatedImagesSet);
-//        this.sportRepository.saveAndFlush(sport);
-//        this.imageService.deleteImage(imageID);
-//    }
+    @Override
+    public void deleteSportImage(String sportID, String imageID) {
+        Sport sport = this.sportRepository.findById(sportID).orElse(null);
+        Image image = this.imageRepository.findById(imageID).orElse(null);
+
+        List<Image> sportImages = sport.getSportImages()
+                .stream()
+                .filter(i -> !i.getId().equals(image.getId()))
+                .collect(Collectors.toList());
+
+        sport.setSportImages(sportImages);
+
+
+        this.sportRepository.save(sport);
+    }
+
 }

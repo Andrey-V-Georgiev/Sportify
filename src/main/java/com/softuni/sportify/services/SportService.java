@@ -23,6 +23,8 @@ public interface SportService {
 
     List<SportServiceModel> findAllSports();
 
+    void deleteSportImage(String sportID, String imageID);
+
 
 //    void deleteImage(String sportID, String imageID) throws Exception;
 }

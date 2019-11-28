@@ -41,11 +41,6 @@
                       th:method="get">
                     <button class="btn btn-warning">Edit image</button>
                 </form>
-                <form th:action="@{/settings/delete-setting-image/{settingID}/{imageID}
-                (settingID=${sportServiceModel.getId()}, imageID=${sportServiceModel.getDescriptionImage().getId()})}"
-                      th:method="post">
-                    <button class="btn btn-danger">Delete image</button>
-                </form>
             </div>
         </div>
     </div>

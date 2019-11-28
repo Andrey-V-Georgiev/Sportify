@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Edit image</title>
+</head>
+
+<body>
+
+
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+
+    <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5">
+        <div class="w-100 d-flex justify-content-center mb-4">
+            <img th:src="${imageEditBindingModel.getImageURL()}"
+                 class="mw-100 rounded" style="max-height: 300px;" alt="...">
+        </div>
+        <form th:action="@{/sports/edit-sport-image}" th:method="post"
+              class="w-100 mx-0" enctype="multipart/form-data">
+            <div class="btn-group-vertical w-100">
+                <input name="name" th:value="${imageEditBindingModel.getName()}" aria-describedby="name"
+                       type="text" class="btn btn-block border text-left" placeholder="Name...">
+            </div>
+            <input type="hidden" name="id" th:value="${imageEditBindingModel.getId()}">
+            <input type="hidden" name="imageURL" th:value="${imageEditBindingModel.getImageURL()}">
+            <input type="hidden" name="publicID" th:value="${imageEditBindingModel.getPublicID()}">
+            <input type="hidden" name="ownerObjectID" th:value="${imageEditBindingModel.getOwnerObjectID()}">
+
+            <button type="submit" class="btn btn-lg btn-block btn-warning my-2">Edit</button>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        </form>
+    </div>
+
+</main>
+
+</div>
+</body>
+</html>

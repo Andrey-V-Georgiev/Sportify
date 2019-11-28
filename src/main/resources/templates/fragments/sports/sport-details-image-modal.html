@@ -35,13 +35,13 @@
 
             </div>
             <div class="modal-footer">
-                <form th:action="@{/settings/edit-setting-image/{settingID}/{imageID}
-                (settingID=${sportServiceModel.getId()}, imageID=${image.getId()})}"
+                <form th:action="@{/sports/edit-sport-image/{sportID}/{imageID}
+                (sportID=${sportServiceModel.getId()}, imageID=${image.getId()})}"
                       th:method="get">
                     <button class="btn btn-warning">Edit image</button>
                 </form>
-                <form th:action="@{/settings/delete-setting-image/{settingID}/{imageID}
-                (settingID=${sportServiceModel.getId()}, imageID=${image.getId()})}"
+                <form th:action="@{/sports/delete-sport-image/{sportID}/{imageID}
+                (sportID=${sportServiceModel.getId()}, imageID=${image.getId()})}"
                       th:method="post">
                     <button class="btn btn-danger">Delete image</button>
                 </form>

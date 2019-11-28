@@ -7,5 +7,5 @@ public abstract class SportsControllerConstants {
     public static final String REDIRECT_TO_SPORT_DETAILS = "redirect:/sports/sport-details/";
     public static final String VIEW_SHOW_ALL_SPORTS = "sports/show-all-sports";
     public static final String REDIRECT_TO_SHOW_ALL_SPORTS = "redirect:/sports/show-all-sports";
-
+    public static final String VIEW_EDIT_SPORT_IMAGE = "sports/edit-sport-image";
 }

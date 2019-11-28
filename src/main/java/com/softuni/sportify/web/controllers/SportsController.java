@@ -1,6 +1,7 @@
 package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.ImageCreateBindingModel;
+import com.softuni.sportify.domain.models.binding_models.ImageEditBindingModel;
 import com.softuni.sportify.domain.models.binding_models.SportCreateBindingModel;
 import com.softuni.sportify.domain.models.binding_models.SportEditBindingModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
@@ -120,6 +121,33 @@ public class SportsController {
         return modelAndView;
     }
 
+    @GetMapping("/edit-sport-image/{sportID}/{imageID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView editSettingImage(@PathVariable("sportID") String sportID,
+                                         @PathVariable("imageID") String imageID,
+                                         @ModelAttribute ImageEditBindingModel imageEditBindingModel,
+                                         ModelAndView modelAndView) {
+
+        ImageServiceModel imageServiceModel = this.imageService.findImageByID(imageID);
+        this.modelMapper.map(imageServiceModel, imageEditBindingModel);
+        imageEditBindingModel.setOwnerObjectID(sportID);
+        modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+
+        modelAndView.setViewName(VIEW_EDIT_SPORT_IMAGE);
+        return modelAndView;
+    }
+
+    @PostMapping("/edit-sport-image")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView editSettingImageConfirmed(@ModelAttribute ImageEditBindingModel imageEditBindingModel,
+                                                  ModelAndView modelAndView) throws IOException {
+
+        this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
+
+        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + imageEditBindingModel.getOwnerObjectID());
+        return modelAndView;
+    }
+
     @PostMapping("/delete-sport/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteImage(@PathVariable String id,
@@ -130,5 +158,15 @@ public class SportsController {
         return modelAndView;
     }
 
+    @PostMapping("/delete-sport-image/{sportID}/{imageID}")
+    public ModelAndView deleteImage(@PathVariable("sportID") String sportID,
+                                    @PathVariable("imageID") String imageID,
+                                    ModelAndView modelAndView) throws Exception {
+
+        this.sportService.deleteSportImage(sportID, imageID);
+        this.imageService.deleteImage(imageID);
+        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + sportID);
+        return modelAndView;
+    }
 
 }
