@@ -1,5 +1,6 @@
 package com.softuni.sportify.services;
 
+import com.softuni.sportify.domain.entities.Role;
 import com.softuni.sportify.domain.entities.User;
 import com.softuni.sportify.domain.models.service_models.RoleServiceModel;
 import com.softuni.sportify.domain.models.service_models.UserServiceModel;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.softuni.sportify.constants.RoleConstants.ROLE_USER;
+import static com.softuni.sportify.constants.RoleConstants.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -73,6 +74,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String id) {
         this.userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserServiceModel findById(String id) {
+
+        User user = this.userRepository.findById(id).orElse(null);
+        return this.modelMapper.map(user, UserServiceModel.class);
+    }
+
+    @Override
+    public UserServiceModel changeUserAuthorities(String id, String authority) {
+
+        User user = this.userRepository.findById(id).orElse(null);
+        Set<Role> newAuthorities = new LinkedHashSet<>();
+        switch(authority) {
+            case ROLE_USER:
+                newAuthorities.add(this.modelMapper.map(this.roleService.findByAuthority(ROLE_USER), Role.class));
+                break;
+            case ROLE_ADMIN:
+                newAuthorities.add(this.modelMapper.map(this.roleService.findByAuthority(ROLE_USER), Role.class));
+                newAuthorities.add(this.modelMapper.map(this.roleService.findByAuthority(ROLE_ADMIN), Role.class));
+                break;
+        }
+        user.setAuthorities(newAuthorities);
+        User updatedUser = this.userRepository.saveAndFlush(user);
+        return this.modelMapper.map(updatedUser, UserServiceModel.class);
     }
 
     @Override

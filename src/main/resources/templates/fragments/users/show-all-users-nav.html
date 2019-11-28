@@ -26,7 +26,7 @@
     </th:block>
 
     <th:block th:if="${user.getAuthorities().size() < 3}">
-        <button class="nav-item btn btn-outline-dark m-2">Edit</button>
+        <a th:href="@{/users/edit-user/{id}(id=${user.getId()})}" class="nav-item btn btn-outline-dark m-2">Edit</a>
         <!-- Button trigger modal -->
         <button type="button" class="nav-item btn btn-outline-danger m-2" data-toggle="modal" data-target="#deleteUser">
             Delete

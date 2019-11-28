@@ -6,17 +6,17 @@
 <nav class="navbar navbar-dark bg-dark fixed-top">
 
     <div class="d-flex justify-content-start">
-        <div class="dropdown">
-            <button type="button" class="btn btn-lg btn-success border-secondary ml-2 dropdown-toggle"
-                    data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
-                Explore
-            </button>
-            <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" th:href="@{/guests/centers}">Sport Centers</a>
-                <a class="dropdown-item" th:href="@{/guests/sports}">Sports</a>
-                <a class="dropdown-item" th:href="@{/guests/prices}">Prices</a>
-            </div>
-        </div>
+<!--        <div class="dropdown">-->
+<!--            <button type="button" class="btn btn-lg btn-success border-secondary ml-2 dropdown-toggle"-->
+<!--                    data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">-->
+<!--                Explore-->
+<!--            </button>-->
+<!--            <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuLink">-->
+<!--                <a class="dropdown-item" th:href="@{/sports/show-all-sports}">Sport Centers</a>-->
+<!--                <a class="dropdown-item" th:href="@{/sports/show-all-sports}">Sports</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
         <div sec:authorize="isAuthenticated()">
             <a th:href="@{/home}" class="btn btn-lg btn-outline-success ml-2">Home page</a>
         </div>
@@ -37,7 +37,7 @@
             <div class="btn-group" role="group" aria-label="Basic example">
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                     <a th:href="@{/admin/panel}" class="btn btn-lg btn-success border-secondary">
-                        <h5 class="m-1 font-weight-normal">Admin panel</h5>
+                        <h5 class="m-1 font-weight-normal">Admin</h5>
                     </a>
                 </th:block>
                 <a th:href="@{/my-cart}" class="btn btn-lg btn-success border border-secondary">

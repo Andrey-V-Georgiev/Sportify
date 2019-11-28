@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Edit sport</title>
+</head>
+
+<body>
+
+
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+
+    <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5 bg-white">
+        <form th:action="@{/users/edit-user/{id}(id=${userServiceModel.getId()})}" th:method="post" class="w-100 mx-0">
+            <div class="btn-group-vertical w-100">
+                <input type="text" class="btn btn-outline-secondary btn-block border"
+                       th:value="${userServiceModel.getUsername()}" disabled>
+                <input type="text" class="btn btn-outline-secondary btn-block border"
+                       th:value="${userServiceModel.getEmail()}" disabled>
+            </div>
+
+            <div class="row my-4">
+                <div class="col-6 pl-5">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio"
+                               name="authority" id="inlineRadio1" value="ROLE_USER">
+                        <label class="form-check-label" for="inlineRadio1">ROLE_USER</label>
+                    </div>
+                </div>
+                <div class="col-6 pl-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio"
+                               name="authority" id="inlineRadio2" value="ROLE_ADMIN">
+                        <label class="form-check-label" for="inlineRadio2">ROLE_ADMIN</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-lg btn-block btn-warning my-2">Edit user</button>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        </form>
+    </div>
+
+</main>
+
+</div>
+</body>
+</html>
