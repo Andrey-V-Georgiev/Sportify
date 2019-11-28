@@ -1,5 +1,7 @@
 package com.softuni.sportify.domain.entities;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +12,12 @@ public class Sport extends BaseEntity {
 
     private String name;
     private String sportDescription;
+    private Image descriptionImage;
+    private Image iconImage;
     private List<Image> sportImages;
     private List<SportCenter> sportCenters;
 
     public Sport() {
-        this.sportImages = new ArrayList<>();
-        this.sportCenters = new ArrayList<>();
     }
 
     @Column(name = "name", nullable = false)
@@ -34,6 +36,26 @@ public class Sport extends BaseEntity {
 
     public void setSportDescription(String sportDescription) {
         this.sportDescription = sportDescription;
+    }
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name="description_image_id")
+    public Image getDescriptionImage() {
+        return descriptionImage;
+    }
+
+    public void setDescriptionImage(Image descriptionImage) {
+        this.descriptionImage = descriptionImage;
+    }
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name="icon_image_id")
+    public Image getIconImage() {
+        return iconImage;
+    }
+
+    public void setIconImage(Image iconImage) {
+        this.iconImage = iconImage;
     }
 
     @ManyToMany(targetEntity = Image.class, fetch = FetchType.EAGER)

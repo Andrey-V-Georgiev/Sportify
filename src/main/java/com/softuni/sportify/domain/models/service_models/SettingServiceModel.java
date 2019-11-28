@@ -11,9 +11,7 @@ public class SettingServiceModel extends BaseServiceModel {
     private List<ImageServiceModel> adminPanelImages;
 
     public SettingServiceModel() {
-        this.indexCarouselImages = new ArrayList<>();
-        this.homeCarouselImages = new ArrayList<>();
-        this.adminPanelImages = new ArrayList<>();
+
     }
 
     public String getName() {

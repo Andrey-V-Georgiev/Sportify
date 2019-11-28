@@ -41,6 +41,7 @@ public class SettingsController {
     @GetMapping("/create-new-setting")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createImage(ModelAndView modelAndView) {
+
         modelAndView.setViewName(VIEW_CREATE_NEW_SETTING);
         return modelAndView;
     }
@@ -50,11 +51,8 @@ public class SettingsController {
     public ModelAndView createImageConfirmed(@ModelAttribute SettingCreateBindingModel settingCreateBindingModel,
                                              ModelAndView modelAndView) throws IOException {
 
-        SettingServiceModel settingServiceModel = this.modelMapper
-                .map(settingCreateBindingModel, SettingServiceModel.class);
-
-        SettingServiceModel newSettingServiceModel = this.settingsService.createNewSetting(settingServiceModel);
-
+        SettingServiceModel newSettingServiceModel = this.settingsService
+                .createNewSetting(this.modelMapper.map(settingCreateBindingModel, SettingServiceModel.class));
         modelAndView.setViewName(REDIRECT_TO_SETTING_DETAILS + newSettingServiceModel.getId());
         return modelAndView;
     }
@@ -65,9 +63,8 @@ public class SettingsController {
                                                       @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
                                                       ModelAndView modelAndView) throws IOException {
 
-        MultipartFile multipartFile = imageCreateBindingModel.getImage();
         ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(multipartFile, imageCreateBindingModel.getName());
+                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
 
         SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
         this.settingsService.addIndexCarouselImage(settingServiceModel, imageServiceModel);
@@ -82,9 +79,8 @@ public class SettingsController {
                                                      @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
                                                      ModelAndView modelAndView) throws IOException {
 
-        MultipartFile multipartFile = imageCreateBindingModel.getImage();
         ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(multipartFile, imageCreateBindingModel.getName());
+                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
 
         SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
         this.settingsService.addHomeCarouselImage(settingServiceModel, imageServiceModel);
@@ -99,9 +95,8 @@ public class SettingsController {
                                                    @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
                                                    ModelAndView modelAndView) throws IOException {
 
-        MultipartFile multipartFile = imageCreateBindingModel.getImage();
         ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(multipartFile, imageCreateBindingModel.getName());
+                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
 
         SettingServiceModel settingServiceModel = this.settingsService.findByID(id);
         this.settingsService.addAdminPanelImages(settingServiceModel, imageServiceModel);

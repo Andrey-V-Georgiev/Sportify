@@ -72,15 +72,31 @@
             </a>
         </th:block>
         <hr>
-                     <th:block th:include="~{fragments/settings/delete-setting-modal}"></th:block>
-<!--        <form th:action="@{/settings/delete-setting/{id}(id=${settingServiceModel.getId()})}" th:method="post">-->
-<!--            <button class="btn btn-lg btn-outline-danger">Delete</button>-->
-<!--        </form>-->
-
+        <th:block th:include="~{fragments/settings/delete-setting-modal}"></th:block>
         <hr>
     </div>
 </main>
-<script>
+<script type="text/javascript">
+    (function ($) {
+        $.fn.scrollPosReaload = function () {
+            if (localStorage) {
+                var posReader = localStorage["posStorage"];
+                if (posReader) {
+                    $(window).scrollTop(posReader);
+                    localStorage.removeItem("posStorage");
+                }
+                $(this).click(function (e) {
+                    localStorage["posStorage"] = $(window).scrollTop();
+                });
+                return true;
+            }
+            return false;
+        }
+        $(document).ready(function () {
+            $('select').scrollPosReaload();
+        });
+    }(jQuery));
+
     $('#exampleModalCenter').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')
     })

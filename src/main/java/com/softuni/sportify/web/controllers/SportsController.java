@@ -1,7 +1,7 @@
 package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.ImageCreateBindingModel;
-import com.softuni.sportify.domain.models.binding_models.SportAddNewBindingModel;
+import com.softuni.sportify.domain.models.binding_models.SportCreateBindingModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.services.CloudinaryService;
@@ -39,21 +39,28 @@ public class SportsController {
         this.cloudinaryService = cloudinaryService;
     }
 
-    @GetMapping("/add-new-sport")
+    @GetMapping("/create-sport")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addNewSport(ModelAndView modelAndView) {
 
-        modelAndView.setViewName(VIEW_ADD_NEW_SPORT);
+        modelAndView.setViewName(VIEW_CREATE_SPORT);
         return modelAndView;
     }
 
-    @PostMapping("/add-new-sport")
+    @PostMapping("/create-sport")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editImageConfirmed(@ModelAttribute SportAddNewBindingModel sportAddNewBindingModel,
+    public ModelAndView editImageConfirmed(@ModelAttribute SportCreateBindingModel sportCreateBindingModel,
                                            ModelAndView modelAndView) throws IOException {
 
-        SportServiceModel sportServiceModel = this.sportService
-                .addNewSport(this.modelMapper.map(sportAddNewBindingModel, SportServiceModel.class));
+        SportServiceModel sportServiceModel = this.modelMapper.map(sportCreateBindingModel, SportServiceModel.class);
+        ImageServiceModel descriptionImageServiceModel = this.imageService
+                .createImageMultipartFile(sportCreateBindingModel.getDescriptionImage(), sportCreateBindingModel.getName());
+        ImageServiceModel iconImageServiceModel = this.imageService
+                .createImageMultipartFile(sportCreateBindingModel.getIconImage(), sportCreateBindingModel.getName());
+
+        SportServiceModel newSportServiceModel = this.sportService
+                .createSport(sportServiceModel, descriptionImageServiceModel, iconImageServiceModel);
+
         modelAndView.setViewName(REDIRECT_TO_CREATE_SPORT_IMAGE + sportServiceModel.getId());
         return modelAndView;
     }

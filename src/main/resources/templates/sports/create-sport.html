@@ -17,14 +17,16 @@
 <main class="d-flex justify-content-center">
 
     <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5 bg-white">
-        <form class="w-100 mx-0" th:action="@{/sports/add-new-sport}" th:method="post" enctype="multipart/form-data">
+        <form class="w-100 mx-0" th:action="@{/sports/create-sport}" th:method="post" enctype="multipart/form-data">
             <div class="btn-group-vertical w-100">
                 <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">
-                <textarea name="description" class="btn btn-block border text-left">
-                </textarea>
             </div>
+            <p class="my-3 text-danger">Description image must be 1600 x 600 px</p>
+            <input name="descriptionImage" type="file" class=" mb-3">
+            <p class="my-3 text-danger">Icon image must be 560 x 800 px</p>
+            <input name="iconImage" type="file" class=" mb-3">
 
-            <button type="submit" class="btn btn-lg btn-block btn-success my-2">Add new sport</button>
+            <button type="submit" class="btn btn-lg btn-block btn-success my-2">Create sport</button>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         </form>
     </div>

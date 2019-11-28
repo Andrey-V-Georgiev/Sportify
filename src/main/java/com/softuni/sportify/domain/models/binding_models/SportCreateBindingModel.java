@@ -1,23 +1,23 @@
-package com.softuni.sportify.domain.models.service_models;
+package com.softuni.sportify.domain.models.binding_models;
 
-import com.softuni.sportify.domain.entities.Image;
 import com.softuni.sportify.domain.entities.SportCenter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class SportServiceModel extends BaseServiceModel {
+public class SportCreateBindingModel extends BaseBindingModel {
 
     private String name;
     private String sportDescription;
-    private ImageServiceModel descriptionImage;
-    private ImageServiceModel iconImage;
-    private List<ImageServiceModel> sportImages;
+    private MultipartFile descriptionImage;
+    private MultipartFile iconImage;
+    private List<MultipartFile> sportImages;
     private List<SportCenter> sportCenters;
 
-    public SportServiceModel() {
-
+    public SportCreateBindingModel() {
+        this.sportImages = new ArrayList<>();
+        this.sportCenters = new ArrayList<>();
     }
 
     public String getName() {
@@ -36,27 +36,27 @@ public class SportServiceModel extends BaseServiceModel {
         this.sportDescription = sportDescription;
     }
 
-    public ImageServiceModel getDescriptionImage() {
+    public MultipartFile getDescriptionImage() {
         return descriptionImage;
     }
 
-    public void setDescriptionImage(ImageServiceModel descriptionImage) {
+    public void setDescriptionImage(MultipartFile descriptionImage) {
         this.descriptionImage = descriptionImage;
     }
 
-    public ImageServiceModel getIconImage() {
+    public MultipartFile getIconImage() {
         return iconImage;
     }
 
-    public void setIconImage(ImageServiceModel iconImage) {
+    public void setIconImage(MultipartFile iconImage) {
         this.iconImage = iconImage;
     }
 
-    public List<ImageServiceModel> getSportImages() {
+    public List<MultipartFile> getSportImages() {
         return sportImages;
     }
 
-    public void setSportImages(List<ImageServiceModel> sportImages) {
+    public void setSportImages(List<MultipartFile> sportImages) {
         this.sportImages = sportImages;
     }
 

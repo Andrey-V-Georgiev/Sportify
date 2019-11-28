@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SportService {
 
-    SportServiceModel addNewSport(SportServiceModel sportServiceModel);
+    SportServiceModel createSport(SportServiceModel sportServiceModel,
+                                  ImageServiceModel descriptionImageServiceModel,
+                                  ImageServiceModel iconImageServiceModel);
 
     SportServiceModel findByID(String id);
 
