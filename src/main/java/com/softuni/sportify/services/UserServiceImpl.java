@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,6 +59,20 @@ public class UserServiceImpl implements UserService {
         User savedUser = this.userRepository.saveAndFlush(user);
 
         return this.modelMapper.map(savedUser, UserServiceModel.class);
+    }
+
+    @Override
+    public List<UserServiceModel> findAllUsers() {
+
+        return this.userRepository.findAll()
+                .stream()
+                .map(u-> this.modelMapper.map(u, UserServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        this.userRepository.deleteById(id);
     }
 
     @Override
