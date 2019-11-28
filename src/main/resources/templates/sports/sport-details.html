@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Sport details</title>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+    <div class="jumbotron col-8 shadow-lg bg-white">
+        <h1>Sport details</h1>
+        <hr>
+        <div class="row">
+            <h5 class="mx-3">Name:</h5>
+            <h5 th:text="${sportServiceModel.getName()}"></h5>
+        </div>
+        <hr>
+
+        <h5>Description image:</h5>
+        <div class="row">
+            <div class="col-4">
+                <th:block th:include="~{fragments/sport/sport-details-description-image-modal}"></th:block>
+            </div>
+        </div>
+        <hr>
+
+        <h5>Description:</h5>
+        <div class="row">
+            <th:block th:include="~{fragments/sport/form-sport-description}"></th:block>
+        </div>
+        <hr>
+
+        <h5>Icon image:</h5>
+        <div class="row">
+            <div class="col-4">
+                <th:block th:include="~{fragments/sport/sport-details-icon-image-modal}"></th:block>
+            </div>
+        </div>
+        <hr>
+
+        <h5>Sport images:</h5>
+        <div class="row">
+            <div class="col-3">
+                <th:block th:include="~{fragments/sport/form-add-sport-images}"></th:block>
+            </div>
+            <div class="col d-flex flex-wrap pt-2 px-0">
+                <th:block th:each="image, iter : ${sportServiceModel.getSportImages()}">
+                    <th:block th:include="~{fragments/sport/sport-details-image-modal}"></th:block>
+                </th:block>
+            </div>
+        </div>
+        <hr>
+
+    </div>
+</main>
+<script type="text/javascript">
+    (function ($) {
+        $.fn.scrollPosReaload = function () {
+            if (localStorage) {
+                var posReader = localStorage["posStorage"];
+                if (posReader) {
+                    $(window).scrollTop(posReader);
+                    localStorage.removeItem("posStorage");
+                }
+                $(this).click(function (e) {
+                    localStorage["posStorage"] = $(window).scrollTop();
+                });
+                return true;
+            }
+            return false;
+        }
+        $(document).ready(function () {
+            $('select').scrollPosReaload();
+        });
+    }(jQuery));
+
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+</body>
+</html>

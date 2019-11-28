@@ -1,9 +1,6 @@
 package com.softuni.sportify.domain.entities;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

@@ -13,7 +13,10 @@ public interface SportService {
 
     SportServiceModel findByID(String id);
 
-    SportServiceModel addSportImage(String id, ImageServiceModel imageServiceModel);
+    SportServiceModel updateSportDescription(SportServiceModel sportServiceModel);
+
+    SportServiceModel addSportImage(SportServiceModel sportServiceModel, ImageServiceModel imageServiceModel);
+
 
 //    void deleteImage(String sportID, String imageID) throws Exception;
 }

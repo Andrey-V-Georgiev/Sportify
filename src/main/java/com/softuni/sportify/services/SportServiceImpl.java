@@ -50,18 +50,24 @@ public class SportServiceImpl implements SportService {
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
 
+
+
     @Override
-    public SportServiceModel addSportImage(String id, ImageServiceModel imageServiceModel) {
+    public SportServiceModel updateSportDescription(SportServiceModel sportServiceModel) {
+        Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
+        Sport updatedSport = this.sportRepository.saveAndFlush(sport);
+        return this.modelMapper.map(updatedSport, SportServiceModel.class);
+    }
 
+    @Override
+    public SportServiceModel addSportImage(SportServiceModel sportServiceModel,
+                                           ImageServiceModel imageServiceModel) {
+
+        Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
         Image image = this.modelMapper.map(imageServiceModel, Image.class);
-        Sport sport = this.sportRepository.findById(id).orElse(null);
         sport.getSportImages().add(image);
-
-        sport.setSportImages(sport.getSportImages());
-
-            this.sportRepository.saveAndFlush(sport);
-
-        return this.modelMapper.map(sport, SportServiceModel.class);
+        Sport updatedSport = this.sportRepository.saveAndFlush(sport);
+        return this.modelMapper.map(updatedSport, SportServiceModel.class);
     }
 
 //    @Override

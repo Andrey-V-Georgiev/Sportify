@@ -2,6 +2,7 @@ package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.ImageCreateBindingModel;
 import com.softuni.sportify.domain.models.binding_models.SportCreateBindingModel;
+import com.softuni.sportify.domain.models.binding_models.SportEditBindingModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.services.CloudinaryService;
@@ -61,39 +62,50 @@ public class SportsController {
         SportServiceModel newSportServiceModel = this.sportService
                 .createSport(sportServiceModel, descriptionImageServiceModel, iconImageServiceModel);
 
-        modelAndView.setViewName(REDIRECT_TO_CREATE_SPORT_IMAGE + sportServiceModel.getId());
+        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + newSportServiceModel.getId());
         return modelAndView;
     }
 
-    @GetMapping("/create-sport-image/{id}")
+    @GetMapping("/sport-details/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView createSportImage(@PathVariable String id,
-                                         @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
-                                         ModelAndView modelAndView) {
+    public ModelAndView sportDetails(@PathVariable String id,
+                                     ModelAndView modelAndView) {
 
-        modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
         SportServiceModel sportServiceModel = this.sportService.findByID(id);
         modelAndView.addObject("sportServiceModel", sportServiceModel);
-        modelAndView.setViewName(VIEW_CREATE_SPORT_IMAGE);
+
+        modelAndView.setViewName(VIEW_SPORT_DETAILS);
         return modelAndView;
     }
 
-    @PostMapping("/create-sport-image/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView createSportImageConfirm(@PathVariable String id,
-                                                @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
-                                                ModelAndView modelAndView) throws IOException {
+    @PostMapping("/edit-description/{id}")
+    public ModelAndView editDescription(@PathVariable("id") String sportID,
+                                        SportEditBindingModel sportEditBindingModel,
+                                        ModelAndView modelAndView) {
 
-        ImageServiceModel imageServiceModel = this.modelMapper.map(imageCreateBindingModel, ImageServiceModel.class);
-        imageServiceModel.setImageURL(this.cloudinaryService.uploadImage(imageCreateBindingModel.getImage()));
-        ImageServiceModel newImageServiceModel = this.imageService.createImage(imageServiceModel);
+        SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
+        sportServiceModel.setSportDescription(sportEditBindingModel.getSportDescription());
+        SportServiceModel updatedSportServiceModel = this.sportService.updateSportDescription(sportServiceModel);
 
-        SportServiceModel sportServiceModel = this.sportService
-                .addSportImage(id, this.imageService.createImage(newImageServiceModel));
+        modelAndView.addObject("sportServiceModel", updatedSportServiceModel);
+        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + sportID);
+        return modelAndView;
+    }
 
-        modelAndView.addObject("sportServiceModel", sportServiceModel);
+    @PostMapping("/add-sport-images/{id}")
+    public ModelAndView addSportImages(@PathVariable("id") String sportID,
+                                       ImageCreateBindingModel imageCreateBindingModel,
+                                       ModelAndView modelAndView) throws IOException {
 
-        modelAndView.setViewName(REDIRECT_TO_CREATE_SPORT_IMAGE + id);
+        SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
+        ImageServiceModel imageServiceModel = this.imageService
+                .createImageMultipartFile(imageCreateBindingModel.getImage(), sportServiceModel.getName());
+
+        SportServiceModel updatedSportServiceModel = this.sportService
+                .addSportImage(sportServiceModel, imageServiceModel);
+
+        modelAndView.addObject("sportServiceModel", updatedSportServiceModel);
+        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + sportID);
         return modelAndView;
     }
 
@@ -108,9 +120,4 @@ public class SportsController {
 //    }
 
 
-    @GetMapping("/list-all")
-    public ModelAndView listAllSports(ModelAndView modelAndView) {
-        modelAndView.setViewName(VIEW_ALL_IMAGES_BY_SPORT);
-        return modelAndView;
-    }
 }
