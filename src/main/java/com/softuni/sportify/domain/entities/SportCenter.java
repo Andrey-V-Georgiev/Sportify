@@ -10,7 +10,7 @@ public class SportCenter extends BaseEntity {
 
     private String name;
     private Address address;
-    private String sportCenterDescription;
+    private String description;
     private Image descriptionImage;
     private Image iconImage;
     private List<Image> sportCenterImages;
@@ -43,12 +43,12 @@ public class SportCenter extends BaseEntity {
     }
 
     @Column(name = "sport_center_description", nullable = false, columnDefinition = "TEXT")
-    public String getSportCenterDescription() {
-        return sportCenterDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSportCenterDescription(String sportCenterDescription) {
-        this.sportCenterDescription = sportCenterDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @ManyToOne(optional = false)
