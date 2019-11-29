@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AddressService {
     AddressServiceModel createAddress(AddressServiceModel addressServiceModel);
+
+    AddressServiceModel editAddress(AddressServiceModel addressServiceModel);
 }

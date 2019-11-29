@@ -11,4 +11,11 @@ public interface SportCenterService {
                                               ImageServiceModel descriptionImageServiceModel,
                                               ImageServiceModel iconImageServiceModel);
 
+    SportCenterServiceModel findByID(String id);
+
+    SportCenterServiceModel updateSportCenterDescription(SportCenterServiceModel sportCenterServiceModel);
+
+    SportCenterServiceModel addSportCenterImage(SportCenterServiceModel sportCenterServiceModel, ImageServiceModel imageServiceModel);
+
+    SportCenterServiceModel editSportCenterAddress(SportCenterServiceModel sportCenterServiceModel);
 }

@@ -32,4 +32,12 @@ public class AddressServiceImpl implements AddressService {
         }
         return this.modelMapper.map(newAddress, AddressServiceModel.class);
     }
+
+    @Override
+    public AddressServiceModel editAddress(AddressServiceModel addressServiceModel) {
+
+        Address address = this.modelMapper.map(addressServiceModel, Address.class);
+        Address updatedAddress = this.addressRepository.saveAndFlush(address);
+        return this.modelMapper.map(updatedAddress, AddressServiceModel.class);
+    }
 }

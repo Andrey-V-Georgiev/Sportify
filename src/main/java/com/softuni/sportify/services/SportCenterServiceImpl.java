@@ -49,4 +49,46 @@ public class SportCenterServiceImpl implements SportCenterService {
         }
         return this.modelMapper.map(newSportCenter, SportCenterServiceModel.class);
     }
+
+    @Override
+    public SportCenterServiceModel findByID(String id) {
+        SportCenter sportCenter = this.sportCenterRepository.findById(id).orElse(null);
+        return this.modelMapper.map(sportCenter, SportCenterServiceModel.class);
+    }
+
+    @Override
+    public SportCenterServiceModel updateSportCenterDescription(SportCenterServiceModel sportCenterServiceModel) {
+        SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
+        SportCenter updatedSportCenter = null;
+        try {
+            updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
+    }
+
+    @Override
+    public SportCenterServiceModel addSportCenterImage(SportCenterServiceModel sportCenterServiceModel,
+                                                       ImageServiceModel imageServiceModel) {
+
+        SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
+        Image image = this.modelMapper.map(imageServiceModel, Image.class);
+        sportCenter.getSportCenterImages().add(image);
+        SportCenter updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
+        return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
+    }
+
+    @Override
+    public SportCenterServiceModel editSportCenterAddress(SportCenterServiceModel sportCenterServiceModel) {
+
+        SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
+        SportCenter updatedSportCenter = null;
+        try {
+            updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
+    }
 }
