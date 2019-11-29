@@ -2,15 +2,19 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.entities.Address;
 import com.softuni.sportify.domain.entities.Image;
+import com.softuni.sportify.domain.entities.Sport;
 import com.softuni.sportify.domain.entities.SportCenter;
 import com.softuni.sportify.domain.models.service_models.AddressServiceModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
+import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.repositories.SportCenterRepository;
+import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,16 +24,18 @@ public class SportCenterServiceImpl implements SportCenterService {
     private final ModelMapper modelMapper;
     private final SportCenterRepository sportCenterRepository;
     private final AddressService addressService;
+    private final SportRepository sportRepository;
 
     @Autowired
     public SportCenterServiceImpl(ModelMapper modelMapper,
                                   SportCenterRepository sportCenterRepository,
-                                  AddressService addressService) {
+                                  AddressService addressService,
+                                  SportRepository sportRepository) {
         this.modelMapper = modelMapper;
         this.sportCenterRepository = sportCenterRepository;
         this.addressService = addressService;
+        this.sportRepository = sportRepository;
     }
-
 
     @Override
     public SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel,
@@ -99,7 +105,22 @@ public class SportCenterServiceImpl implements SportCenterService {
     public List<SportCenterServiceModel> findAllSportCenters() {
         return this.sportCenterRepository.findAll()
                 .stream()
-                .map(sc-> this.modelMapper.map(sc, SportCenterServiceModel.class))
+                .map(sc -> this.modelMapper.map(sc, SportCenterServiceModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public SportCenterServiceModel updateSportCenterSports(SportCenterServiceModel sportCenterServiceModel,
+                                                           List<String> sportCenterIDs) {
+        List<Sport> chosenSports = new ArrayList<>();
+        for (String id : sportCenterIDs) {
+            chosenSports.add(this.sportRepository.findById(id).orElse(null));
+        }
+        SportCenter sportCenter = this.sportCenterRepository.findById(
+                sportCenterServiceModel.getId()).orElse(null);
+        sportCenter.setSports(chosenSports);
+        SportCenter updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
+
+        return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
     }
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Update sport center sports</title>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+    <div class="jumbotron col-10 shadow-lg bg-white">
+        <h1>Update sport center sports</h1>
+        <hr>
+
+        <form th:action="@{/sport-centers/update-sport-center-sports/{id}(id=${sportCenterID})}"
+              th:method="post">
+            <div class="d-flex flex-wrap">
+                <th:block th:each="sport, iter : ${allSportServiceModels}">
+                    <th:block th:include="~{fragments/sport_centers/show-all-sport-center-sports-image-modal}">
+                    </th:block>
+                </th:block>
+            </div>
+            <hr>
+            <button class="btn btn-lg btn-warning border border-dark">Update sports</button>
+        </form>
+
+        <hr>
+        <form th:action="@{/admin/panel}" th:method="get">
+            <button class="btn btn-lg btn-outline-success">Admin panel</button>
+        </form>
+
+    </div>
+</main>
+<script>
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+</body>
+</html>

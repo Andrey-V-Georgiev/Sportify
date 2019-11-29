@@ -63,6 +63,18 @@
         </div>
         <hr>
 
+        <h5>Sports:</h5>
+        <div class="row">
+            <div class="col-3">
+                <th:block th:include="~{fragments/sport_centers/form-update-sport-center-sports}"></th:block>
+            </div>
+            <div class="col d-flex flex-wrap pt-2 px-0">
+                <th:block th:each="sport, iter : ${sportCenterServiceModel.getSports()}">
+                    <th:block th:include="~{fragments/sport_centers/sport-center-sport-image-modal}"></th:block>
+                </th:block>
+            </div>
+        </div>
+        <hr>
 
         <form th:action="@{/admin/panel}" th:method="get">
             <button class="btn btn-lg btn-outline-success">Go to admin panel</button>

@@ -17,7 +17,7 @@
             <input name="details" type="text" th:value="${sportCenterServiceModel.getAddress().getDetails()}"
                    class="btn btn-block border text-left" placeholder="Details...">
         </div>
-
+        <hr>
         <button type="submit" class="btn btn-lg btn-block btn-warning mb-2 mt-3">Save address</button>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>

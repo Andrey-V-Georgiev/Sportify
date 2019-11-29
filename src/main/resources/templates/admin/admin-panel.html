@@ -18,6 +18,7 @@
         <h3 class="text-left mb-5 ml-4">Admin panel</h3>
 
         <div class="row my-3">
+
             <div class="card mx-4 shadow-sm" style="max-width: 540px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
@@ -47,38 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img class="card-img" th:src="${imagesImage}" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body py-1">
 
-                            <h5 class="my-3">Settings</h5>
-
-                            <div class="btn-group-vertical btn-block my-2">
-                                <a th:href="@{/settings/create-new-setting}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Create new setting
-                                </a>
-                                <a th:href="@{/settings/show-all-settings}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Show all settings
-                                </a>
-                                <a th:href="@{/settings/show-all-settings}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Empty
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row my-3">
             <div class="card mx-4 shadow-sm" style="max-width: 540px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
@@ -108,6 +78,41 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+
+        <div class="row my-3">
+
+            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img class="card-img" th:src="${imagesImage}" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body py-1">
+
+                            <h5 class="my-3">Settings</h5>
+
+                            <div class="btn-group-vertical btn-block my-2">
+                                <a th:href="@{/settings/create-new-setting}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Create new setting
+                                </a>
+                                <a th:href="@{/settings/show-all-settings}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Show all settings
+                                </a>
+                                <a th:href="@{/settings/show-all-settings}"
+                                   class="btn btn-lg btn-outline-dark btn-block">
+                                    Empty
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card mx-4 shadow-sm" style="max-width: 540px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">

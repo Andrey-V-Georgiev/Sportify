@@ -24,7 +24,14 @@
             <p class="my-3 text-danger">Icon image must be 560 x 800 px and up to 1.0MB</p>
             <input name="iconImage" type="file" class=" mb-3">
 
-            <button type="submit" class="btn btn-lg btn-block btn-success my-2">Create sport center</button>
+
+            <div class="btn-group w-100" role="group" aria-label="Basic example">
+                <button type="submit"
+                        class="col-8 btn btn-lg btn-success border border-dark">Create sport center</button>
+                <a th:href="@{/sport-centers/show-all-sport-centers}"
+                   class="col-4 btn btn-lg btn-outline-dark">Cancel</a>
+            </div>
+
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         </form>
     </div>

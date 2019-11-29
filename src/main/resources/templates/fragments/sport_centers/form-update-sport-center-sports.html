@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<div class="col-3 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
+    <hr>
+    <form th:action="@{/sport-centers/update-sport-center-sports/{id}(id=${sportCenterServiceModel.getId()})}"
+          th:method="get" class="w-100 mx-0">
+        <button type="submit" class="btn btn-lg btn-block btn-warning mb-2">Update sports</button>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    </form>
+    <hr>
+</div>
+</html>

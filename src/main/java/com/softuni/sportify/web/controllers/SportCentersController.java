@@ -1,15 +1,14 @@
 package com.softuni.sportify.web.controllers;
 
-import com.softuni.sportify.domain.models.binding_models.AddressEditBindingModel;
-import com.softuni.sportify.domain.models.binding_models.ImageCreateBindingModel;
-import com.softuni.sportify.domain.models.binding_models.SportCenterCreateBindingModel;
-import com.softuni.sportify.domain.models.binding_models.SportCenterEditBindingModel;
+import com.softuni.sportify.domain.models.binding_models.*;
 import com.softuni.sportify.domain.models.service_models.AddressServiceModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
+import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.services.AddressService;
 import com.softuni.sportify.services.ImageService;
 import com.softuni.sportify.services.SportCenterService;
+import com.softuni.sportify.services.SportService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,15 +28,19 @@ public class SportCentersController {
     private final ModelMapper modelMapper;
     private final SportCenterService sportCenterService;
     private final AddressService addressService;
+    private final SportService sportService;
 
     @Autowired
     public SportCentersController(ImageService imageService,
                                   ModelMapper modelMapper,
-                                  SportCenterService sportCenterService, AddressService addressService) {
+                                  SportCenterService sportCenterService,
+                                  AddressService addressService,
+                                  SportService sportService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.sportCenterService = sportCenterService;
         this.addressService = addressService;
+        this.sportService = sportService;
     }
 
     @GetMapping("/create-sport-center")
@@ -134,6 +137,32 @@ public class SportCentersController {
         modelAndView.addObject("allSportCenterServiceModels", allSportCenterServiceModels);
 
         modelAndView.setViewName(VIEW_SHOW_ALL_SPORT_CENTERS);
+        return modelAndView;
+    }
+
+    @GetMapping("/update-sport-center-sports/{id}")
+    public ModelAndView updateSportCenterSports(@PathVariable("id") String sportCenterID,
+                                                @ModelAttribute UpdateSportCenterSportsBindingModel bindingModel,
+                                                ModelAndView modelAndView) throws IOException {
+
+        List<SportServiceModel> allSportServiceModels = this.sportService.findAllSports();
+
+        modelAndView.addObject("allSportServiceModels", allSportServiceModels);
+        modelAndView.addObject("sportCenterID", sportCenterID);
+        modelAndView.setViewName(VIEW_UPDATE_SPORT_CENTER_SPORTS);
+        return modelAndView;
+    }
+
+    @PostMapping("/update-sport-center-sports/{id}")
+    public ModelAndView updateSportCenterSportsConfirm(@PathVariable("id") String sportCenterID,
+                                                       @ModelAttribute UpdateSportCenterSportsBindingModel bindingModel,
+                                                       ModelAndView modelAndView) throws IOException {
+
+        List<String> spotrsIDs = bindingModel.getSpotrsIDs();
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
+        this.sportCenterService.updateSportCenterSports(sportCenterServiceModel, spotrsIDs);
+
+        modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
         return modelAndView;
     }
 }
