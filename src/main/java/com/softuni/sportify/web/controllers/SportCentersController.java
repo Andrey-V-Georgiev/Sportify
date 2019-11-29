@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.softuni.sportify.constants.SportCentersControllerConstants.*;
 
@@ -123,6 +124,16 @@ public class SportCentersController {
 
         modelAndView.addObject("sportCenterServiceModel", updatedSportCenterServiceModel);
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
+        return modelAndView;
+    }
+
+    @GetMapping("/show-all-sport-centers")
+    public ModelAndView showAllSports(ModelAndView modelAndView) {
+
+        List<SportCenterServiceModel> allSportCenterServiceModels = this.sportCenterService.findAllSportCenters();
+        modelAndView.addObject("allSportCenterServiceModels", allSportCenterServiceModels);
+
+        modelAndView.setViewName(VIEW_SHOW_ALL_SPORT_CENTERS);
         return modelAndView;
     }
 }

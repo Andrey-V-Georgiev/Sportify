@@ -11,6 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SportCenterServiceImpl implements SportCenterService {
 
@@ -90,5 +93,13 @@ public class SportCenterServiceImpl implements SportCenterService {
             e.printStackTrace();
         }
         return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
+    }
+
+    @Override
+    public List<SportCenterServiceModel> findAllSportCenters() {
+        return this.sportCenterRepository.findAll()
+                .stream()
+                .map(sc-> this.modelMapper.map(sc, SportCenterServiceModel.class))
+                .collect(Collectors.toList());
     }
 }
