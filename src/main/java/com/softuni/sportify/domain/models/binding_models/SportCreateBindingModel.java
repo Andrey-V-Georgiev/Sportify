@@ -10,7 +10,6 @@ public class SportCreateBindingModel extends BaseBindingModel {
 
     private String name;
     private String sportDescription;
-    private MultipartFile descriptionImage;
     private MultipartFile iconImage;
     private List<MultipartFile> sportImages;
 
@@ -32,14 +31,6 @@ public class SportCreateBindingModel extends BaseBindingModel {
 
     public void setSportDescription(String sportDescription) {
         this.sportDescription = sportDescription;
-    }
-
-    public MultipartFile getDescriptionImage() {
-        return descriptionImage;
-    }
-
-    public void setDescriptionImage(MultipartFile descriptionImage) {
-        this.descriptionImage = descriptionImage;
     }
 
     public MultipartFile getIconImage() {

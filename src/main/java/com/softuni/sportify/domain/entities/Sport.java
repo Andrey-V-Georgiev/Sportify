@@ -9,7 +9,6 @@ public class Sport extends BaseEntity {
 
     private String name;
     private String sportDescription;
-    private Image descriptionImage;
     private Image iconImage;
     private List<Image> sportImages;
 
@@ -32,16 +31,6 @@ public class Sport extends BaseEntity {
 
     public void setSportDescription(String sportDescription) {
         this.sportDescription = sportDescription;
-    }
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name="sport_description_image_id")
-    public Image getDescriptionImage() {
-        return descriptionImage;
-    }
-
-    public void setDescriptionImage(Image descriptionImage) {
-        this.descriptionImage = descriptionImage;
     }
 
     @ManyToOne(optional = false)

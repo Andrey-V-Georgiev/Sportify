@@ -39,7 +39,6 @@ public class SportCenterServiceImpl implements SportCenterService {
 
     @Override
     public SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel,
-                                                     ImageServiceModel descriptionImageServiceModel,
                                                      ImageServiceModel iconImageServiceModel) {
 
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
@@ -47,7 +46,6 @@ public class SportCenterServiceImpl implements SportCenterService {
                 this.modelMapper.map(sportCenterServiceModel.getAddress(), AddressServiceModel.class));
 
         sportCenter.setAddress(this.modelMapper.map(addressServiceModel, Address.class));
-        sportCenter.setDescriptionImage(this.modelMapper.map(descriptionImageServiceModel, Image.class));
         sportCenter.setIconImage(this.modelMapper.map(iconImageServiceModel, Image.class));
 
         SportCenter newSportCenter = null;

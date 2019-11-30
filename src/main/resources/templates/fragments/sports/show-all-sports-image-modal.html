@@ -5,9 +5,9 @@
 
 <!-- Button trigger modal -->
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sport.getIconImage().getId()}">
-    <div class="card m-2" style="width: 8rem;">
+    <div class="card m-2 shadow-lg" style="width: 21rem;">
         <img th:src="${sport.getIconImage().getImageURL()}"
-             class="mw-100 mh-100 rounded-top" style="height: 150px;" alt="...">
+             class="w-100 h-100 rounded-top" style="height: 150px;" alt="...">
         <div class="card-body p-1">
             <h6 class="card-text text-center mb-2" th:text="${sport.getName()}"></h6>
         </div>
@@ -43,7 +43,7 @@
             <div class="modal-footer">
                 <form th:action="@{/sports/sport-details/{id}(id=${sport.getId()})}"
                       th:method="get" class="w-100">
-                    <button class="btn btn-block btn-outline-success">Show sport details</button>
+                    <button class="btn btn-block btn-secondary">Sport details</button>
                 </form>
             </div>
         </div>

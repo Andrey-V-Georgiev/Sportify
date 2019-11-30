@@ -55,14 +55,12 @@ public class SportCentersController {
                                                            SportCenterCreateBindingModel sportCenterCreateBindingModel,
                                                    ModelAndView modelAndView) throws IOException {
 
-        ImageServiceModel descriptionImageServiceModel = this.imageService.createImageMultipartFile(
-                sportCenterCreateBindingModel.getDescriptionImage(), sportCenterCreateBindingModel.getName());
         ImageServiceModel iconImageServiceModel = this.imageService.createImageMultipartFile(
                 sportCenterCreateBindingModel.getIconImage(), sportCenterCreateBindingModel.getName());
         SportCenterServiceModel sportCenterServiceModel = this.modelMapper.map(
                 sportCenterCreateBindingModel, SportCenterServiceModel.class);
         SportCenterServiceModel newSportCenterServiceModel = this.sportCenterService.createSportCenter(
-                sportCenterServiceModel, descriptionImageServiceModel, iconImageServiceModel);
+                sportCenterServiceModel, iconImageServiceModel);
 
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + newSportCenterServiceModel.getId());
         return modelAndView;

@@ -15,12 +15,12 @@
 
     <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5 bg-white">
         <form class="w-100 mx-0" th:action="@{/sports/create-sport}" th:method="post" enctype="multipart/form-data">
+
             <div class="btn-group-vertical w-100">
                 <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">
             </div>
-            <p class="my-3 text-danger">Description image must be 1600 x 600 px and up to 1.0MB</p>
-            <input name="descriptionImage" type="file" class=" mb-3">
-            <p class="my-3 text-danger">Icon image must be 560 x 800 px and up to 1.0MB</p>
+
+            <p class="my-3 text-danger">Icon image must be 1600 x 600px and up to 1.0MB</p>
             <input name="iconImage" type="file" class=" mb-3">
 
             <div class="btn-group w-100" role="group" aria-label="Basic example">

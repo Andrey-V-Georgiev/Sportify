@@ -11,7 +11,6 @@ public class SportCenter extends BaseEntity {
     private String name;
     private Address address;
     private String description;
-    private Image descriptionImage;
     private Image iconImage;
     private List<Image> sportCenterImages;
     private List<Sport> sports;
@@ -49,16 +48,6 @@ public class SportCenter extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name="sport_center_description_image_id")
-    public Image getDescriptionImage() {
-        return descriptionImage;
-    }
-
-    public void setDescriptionImage(Image descriptionImage) {
-        this.descriptionImage = descriptionImage;
     }
 
     @ManyToOne(optional = false)

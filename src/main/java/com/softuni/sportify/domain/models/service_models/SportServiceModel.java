@@ -11,7 +11,6 @@ public class SportServiceModel extends BaseServiceModel {
 
     private String name;
     private String sportDescription;
-    private ImageServiceModel descriptionImage;
     private ImageServiceModel iconImage;
     private List<ImageServiceModel> sportImages;
 
@@ -33,14 +32,6 @@ public class SportServiceModel extends BaseServiceModel {
 
     public void setSportDescription(String sportDescription) {
         this.sportDescription = sportDescription;
-    }
-
-    public ImageServiceModel getDescriptionImage() {
-        return descriptionImage;
-    }
-
-    public void setDescriptionImage(ImageServiceModel descriptionImage) {
-        this.descriptionImage = descriptionImage;
     }
 
     public ImageServiceModel getIconImage() {

@@ -10,7 +10,6 @@ import java.util.List;
 public interface SportCenterService {
 
     SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel,
-                                              ImageServiceModel descriptionImageServiceModel,
                                               ImageServiceModel iconImageServiceModel);
 
     SportCenterServiceModel findByID(String id);

@@ -8,7 +8,6 @@ import java.util.List;
 public class SportCenterCreateBindingModel extends BaseBindingModel {
 
     private String name;
-    private MultipartFile descriptionImage;
     private MultipartFile iconImage;
 
     private String description;
@@ -31,14 +30,6 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public MultipartFile getDescriptionImage() {
-        return descriptionImage;
-    }
-
-    public void setDescriptionImage(MultipartFile descriptionImage) {
-        this.descriptionImage = descriptionImage;
     }
 
     public MultipartFile getIconImage() {

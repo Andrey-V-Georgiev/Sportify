@@ -5,8 +5,13 @@
 
 <!-- Button trigger modal -->
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${setting.getIconImage().getId()}">
-    <img th:src="${setting.getIconImage().getImageURL()}"
-         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
+    <div class="card m-2 shadow-lg" style="width: 21rem;">
+        <img th:src="${setting.getIconImage().getImageURL()}"
+             class="w-100 h-100 rounded-top" style="height: 150px;" alt="...">
+        <div class="card-body p-1">
+            <h6 class="card-text text-center mb-2" th:text="${setting.getName()}"></h6>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -38,7 +43,7 @@
             <div class="modal-footer">
                 <form th:action="@{/settings/show-setting-details/{id}(id=${setting.getId()})}"
                       th:method="get" class="w-100">
-                    <button class="btn btn-block btn-outline-success">Show setting details</button>
+                    <button class="btn btn-block btn-secondary">Show setting details</button>
                 </form>
             </div>
         </div>

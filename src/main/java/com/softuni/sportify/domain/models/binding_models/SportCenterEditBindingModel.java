@@ -9,7 +9,6 @@ import java.util.List;
 public class SportCenterEditBindingModel extends BaseBindingModel {
 
     private String name;
-    private ImageServiceModel descriptionImage;
     private ImageServiceModel iconImage;
 
     private String description;
@@ -27,14 +26,6 @@ public class SportCenterEditBindingModel extends BaseBindingModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ImageServiceModel getDescriptionImage() {
-        return descriptionImage;
-    }
-
-    public void setDescriptionImage(ImageServiceModel descriptionImage) {
-        this.descriptionImage = descriptionImage;
     }
 
     public ImageServiceModel getIconImage() {

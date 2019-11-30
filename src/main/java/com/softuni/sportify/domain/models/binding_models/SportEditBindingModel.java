@@ -10,7 +10,6 @@ public class SportEditBindingModel {
 
     private String name;
     private String sportDescription;
-    private ImageServiceModel descriptionImage;
     private ImageServiceModel iconImage;
     private List<ImageServiceModel> sportImages;
 
@@ -31,14 +30,6 @@ public class SportEditBindingModel {
 
     public void setSportDescription(String sportDescription) {
         this.sportDescription = sportDescription;
-    }
-
-    public ImageServiceModel getDescriptionImage() {
-        return descriptionImage;
-    }
-
-    public void setDescriptionImage(ImageServiceModel descriptionImage) {
-        this.descriptionImage = descriptionImage;
     }
 
     public ImageServiceModel getIconImage() {

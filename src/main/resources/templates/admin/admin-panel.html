@@ -15,133 +15,17 @@
 <main class="d-flex justify-content-center">
 
     <div class="jumbotron col-8 shadow-lg bg-white">
-        <h3 class="text-left mb-5 ml-4">Admin panel</h3>
+        <h3 class="text-left mb-3 ml-4">Admin panel</h3>
+        <hr>
 
         <div class="row my-3">
-
-            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img class="card-img" th:src="${usersImage}" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body py-1">
-
-                            <h5 class="my-3">Users</h5>
-
-                            <div class="btn-group-vertical btn-block my-2">
-                                <a th:href="@{/users/show-all-users}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Show all users
-                                </a>
-                                <a th:href="@{/users/show-all-users}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Empty
-                                </a>
-                                <a th:href="@{/users/show-all-users}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Empty
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img class="card-img" th:src="${sportCentersImage}" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body py-1 h-100">
-
-                            <h5 class="my-3">Sport Centers</h5>
-
-                            <div class="btn-group-vertical btn-block my-2">
-                                <a th:href="@{/sport-centers/create-sport-center}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Create sport center
-                                </a>
-                                <a th:href="@{/sport-centers/show-all-sport-centers}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Show all sport centers
-                                </a>
-                                <a th:href="@{/sport-centers/create-sport-center}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Empty
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <th:block th:include="~{fragments/admin_panel/users-panel}"></th:block>
+            <th:block th:include="~{fragments/admin_panel/sport-centers-panel}"></th:block>
         </div>
 
         <div class="row my-3">
-
-            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img class="card-img" th:src="${imagesImage}" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body py-1">
-
-                            <h5 class="my-3">Settings</h5>
-
-                            <div class="btn-group-vertical btn-block my-2">
-                                <a th:href="@{/settings/create-new-setting}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Create new setting
-                                </a>
-                                <a th:href="@{/settings/show-all-settings}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Show all settings
-                                </a>
-                                <a th:href="@{/settings/show-all-settings}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Empty
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mx-4 shadow-sm" style="max-width: 540px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img class="card-img" th:src="${sportsImage}" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body py-1">
-
-                            <h5 class="my-3">Sports</h5>
-
-                            <div class="btn-group-vertical btn-block my-2">
-                                <a th:href="@{/sports/create-sport}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Create sport
-                                </a>
-                                <a th:href="@{/sports/show-all-sports}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Show all sports
-                                </a>
-                                <a th:href="@{/settings/create-new-setting}"
-                                   class="btn btn-lg btn-outline-dark btn-block">
-                                    Empty
-                                </a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <th:block th:include="~{fragments/admin_panel/settings-panel}"></th:block>
+            <th:block th:include="~{fragments/admin_panel/sports-panel}"></th:block>
         </div>
 
     </div>

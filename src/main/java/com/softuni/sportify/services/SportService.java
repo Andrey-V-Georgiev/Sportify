@@ -10,14 +10,14 @@ import java.util.List;
 public interface SportService {
 
     SportServiceModel createSport(SportServiceModel sportServiceModel,
-                                  ImageServiceModel descriptionImageServiceModel,
                                   ImageServiceModel iconImageServiceModel);
 
     SportServiceModel findByID(String id);
 
     SportServiceModel updateSportDescription(SportServiceModel sportServiceModel);
 
-    SportServiceModel addSportImage(SportServiceModel sportServiceModel, ImageServiceModel imageServiceModel);
+    SportServiceModel addSportImage(SportServiceModel sportServiceModel,
+                                    ImageServiceModel imageServiceModel);
 
     void deleteSport(String id);
 

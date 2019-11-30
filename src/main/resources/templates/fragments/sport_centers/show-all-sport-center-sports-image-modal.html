@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<div class="card m-2" style="width: 8rem;">
+<div class="card m-2" style="width: 21rem;">
     <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sport.getIconImage().getId()}">
         <img th:src="${sport.getIconImage().getImageURL()}"
              class="w-100 mh-100 rounded-top" style="height: 150px;" alt="...">

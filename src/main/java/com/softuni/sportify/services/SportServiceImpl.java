@@ -31,12 +31,10 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public SportServiceModel createSport(SportServiceModel sportServiceModel,
-                                         ImageServiceModel descriptionImageServiceModel,
                                          ImageServiceModel iconImageServiceModel) {
 
         Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
         sport.setSportDescription("");
-        sport.setDescriptionImage(this.modelMapper.map(descriptionImageServiceModel, Image.class));
         sport.setIconImage(this.modelMapper.map(iconImageServiceModel, Image.class));
 
         Sport newSport = null;

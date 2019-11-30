@@ -56,13 +56,11 @@ public class SportsController {
                                            ModelAndView modelAndView) throws IOException {
 
         SportServiceModel sportServiceModel = this.modelMapper.map(sportCreateBindingModel, SportServiceModel.class);
-        ImageServiceModel descriptionImageServiceModel = this.imageService
-                .createImageMultipartFile(sportCreateBindingModel.getDescriptionImage(), sportCreateBindingModel.getName());
         ImageServiceModel iconImageServiceModel = this.imageService
                 .createImageMultipartFile(sportCreateBindingModel.getIconImage(), sportCreateBindingModel.getName());
 
         SportServiceModel newSportServiceModel = this.sportService
-                .createSport(sportServiceModel, descriptionImageServiceModel, iconImageServiceModel);
+                .createSport(sportServiceModel, iconImageServiceModel);
 
         modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + newSportServiceModel.getId());
         return modelAndView;
