@@ -25,4 +25,6 @@ public interface SportCenterService {
 
     SportCenterServiceModel updateSportCenterSports(SportCenterServiceModel sportCenterServiceModel,
                                                     List<String> sportCenterIDs);
+
+    void deleteSportCenterImage(String sportCenterID, String imageID);
 }

@@ -7,7 +7,7 @@ import com.softuni.sportify.domain.entities.SportCenter;
 import com.softuni.sportify.domain.models.service_models.AddressServiceModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
-import com.softuni.sportify.domain.models.service_models.SportServiceModel;
+import com.softuni.sportify.repositories.ImageRepository;
 import com.softuni.sportify.repositories.SportCenterRepository;
 import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
@@ -25,16 +25,19 @@ public class SportCenterServiceImpl implements SportCenterService {
     private final SportCenterRepository sportCenterRepository;
     private final AddressService addressService;
     private final SportRepository sportRepository;
+    private final ImageRepository imageRepository;
 
     @Autowired
     public SportCenterServiceImpl(ModelMapper modelMapper,
                                   SportCenterRepository sportCenterRepository,
                                   AddressService addressService,
-                                  SportRepository sportRepository) {
+                                  SportRepository sportRepository,
+                                  ImageRepository imageRepository) {
         this.modelMapper = modelMapper;
         this.sportCenterRepository = sportCenterRepository;
         this.addressService = addressService;
         this.sportRepository = sportRepository;
+        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -59,12 +62,14 @@ public class SportCenterServiceImpl implements SportCenterService {
 
     @Override
     public SportCenterServiceModel findByID(String id) {
+
         SportCenter sportCenter = this.sportCenterRepository.findById(id).orElse(null);
         return this.modelMapper.map(sportCenter, SportCenterServiceModel.class);
     }
 
     @Override
     public SportCenterServiceModel updateSportCenterDescription(SportCenterServiceModel sportCenterServiceModel) {
+
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
         SportCenter updatedSportCenter = null;
         try {
@@ -120,5 +125,19 @@ public class SportCenterServiceImpl implements SportCenterService {
         SportCenter updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
 
         return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
+    }
+
+    @Override
+    public void deleteSportCenterImage(String sportCenterID, String imageID) {
+
+        SportCenter sportCenter = this.sportCenterRepository.findById(sportCenterID).orElse(null);
+        Image image = this.imageRepository.findById(imageID).orElse(null);
+        List<Image> sportCenterImages = sportCenter.getSportCenterImages()
+                .stream()
+                .filter(i -> !i.getId().equals(image.getId()))
+                .collect(Collectors.toList());
+        sportCenter.setSportCenterImages(sportCenterImages);
+
+        this.sportCenterRepository.save(sportCenter);
     }
 }

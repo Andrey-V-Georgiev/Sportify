@@ -121,7 +121,7 @@ public class SportsController {
 
     @GetMapping("/edit-sport-image/{sportID}/{imageID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editSettingImage(@PathVariable("sportID") String sportID,
+    public ModelAndView editSportImage(@PathVariable("sportID") String sportID,
                                          @PathVariable("imageID") String imageID,
                                          @ModelAttribute ImageEditBindingModel imageEditBindingModel,
                                          ModelAndView modelAndView) {
@@ -137,22 +137,12 @@ public class SportsController {
 
     @PostMapping("/edit-sport-image")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editSettingImageConfirmed(@ModelAttribute ImageEditBindingModel imageEditBindingModel,
+    public ModelAndView editSportImageConfirmed(@ModelAttribute ImageEditBindingModel imageEditBindingModel,
                                                   ModelAndView modelAndView) throws IOException {
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
         modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + imageEditBindingModel.getOwnerObjectID());
-        return modelAndView;
-    }
-
-    @PostMapping("/delete-sport/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView deleteImage(@PathVariable String id,
-                                    ModelAndView modelAndView) throws Exception {
-
-        this.sportService.deleteSport(id);
-        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SPORTS);
         return modelAndView;
     }
 
@@ -164,6 +154,16 @@ public class SportsController {
         this.sportService.deleteSportImage(sportID, imageID);
         this.imageService.deleteImage(imageID);
         modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + sportID);
+        return modelAndView;
+    }
+
+    @PostMapping("/delete-sport/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView deleteImage(@PathVariable String id,
+                                    ModelAndView modelAndView) throws Exception {
+
+        this.sportService.deleteSport(id);
+        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SPORTS);
         return modelAndView;
     }
 

@@ -11,6 +11,7 @@ import com.softuni.sportify.services.SportCenterService;
 import com.softuni.sportify.services.SportService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.util.List;
 
+import static com.softuni.sportify.constants.AuthConstants.HAS_ROLE_ADMIN;
 import static com.softuni.sportify.constants.SportCentersControllerConstants.*;
+import static com.softuni.sportify.constants.SportsControllerConstants.REDIRECT_TO_SPORT_DETAILS;
+import static com.softuni.sportify.constants.SportsControllerConstants.VIEW_EDIT_SPORT_IMAGE;
 
 @Controller
 @RequestMapping("/sport-centers")
@@ -105,6 +109,44 @@ public class SportCentersController {
                 .addSportCenterImage(sportCenterServiceModel, imageServiceModel);
 
         modelAndView.addObject("sportCenterServiceModel", updatedSportCenterServiceModel);
+        modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
+        return modelAndView;
+    }
+
+    @GetMapping("/edit-sport-center-image/{sportID}/{imageID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView editSportCenterImage(@PathVariable("sportID") String sportID,
+                                         @PathVariable("imageID") String imageID,
+                                         @ModelAttribute ImageEditBindingModel imageEditBindingModel,
+                                         ModelAndView modelAndView) {
+
+        ImageServiceModel imageServiceModel = this.imageService.findImageByID(imageID);
+        this.modelMapper.map(imageServiceModel, imageEditBindingModel);
+        imageEditBindingModel.setOwnerObjectID(sportID);
+        modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+
+        modelAndView.setViewName(VIEW_EDIT_SPORT_CENTER_IMAGE);
+        return modelAndView;
+    }
+
+    @PostMapping("/edit-sport-center-image")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView editSportCenterImageConfirmed(@ModelAttribute ImageEditBindingModel imageEditBindingModel,
+                                                  ModelAndView modelAndView) throws IOException {
+
+        this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
+
+        modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + imageEditBindingModel.getOwnerObjectID());
+        return modelAndView;
+    }
+
+    @PostMapping("/delete-sport-center-image/{sportCenterID}/{imageID}")
+    public ModelAndView deleteImage(@PathVariable("sportCenterID") String sportCenterID,
+                                    @PathVariable("imageID") String imageID,
+                                    ModelAndView modelAndView) throws Exception {
+
+        this.sportCenterService.deleteSportCenterImage(sportCenterID, imageID);
+        this.imageService.deleteImage(imageID);
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
         return modelAndView;
     }
