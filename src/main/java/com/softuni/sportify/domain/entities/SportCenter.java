@@ -17,12 +17,9 @@ public class SportCenter extends BaseEntity {
     private List<Event> events;
 
     public SportCenter() {
-        this.sportCenterImages = new ArrayList<>();
-        this.sports = new ArrayList<>();
-        this.events = new ArrayList<>();
     }
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -32,7 +29,7 @@ public class SportCenter extends BaseEntity {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="sport_center_id")
+    @JoinColumn(name = "sport_center_id")
     public Address getAddress() {
         return address;
     }
@@ -41,7 +38,7 @@ public class SportCenter extends BaseEntity {
         this.address = address;
     }
 
-    @Column(name = "sport_center_description", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "sport_center_description", columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -51,7 +48,7 @@ public class SportCenter extends BaseEntity {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="sport_center_icon_image_id")
+    @JoinColumn(name = "sport_center_icon_image_id")
     public Image getIconImage() {
         return iconImage;
     }
@@ -73,10 +70,11 @@ public class SportCenter extends BaseEntity {
         this.sportCenterImages = sportCenterImages;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "sport_center_sports",
-            joinColumns = @JoinColumn(name = "sport_center_id"),
-            inverseJoinColumns = @JoinColumn(name = "sport_id")
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Sport.class)
+    @JoinTable(
+            name="sport_center_sports",
+            joinColumns = {@JoinColumn( name="sport_center_id")},
+            inverseJoinColumns = {@JoinColumn( name="sport_id")}
     )
     public List<Sport> getSports() {
         return sports;
@@ -87,7 +85,7 @@ public class SportCenter extends BaseEntity {
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sport_center_id", nullable = false)
+    @JoinColumn(name = "sport_center_id")
     public List<Event> getEvents() {
         return events;
     }

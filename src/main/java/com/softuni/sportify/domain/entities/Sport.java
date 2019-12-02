@@ -43,7 +43,7 @@ public class Sport extends BaseEntity {
         this.iconImage = iconImage;
     }
 
-    @ManyToMany(targetEntity = Image.class, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name="sport_images",
             joinColumns = {@JoinColumn( name="sport_id")},

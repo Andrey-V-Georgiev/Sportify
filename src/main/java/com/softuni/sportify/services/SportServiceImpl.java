@@ -2,9 +2,11 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.entities.Image;
 import com.softuni.sportify.domain.entities.Sport;
+import com.softuni.sportify.domain.entities.SportCenter;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.repositories.ImageRepository;
+import com.softuni.sportify.repositories.SportCenterRepository;
 import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +21,17 @@ public class SportServiceImpl implements SportService {
     private final ModelMapper modelMapper;
     private final SportRepository sportRepository;
     private final ImageRepository imageRepository;
+    private final SportCenterRepository sportCenterRepository;
 
     @Autowired
     public SportServiceImpl(ModelMapper modelMapper,
                             SportRepository sportRepository,
-                            ImageRepository imageRepository) {
+                            ImageRepository imageRepository,
+                            SportCenterRepository sportCenterRepository) {
         this.modelMapper = modelMapper;
         this.sportRepository = sportRepository;
         this.imageRepository = imageRepository;
+        this.sportCenterRepository = sportCenterRepository;
     }
 
     @Override
@@ -74,7 +79,18 @@ public class SportServiceImpl implements SportService {
     @Override
     public void deleteSport(String id) {
 
+        List<SportCenter> allSportCenters = this.sportCenterRepository.findAll();
+        for (SportCenter sportCenter : allSportCenters) {
+            List<Sport> updatedSports = sportCenter.getSports()
+                    .stream()
+                    .filter(s -> !s.getId().equals(id))
+                    .collect(Collectors.toList());
+            sportCenter.setSports(updatedSports);
+            this.sportCenterRepository.save(sportCenter);
+        }
+
         this.sportRepository.deleteById(id);
+
     }
 
     @Override
