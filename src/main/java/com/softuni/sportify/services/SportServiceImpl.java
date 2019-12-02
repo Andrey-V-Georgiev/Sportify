@@ -118,4 +118,10 @@ public class SportServiceImpl implements SportService {
         this.sportRepository.save(sport);
     }
 
+    @Override
+    public SportServiceModel editIconImage(SportServiceModel sportServiceModel) {
+        Sport sport = this.sportRepository.findById(sportServiceModel.getId()).orElse(null);
+        sport.getIconImage().setName(sportServiceModel.getIconImage().getName());
+        return this.modelMapper.map(this.sportRepository.saveAndFlush(sport), SportServiceModel.class);
+    }
 }

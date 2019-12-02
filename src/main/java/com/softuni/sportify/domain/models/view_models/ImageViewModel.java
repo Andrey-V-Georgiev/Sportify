@@ -25,4 +25,11 @@ public class ImageViewModel extends BaseViewModel {
         this.imageURL = imageURL;
     }
 
+    public String getPublicID() {
+        return publicID;
+    }
+
+    public void setPublicID(String publicID) {
+        this.publicID = publicID;
+    }
 }

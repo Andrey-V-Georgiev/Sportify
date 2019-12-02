@@ -24,6 +24,9 @@
 
         <h5>Icon image:</h5>
         <div class="row">
+            <div class="col-3">
+                <th:block th:include="~{fragments/sports/form-edit-sport-icon-image}"></th:block>
+            </div>
             <div class="col-4">
                 <th:block th:include="~{fragments/sports/sport-details-icon-image-modal}"></th:block>
             </div>
@@ -60,26 +63,15 @@
         <hr>
     </div>
 </main>
-<script type="text/javascript">
-    (function ($) {
-        $.fn.scrollPosReaload = function () {
-            if (localStorage) {
-                var posReader = localStorage["posStorage"];
-                if (posReader) {
-                    $(window).scrollTop(posReader);
-                    localStorage.removeItem("posStorage");
-                }
-                $(this).click(function (e) {
-                    localStorage["posStorage"] = $(window).scrollTop();
-                });
-                return true;
-            }
-            return false;
-        };
-        $(document).ready(function () {
-            $('select').scrollPosReaload();
+<script th:inline="javascript">
+    let id = [[${sportServiceModel.getIconImage().getId()}]];
+
+    fetch("/rest/sports/load-icon-image/" + id)
+        .then(resp=>resp.json())
+        .then(resp=> {
+           $("#icon-img").attr("src", resp.imageURL);
+           $("#icon-modal-img").attr("src", resp.imageURL);
         });
-    }(jQuery));
 
     $('#exampleModalCenter').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')

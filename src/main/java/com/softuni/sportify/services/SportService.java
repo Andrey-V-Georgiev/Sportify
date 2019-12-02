@@ -25,6 +25,8 @@ public interface SportService {
 
     void deleteSportImage(String sportID, String imageID);
 
+    SportServiceModel editIconImage(SportServiceModel sportServiceModel);
+
 
 //    void deleteImage(String sportID, String imageID) throws Exception;
 }

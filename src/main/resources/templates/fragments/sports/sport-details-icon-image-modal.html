@@ -5,8 +5,7 @@
 
 <!-- Button trigger modal -->
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sportServiceModel.getIconImage().getId()}">
-    <img th:src="${sportServiceModel.getIconImage().getImageURL()}"
-         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
+    <img id="icon-img" src="" class="mw-100 mh-100 m-3 rounded shadow-lg" style="height: 150px;" alt="...">
 </div>
 
 <!-- Modal -->
@@ -30,8 +29,7 @@
 
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
-                    <img th:src="${sportServiceModel.getIconImage().getImageURL()}"
-                         class="mw-100 rounded" style="max-height: 500px;" alt="...">
+                    <img id="icon-modal-img" src="" class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
 
             </div>

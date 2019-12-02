@@ -1,5 +1,6 @@
 package com.softuni.sportify.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,5 +31,10 @@ public class AppBeanConfig {
     @Bean
     public Validator validator() {
         return Validation.buildDefaultValidatorFactory().getValidator();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }

@@ -78,7 +78,23 @@ public class SportsController {
         return modelAndView;
     }
 
+    @PostMapping("/edit-icon-image/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView editIconImage(@PathVariable("id") String sportID,
+                                        ImageEditBindingModel imageEditBindingModel,
+                                        ModelAndView modelAndView) {
+
+        SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
+        sportServiceModel.getIconImage().setName(imageEditBindingModel.getName());
+        SportServiceModel updatedSportServiceModel = this.sportService.editIconImage(sportServiceModel);
+
+        modelAndView.addObject("sportServiceModel", updatedSportServiceModel);
+        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + sportID);
+        return modelAndView;
+    }
+
     @PostMapping("/edit-description/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editDescription(@PathVariable("id") String sportID,
                                         SportEditBindingModel sportEditBindingModel,
                                         ModelAndView modelAndView) {
