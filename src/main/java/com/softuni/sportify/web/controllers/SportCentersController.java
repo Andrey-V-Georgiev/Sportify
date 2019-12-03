@@ -21,8 +21,6 @@ import java.util.List;
 
 import static com.softuni.sportify.constants.AuthConstants.HAS_ROLE_ADMIN;
 import static com.softuni.sportify.constants.SportCentersControllerConstants.*;
-import static com.softuni.sportify.constants.SportsControllerConstants.REDIRECT_TO_SPORT_DETAILS;
-import static com.softuni.sportify.constants.SportsControllerConstants.VIEW_EDIT_SPORT_IMAGE;
 
 @Controller
 @RequestMapping("/sport-centers")
@@ -116,9 +114,9 @@ public class SportCentersController {
     @GetMapping("/edit-sport-center-image/{sportID}/{imageID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editSportCenterImage(@PathVariable("sportID") String sportID,
-                                         @PathVariable("imageID") String imageID,
-                                         @ModelAttribute ImageEditBindingModel imageEditBindingModel,
-                                         ModelAndView modelAndView) {
+                                             @PathVariable("imageID") String imageID,
+                                             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
+                                             ModelAndView modelAndView) {
 
         ImageServiceModel imageServiceModel = this.imageService.findImageByID(imageID);
         this.modelMapper.map(imageServiceModel, imageEditBindingModel);
@@ -132,7 +130,7 @@ public class SportCentersController {
     @PostMapping("/edit-sport-center-image")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editSportCenterImageConfirmed(@ModelAttribute ImageEditBindingModel imageEditBindingModel,
-                                                  ModelAndView modelAndView) throws IOException {
+                                                      ModelAndView modelAndView) throws IOException {
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
@@ -203,6 +201,14 @@ public class SportCentersController {
         this.sportCenterService.updateSportCenterSports(sportCenterServiceModel, spotrsIDs);
 
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
+        return modelAndView;
+    }
+
+    @GetMapping("/calendar/{id}")
+    public ModelAndView calendar(@PathVariable String id,
+                                 ModelAndView modelAndView) {
+
+        modelAndView.setViewName(VIEW_CALENDAR);
         return modelAndView;
     }
 }

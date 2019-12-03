@@ -40,11 +40,19 @@
                 </div>
 
             </div>
-            <div class="modal-footer">
-                <form th:action="@{/sport-centers/sport-center-details/{id}(id=${sc.getId()})}"
-                      th:method="get" class="w-100">
-                    <button class="btn btn-block btn-secondary">Sport center details</button>
-                </form>
+            <div class="modal-footer w-100">
+                <div class="col-6 pl-4 ml-3">
+                    <form th:action="@{/sport-centers/sport-center-details/{id}(id=${sc.getId()})}"
+                          th:method="get" class="w-100">
+                        <button class="btn btn-block btn-secondary">Details</button>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <form th:action="@{/sport-centers/calendar/{id}(id=${sc.getId()})}"
+                          th:method="get" class="w-100">
+                        <button class="btn btn-block btn-success">Calendar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
