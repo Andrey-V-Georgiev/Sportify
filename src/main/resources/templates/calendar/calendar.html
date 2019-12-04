@@ -4,8 +4,8 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/calendar.css}">
-    <script th:src="@{/js/calendar.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/calendar.css}">
+    <script th:src="@{/static/js/calendar.js}"></script>
     <title>Calendar</title>
 </head>
 
@@ -49,26 +49,26 @@
             </div>
 
             <div class="row">
-                <div class="border border-dark" style="width: 130px;height: 45px">
-                    Sun
+                <div class="border border-right-0 border-dark rounded-left ml-1" style="width: 132px;height: 35px">
+                    <h5 class="text-center">Sun</h5>
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 45px">
-                    Mon
+                <div class="border-top border-bottom border-dark" style="width: 132px;height: 35px">
+                    <h5 class="text-center">Mon</h5>
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 45px">
-                    Tue
+                <div class="border-top border-bottom border-dark" style="width: 132px;height: 35px">
+                    <h5 class="text-center">Tue</h5>
                 </div>
-                <div class="border border-dark" style="width: 130px;height:45px">
-                    Wed
+                <div class="border-top border-bottom border-dark" style="width: 132px;height:35px">
+                    <h5 class="text-center">Wed</h5>
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 45px">
-                    Thu
+                <div class="border-top border-bottom border-dark" style="width: 132px;height: 35px">
+                    <h5 class="text-center">Thu</h5>
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 45px">
-                    Fri
+                <div class="border-top border-bottom border-dark" style="width: 132px;height: 35px">
+                    <h5 class="text-center">Fri</h5>
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 45px">
-                    Sat
+                <div class="border border-left-0 border-dark rounded-right" style="width: 132px;height: 35px">
+                    <h5 class="text-center">Sat</h5>
                 </div>
             </div>
 

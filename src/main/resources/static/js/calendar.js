@@ -274,10 +274,10 @@ let buildTable = (month) => {
             let dateNumber = dates[counter++];
 
             function fullModal() {
-                return `<div class='border border-dark' style='width: 130px;height: 80px'> 
+                return `<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
  
 <div id="mybtn" data-toggle="modal" data-target="#aaa">
-  <div class='bg-success' style='width: 130px;height: 80px'>
+  <div class='bg-success rounded rounded-sm' style='width: 123px;height: 78px'>
 <h3 class="text-white">
 ${dateNumber}
 </h3>
@@ -315,10 +315,10 @@ ${dateNumber}
             }
 
             function emptyModal() {
-                return `<div class='border border-dark' style='width: 130px;height: 80px'> 
+                return `<div class='m-1 rounded rounded-sm border border-dark' style='width: 125px;height: 80px'>
  
 <div id="mybtn" data-toggle="modal" data-target="#aaa">
-  <div class='bg-white' style='width: 130px;height: 80px'>
+  <div class='bg-white rounded rounded-sm' style='width: 123px;height: 78px'>
 <h3 class="text-dark">
 ${dateNumber}
 </h3>
@@ -353,9 +353,11 @@ ${dateNumber}
 
             if (dateNumber == 0) {
                 $(`#${currentID}`)
-                    .append(`<div class='border border-dark' style='width: 130px;height: 80px'>`)
+                    .append(`<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
+                             </div>`)
             } else {
                 $(`#${currentID}`).append(emptyModal())
+                // $(`#${currentID}`).append(fullModal())
             }
         }
     }

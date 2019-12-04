@@ -14,7 +14,7 @@ public class SportCenter extends BaseEntity {
     private Image iconImage;
     private List<Image> sportCenterImages;
     private List<Sport> sports;
-    private List<Event> events;
+    private List<Schedule> calendar;
 
     public SportCenter() {
     }
@@ -84,14 +84,16 @@ public class SportCenter extends BaseEntity {
         this.sports = sports;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sport_center_id")
-    public List<Event> getEvents() {
-        return events;
+    @OneToMany(
+            mappedBy = "sportCenter",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    public List<Schedule> getCalendar() {
+        return calendar;
     }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void setCalendar(List<Schedule> calendar) {
+        this.calendar = calendar;
     }
-
 }
