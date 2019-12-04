@@ -15,14 +15,30 @@
 </header>
 <main class="d-flex justify-content-center">
 
-    <div class="jumbotron col-8 pt-3 shadow-lg bg-white d-flex justify-content-center">
-
+    <div id="jumbotron" class="jumbotron col-8 pt-3 shadow-lg bg-white d-flex justify-content-center">
 
         <div id="calendar" class="w-75">
             <div id="menu" class="row my-4">
-                <div class="btn-group col-2 px-0 mr-5" role="group" aria-label="Basic example">
-                    <button class="col-6 btn btn-success border border-dark"><</button>
-                    <button class="col-6 btn btn-success border border-dark">></button>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <select id="selectMonth" class="btn border border-dark">
+                        <option value="1" class="dropdown-item" href="#">January</option>
+                        <option value="2" class="dropdown-item" href="#">February</option>
+                        <option value="3" class="dropdown-item" href="#">March</option>
+                        <option value="4" class="dropdown-item" href="#">April</option>
+                        <option value="5" class="dropdown-item" href="#">May</option>
+                        <option value="6" class="dropdown-item" href="#">June</option>
+                        <option value="7" class="dropdown-item" href="#">July</option>
+                        <option value="8" class="dropdown-item" href="#">August</option>
+                        <option value="9" class="dropdown-item" href="#">September</option>
+                        <option value="10" class="dropdown-item" href="#">October</option>
+                        <option value="11" class="dropdown-item" href="#">November</option>
+                        <option value="12" class="dropdown-item" href="#">December</option>
+                    </select>
+                    <select id="selectYear" class="btn border border-dark">
+                        <option value="2019" class="dropdown-item" href="#">2019</option>
+                        <option value="2020" class="dropdown-item" href="#">2020</option>
+                    </select>
+                    <div id="find-month" class="btn btn-success border border-dark">Find</div>
                 </div>
             </div>
 
@@ -49,26 +65,22 @@
                 </div>
             </div>
 
-            <!--            <div id="first-row" class="row"></div>-->
-
-            <!--            <div id="second-row" class="row"></div>-->
-
-            <!--            <div id="third-row" class="row"></div>-->
-
-            <!--            <div id="fourth-row" class="row"></div>-->
-
-            <!--            <div id="fifth-row" class="row"></div>-->
         </div>
     </div>
 </main>
 <script th:inline="javascript">
 
-
     $(document).ready(function () {
-
-        buildTable();
-
+        buildInitialTable();
     });
+
+    $("#find-month").on("click", (e) => {
+        e.preventDefault();
+        let monthVal = $('#selectMonth option:selected').val();
+        let yearVal = $('#selectYear option:selected').val();
+        let month = findMonth(monthVal, yearVal);
+        buildTable(month);
+    })
 
 </script>
 </body>
