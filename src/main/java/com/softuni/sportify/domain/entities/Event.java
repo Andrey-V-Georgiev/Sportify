@@ -13,6 +13,9 @@ public class Event extends BaseEntity {
     private Sport sport;
     private Level level;
     private Location location;
+    private int dayOfMonth;
+    private int month;
+    private int year;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int maxCapacity;
@@ -58,6 +61,33 @@ public class Event extends BaseEntity {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Column(name = "day_of_month")
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(int dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    @Column(name = "month")
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    @Column(name = "year")
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     @Column(name = "start_time", nullable = false)

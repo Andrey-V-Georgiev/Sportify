@@ -18,8 +18,13 @@
     <div id="jumbotron" class="jumbotron col-8 pt-3 shadow-lg bg-white d-flex justify-content-center">
 
         <div id="calendar" class="w-75">
+            <div class="row">
+                <h3>Fitness-center "Pulse" bul. Bulgaria</h3>
+            </div>
+            <hr>
             <div id="menu" class="row my-4">
                 <div class="btn-group" role="group" aria-label="Basic example">
+                    <div id="now" class="btn btn-success border border-dark">Now</div>
                     <select id="selectMonth" class="btn border border-dark">
                         <option value="1" class="dropdown-item" href="#">January</option>
                         <option value="2" class="dropdown-item" href="#">February</option>
@@ -40,27 +45,29 @@
                     </select>
                     <div id="find-month" class="btn btn-success border border-dark">Find</div>
                 </div>
+
             </div>
 
             <div class="row">
-                <div class="border border-dark" style="width: 130px;height: 50px">
+                <div class="border border-dark" style="width: 130px;height: 45px">
                     Sun
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 50px">
+                <div class="border border-dark" style="width: 130px;height: 45px">
                     Mon
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 50px">
+                <div class="border border-dark" style="width: 130px;height: 45px">
                     Tue
                 </div>
-                <div class="border border-dark" style="width: 130px;height:50px">
+                <div class="border border-dark" style="width: 130px;height:45px">
+                    Wed
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 50px">
+                <div class="border border-dark" style="width: 130px;height: 45px">
                     Thu
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 50px">
+                <div class="border border-dark" style="width: 130px;height: 45px">
                     Fri
                 </div>
-                <div class="border border-dark" style="width: 130px;height: 50px">
+                <div class="border border-dark" style="width: 130px;height: 45px">
                     Sat
                 </div>
             </div>
@@ -71,7 +78,12 @@
 <script th:inline="javascript">
 
     $(document).ready(function () {
-        buildInitialTable();
+        buildTable(currentMonth);
+    });
+
+    $("#now").on("click", (e) => {
+        e.preventDefault();
+        buildTable(currentMonth);
     });
 
     $("#find-month").on("click", (e) => {
@@ -80,8 +92,11 @@
         let yearVal = $('#selectYear option:selected').val();
         let month = findMonth(monthVal, yearVal);
         buildTable(month);
-    })
+    });
 
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
 </script>
 </body>
 </html>
