@@ -250,11 +250,8 @@ function findMonth(month, year) {
     return searchedMonth;
 }
 
-let dayOfMonth;
-let yearOfMonth;
 let buildTable = (monthObj, createScheduleModal, showScheduleModal, scheduleDays) => {
 
-    console.log(scheduleDays)
     $("#month").remove();
     $("#year").remove();
     $("#row0").remove();
@@ -284,9 +281,7 @@ let buildTable = (monthObj, createScheduleModal, showScheduleModal, scheduleDays
                     .append(`<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
                              </div>`)
             } else {
-                // $(`#${currentID}`).append(createScheduleModal(day, month, year))
-
-                if(scheduleDays.includes(day)) {
+                if (scheduleDays.includes(day)) {
                     $(`#${currentID}`).append(showScheduleModal(day, month, year))
                 } else {
                     $(`#${currentID}`).append(createScheduleModal(day, month, year))
@@ -300,4 +295,3 @@ function findSportCenterSchedulesByMonth(monthNum, scID) {
     return fetch(`/rest/sport-centers/schedules-by-month/${scID}/${monthNum}`)
         .then(resp => resp.json());
 }
-

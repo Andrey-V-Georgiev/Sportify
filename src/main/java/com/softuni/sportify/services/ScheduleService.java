@@ -11,4 +11,8 @@ public interface ScheduleService {
                                         String day,
                                         String month,
                                         String year);
+
+    ScheduleServiceModel findByID(String scheduleID);
+
+    ScheduleServiceModel findByDetails(String sportCenterID, String day, String month, String year);
 }

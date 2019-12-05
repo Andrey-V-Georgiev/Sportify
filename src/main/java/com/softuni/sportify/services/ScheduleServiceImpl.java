@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -65,6 +66,33 @@ public class ScheduleServiceImpl implements ScheduleService {
             e.printStackTrace();
         }
         this.sportCenterRepository.save(sportCenter);
+
+        return this.modelMapper.map(schedule, ScheduleServiceModel.class);
+    }
+
+    @Override
+    public ScheduleServiceModel findByID(String scheduleID) {
+
+        Schedule schedule = this.scheduleRepository.findById(scheduleID).orElse(null);
+        return this.modelMapper.map(schedule, ScheduleServiceModel.class);
+    }
+
+    @Override
+    public ScheduleServiceModel findByDetails(String sportCenterID, String day, String month, String year) {
+
+        SportCenter sportCenter = this.sportCenterRepository.findById(sportCenterID).orElse(null);
+        Schedule schedule = null;
+        try {
+            schedule = sportCenter.getCalendar()
+                    .stream()
+                    .filter(s -> Integer.parseInt(day) == (s.getDay()) &&
+                            Integer.parseInt(month) == (s.getMonth()) &&
+                            Integer.parseInt(year) == (s.getYear()))
+                    .collect(Collectors.toList())
+                    .get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return this.modelMapper.map(schedule, ScheduleServiceModel.class);
     }

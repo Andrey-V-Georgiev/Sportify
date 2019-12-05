@@ -6,7 +6,7 @@ import com.softuni.sportify.domain.entities.Sport;
 
 import java.time.LocalDateTime;
 
-public class EventCreateBindingModel extends BaseBindingModel {
+public class EventEditBindingModel extends BaseBindingModel {
 
     private String name;
     private Sport sport;
@@ -17,7 +17,7 @@ public class EventCreateBindingModel extends BaseBindingModel {
     private int maxCapacity;
     private int freePlaces;
 
-    public EventCreateBindingModel() {
+    public EventEditBindingModel() {
     }
 
     public String getName() {

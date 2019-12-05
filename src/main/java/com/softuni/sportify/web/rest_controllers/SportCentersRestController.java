@@ -50,4 +50,5 @@ public class SportCentersRestController {
 
         return objectMapper.writeValueAsString(scheduleDays);
     }
+
 }

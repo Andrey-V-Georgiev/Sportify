@@ -205,7 +205,8 @@ public class SportCentersController {
     public ModelAndView calendar(@PathVariable("id") String sportCenterID,
                                  ModelAndView modelAndView) {
 
-        modelAndView.addObject("sportCenterID", sportCenterID);
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
+        modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
         modelAndView.setViewName(VIEW_CALENDAR);
         return modelAndView;
     }
@@ -220,11 +221,41 @@ public class SportCentersController {
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         ScheduleServiceModel scheduleServiceModel = this.scheduleService
                 .createSchedule(sportCenterServiceModel, day, month, year);
+        String scheduleID = scheduleServiceModel.getId();
 
-        modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
-        modelAndView.addObject("scheduleServiceModel", scheduleServiceModel);
+        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + sportCenterID + "/" + scheduleID);
+        return modelAndView;
+    }
+
+    @GetMapping("/edit-schedule-by-id/{sportCenterID}/{scheduleID}")
+    public ModelAndView editScheduleByID(@PathVariable("sportCenterID") String sportCenterID,
+                                         @PathVariable("scheduleID") String scheduleID,
+                                         ModelAndView modelAndView) {
+
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
+        ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
+        ScheduleEditBindingModel scheduleEditBindingModel = this.modelMapper.map(scheduleServiceModel,
+                ScheduleEditBindingModel.class);
+
+        modelAndView.addObject("scheduleEditBindingModel", scheduleEditBindingModel);
         modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
+        return modelAndView;
+    }
 
+    @GetMapping("/edit-schedule-by-details/{scID}/{day}/{month}/{year}")
+    public ModelAndView editScheduleByDetails(@PathVariable("scID") String sportCenterID,
+                                              @PathVariable("day") String day,
+                                              @PathVariable("month") String month,
+                                              @PathVariable("year") String year,
+                                              ModelAndView modelAndView) {
+
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
+        ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByDetails(sportCenterID, day, month, year);
+        ScheduleEditBindingModel scheduleEditBindingModel = this.modelMapper.map(scheduleServiceModel,
+                ScheduleEditBindingModel.class);
+
+        modelAndView.addObject("scheduleEditBindingModel", scheduleEditBindingModel);
+        modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
         return modelAndView;
     }
 }

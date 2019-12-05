@@ -17,8 +17,8 @@
     <div id="jumbotron" class="jumbotron col-8 pt-3 shadow-lg bg-white d-flex justify-content-center">
 
         <div id="calendar" class="w-75">
-            <div class="row">
-                <h3>Fitness-center "Pulse" bul. Bulgaria</h3>
+            <div class="row mt-2">
+                <h3 th:text="${sportCenterServiceModel.getName()}"></h3>
             </div>
             <hr>
             <div id="menu" class="row my-4">
@@ -76,16 +76,16 @@
 </main>
 <script th:inline="javascript">
 
-    let sportCenterID = [[${sportCenterID}]];
+    let sportCenterID = [[${sportCenterServiceModel.getId()}]];
 
     $(document).ready(async function () {
         let scheduleDays = await findSportCenterSchedulesByMonth(currentMonth.month, sportCenterID);
         buildTable(currentMonth, createScheduleModal, showScheduleModal, scheduleDays);
     });
 
-    $("#now").on("click", (e) => {
+    $("#now").on("click", async (e) => {
         e.preventDefault();
-        let scheduleDays = findSportCenterSchedulesByMonth(currentMonth.month, sportCenterID);
+        let scheduleDays = await findSportCenterSchedulesByMonth(currentMonth.month, sportCenterID);
         buildTable(currentMonth, createScheduleModal, showScheduleModal, scheduleDays);
     });
 
@@ -161,14 +161,12 @@ ${day}
                 </h3>
             </div>
             <div class="modal-footer justify-content-center">
-                  <form action="/sport-centers/create-schedule/${sportCenterID}" method="get"
-                        id="create-schedule-form" class="w-100">
+
+                  <form action="/sport-centers/edit-schedule-by-details/${sportCenterID}/${day}/${month}/${year}"
+                        method="get" id="create-schedule-form" class="w-100">
                     <button type="submit" class="btn btn-block btn-warning">Edit schedule</button>
                   </form>
-                     <form action="/sport-centers/create-schedule/${sportCenterID}" method="get"
-                        id="create-schedule-form" class="w-100">
-                    <button type="submit" class="btn btn-block btn-success">Show schedule</button>
-                  </form>
+
             </div>
         </div>
     </div>
