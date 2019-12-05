@@ -4,8 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/calendar.css}">
-    <script th:src="@{/static/js/calendar.js}"></script>
+
     <title>Calendar</title>
 </head>
 
@@ -48,7 +47,7 @@
 
             </div>
 
-            <div class="row">
+            <div class="row mb-1">
                 <div class="border border-right-0 border-dark rounded-left ml-1" style="width: 132px;height: 35px">
                     <h5 class="text-center">Sun</h5>
                 </div>
@@ -78,12 +77,12 @@
 <script th:inline="javascript">
 
     $(document).ready(function () {
-        buildTable(currentMonth);
+        buildTable(currentMonth, createScheduleModal, showScheduleModal);
     });
 
     $("#now").on("click", (e) => {
         e.preventDefault();
-        buildTable(currentMonth);
+        buildTable(currentMonth, createScheduleModal, showScheduleModal);
     });
 
     $("#find-month").on("click", (e) => {
@@ -91,8 +90,88 @@
         let monthVal = $('#selectMonth option:selected').val();
         let yearVal = $('#selectYear option:selected').val();
         let month = findMonth(monthVal, yearVal);
-        buildTable(month);
+        buildTable(month, createScheduleModal, showScheduleModal);
     });
+
+let sportCenterID = [[${sportCenterID}]];
+
+let createScheduleModal = () => {
+        return `<div class='m-1 rounded rounded-sm border border-dark' style='width: 125px;height: 80px'>
+
+<div id="mybtn" data-toggle="modal" data-target="#aaa">
+  <div class='bg-white rounded rounded-sm' style='width: 123px;height: 78px'>
+<h3 class="text-dark">
+${dayOfMonth}
+</h3>
+</div>
+</div>
+
+<div class="modal fade" id="aaa" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered w-25" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body justify-content-center">
+                <h5 class="text-center">
+                    There is no schedule for this day!
+                </h5>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <form action="/sport-centers/create-schedule/${sportCenterID}/${dayOfMonth}/${yearOfMonth}"
+                      method="get" id="create-schedule-form" class="w-100">
+                    <button type="submit" class="btn btn-block btn-warning">Create schedule</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>`
+    }
+
+let showScheduleModal = () => {
+        return `<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
+
+<div id="mybtn" data-toggle="modal" data-target="#aaa">
+  <div class='bg-success rounded rounded-sm' style='width: 123px;height: 78px'>
+<h3 class="text-white">
+${dayOfMonth}
+</h3>
+</div>
+</div>
+
+<div class="modal fade" id="aaa" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered w-25" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body justify-content-center">
+                <h3 class="text-center">
+
+                </h3>
+            </div>
+            <div class="modal-footer justify-content-center">
+                  <form action="/sport-centers/create-schedule/${sportCenterID}" method="get"
+                        id="create-schedule-form" class="w-100">
+                    <button type="submit" class="btn btn-block btn-warning">Edit schedule</button>
+                  </form>
+                     <form action="/sport-centers/create-schedule/${sportCenterID}" method="get"
+                        id="create-schedule-form" class="w-100">
+                    <button type="submit" class="btn btn-block btn-success">Show schedule</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>`
+    }
 
     $('#exampleModalCenter').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')

@@ -217,7 +217,7 @@ let monthsArr = new Array(
     }
 );
 
-let datesInMonthCreator = (month) => {
+let daysOfMonthCreator = (month) => {
     let list = [];
     for (let i = 0; i < month.before; i++) {
         list.push(0);
@@ -250,7 +250,10 @@ function findMonth(month, year) {
     return searchedMonth;
 }
 
-let buildTable = (month) => {
+let dayOfMonth;
+let yearOfMonth;
+let buildTable = (month, createScheduleModal, showScheduleModal) => {
+
     $("#month").remove();
     $("#year").remove();
     $("#row0").remove();
@@ -263,7 +266,7 @@ let buildTable = (month) => {
     $("#menu").append(`<div id="month" class="col-2 ml-5"><h3>${mothsNames[month.month - 1]}</h3></div>`);
     $("#menu").append(`<div id="year" class="col-2"><h3>${month.year}</h3></div>`);
 
-    let dates = datesInMonthCreator(month);
+    let daysOfMonth = daysOfMonthCreator(month);
     let counter = 0;
     for (let i = 0; i < 6; i++) {
 
@@ -271,98 +274,17 @@ let buildTable = (month) => {
         $("#calendar").append(`<div id=${currentID} class='row'></div>`);
 
         for (let j = 0; j < 7; j++) {
-            let dateNumber = dates[counter++];
+            dayOfMonth = daysOfMonth[counter++];
+            yearOfMonth = month.year;
 
-            function fullModal() {
-                return `<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
- 
-<div id="mybtn" data-toggle="modal" data-target="#aaa">
-  <div class='bg-success rounded rounded-sm' style='width: 123px;height: 78px'>
-<h3 class="text-white">
-${dateNumber}
-</h3>
-</div>
-</div>
-
-<div class="modal fade" id="aaa" tabindex="-1" role="dialog" 
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered w-25" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body justify-content-center">
-                <h3 class="text-center">
-                    
-                </h3>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <form th:action="@{/sports/sport-details/{id}(id=3)}"
-                      th:method="get" class="w-100">
-                    <button class="btn btn-block btn-warning">Edit schedule</button>
-                </form>
-                <form th:action="@{/sports/sport-details/{id}(id=3)}"
-                      th:method="get" class="w-100">
-                    <button class="btn btn-block btn-success">Show schedule</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>`
-            }
-
-            function emptyModal() {
-                return `<div class='m-1 rounded rounded-sm border border-dark' style='width: 125px;height: 80px'>
- 
-<div id="mybtn" data-toggle="modal" data-target="#aaa">
-  <div class='bg-white rounded rounded-sm' style='width: 123px;height: 78px'>
-<h3 class="text-dark">
-${dateNumber}
-</h3>
-</div>
-</div>
-
-<div class="modal fade" id="aaa" tabindex="-1" role="dialog" 
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered w-25" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body justify-content-center">
-                <h5 class="text-center">
-                    There is no schedule for this day! 
-                </h5>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <form th:action="@{/sports/sport-details/{id}(id=3)}"
-                      th:method="get" class="w-100">
-                    <button class="btn btn-block btn-warning">Create schedule</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>`
-            }
-
-            if (dateNumber == 0) {
+            if (dayOfMonth == 0) {
                 $(`#${currentID}`)
                     .append(`<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
                              </div>`)
             } else {
-                $(`#${currentID}`).append(emptyModal())
-                // $(`#${currentID}`).append(fullModal())
+                $(`#${currentID}`).append(createScheduleModal)
             }
         }
     }
 };
-
-
-
 

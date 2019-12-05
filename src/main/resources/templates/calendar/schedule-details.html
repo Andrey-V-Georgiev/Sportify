@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Schedule</title>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+    <div class="jumbotron col-8 shadow-lg bg-white">
+        <h1>Schedule</h1>
+<!--        <hr>-->
+<!--        <div class="row">-->
+<!--            <h5 class="mx-3">Name:</h5>-->
+<!--&lt;!&ndash;            <h5 th:text="${sportCenterServiceModel.getName()}"></h5>&ndash;&gt;-->
+<!--        </div>-->
+<!--        <hr>-->
+
+<!--        <h5>Sport center images:</h5>-->
+<!--        <div class="row">-->
+<!--            <div class="col-3">-->
+<!--                <th:block th:include="~{fragments/sport_centers/form-add-sport-center-images}"></th:block>-->
+<!--            </div>-->
+<!--            <div class="col d-flex flex-wrap pt-2 px-0">-->
+<!--&lt;!&ndash;                <th:block th:each="image, iter : ${sportCenterServiceModel.getSportCenterImages()}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <th:block th:include="~{fragments/sport_centers/sport-center-details-image-modal}"></th:block>&ndash;&gt;-->
+<!--&lt;!&ndash;                </th:block>&ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+
+
+
+<!--        <form th:action="@{/admin/panel}" th:method="get">-->
+<!--            <button class="btn btn-lg btn-outline-success">Go to admin panel</button>-->
+<!--        </form>-->
+<!--        <hr>-->
+
+    </div>
+</main>
+<script type="text/javascript">
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+</body>
+</html>

@@ -84,11 +84,7 @@ public class SportCenter extends BaseEntity {
         this.sports = sports;
     }
 
-    @OneToMany(
-            mappedBy = "sportCenter",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "sportCenter", cascade = CascadeType.ALL)
     public List<Schedule> getCalendar() {
         return calendar;
     }

@@ -1,14 +1,8 @@
 package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.*;
-import com.softuni.sportify.domain.models.service_models.AddressServiceModel;
-import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
-import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
-import com.softuni.sportify.domain.models.service_models.SportServiceModel;
-import com.softuni.sportify.services.AddressService;
-import com.softuni.sportify.services.ImageService;
-import com.softuni.sportify.services.SportCenterService;
-import com.softuni.sportify.services.SportService;
+import com.softuni.sportify.domain.models.service_models.*;
+import com.softuni.sportify.services.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,18 +25,21 @@ public class SportCentersController {
     private final SportCenterService sportCenterService;
     private final AddressService addressService;
     private final SportService sportService;
+    private final ScheduleService scheduleService;
 
     @Autowired
     public SportCentersController(ImageService imageService,
                                   ModelMapper modelMapper,
                                   SportCenterService sportCenterService,
                                   AddressService addressService,
-                                  SportService sportService) {
+                                  SportService sportService,
+                                  ScheduleService scheduleService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.sportCenterService = sportCenterService;
         this.addressService = addressService;
         this.sportService = sportService;
+        this.scheduleService = scheduleService;
     }
 
     @GetMapping("/create-sport-center")
@@ -205,10 +202,27 @@ public class SportCentersController {
     }
 
     @GetMapping("/calendar/{id}")
-    public ModelAndView calendar(@PathVariable String id,
+    public ModelAndView calendar(@PathVariable("id") String sportCenterID,
                                  ModelAndView modelAndView) {
 
+        modelAndView.addObject("sportCenterID", sportCenterID);
         modelAndView.setViewName(VIEW_CALENDAR);
+        return modelAndView;
+    }
+
+    @GetMapping("/create-schedule/{id}/{dayOfMonth}/{yearOfMonth}")
+    public ModelAndView createSchedule(@PathVariable("id") String sportCenterID,
+                                       @PathVariable("dayOfMonth") String dayOfMonth,
+                                       @PathVariable("yearOfMonth") String yearOfMonth,
+                                       ModelAndView modelAndView) {
+
+        ScheduleServiceModel scheduleServiceModel = this.scheduleService
+                .createSchedule(sportCenterID, dayOfMonth, yearOfMonth);
+
+        modelAndView.addObject("sportCenterID", sportCenterID);
+        modelAndView.addObject("scheduleID", scheduleServiceModel.getId());
+        modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
+
         return modelAndView;
     }
 }
