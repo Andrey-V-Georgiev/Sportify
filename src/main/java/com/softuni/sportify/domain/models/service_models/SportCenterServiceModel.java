@@ -10,7 +10,7 @@ public class SportCenterServiceModel extends BaseServiceModel {
     private ImageServiceModel iconImage;
     private List<ImageServiceModel> sportCenterImages;
     private List<SportServiceModel> sports;
-    private List<EventServiceModel> events;
+    private List<ScheduleServiceModel> calendar;
 
     public SportCenterServiceModel() {
     }
@@ -63,11 +63,11 @@ public class SportCenterServiceModel extends BaseServiceModel {
         this.sports = sports;
     }
 
-    public List<EventServiceModel> getEvents() {
-        return events;
+    public List<ScheduleServiceModel> getCalendar() {
+        return calendar;
     }
 
-    public void setEvents(List<EventServiceModel> events) {
-        this.events = events;
+    public void setCalendar(List<ScheduleServiceModel> calendar) {
+        this.calendar = calendar;
     }
 }

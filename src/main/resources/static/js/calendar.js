@@ -252,8 +252,9 @@ function findMonth(month, year) {
 
 let dayOfMonth;
 let yearOfMonth;
-let buildTable = (month, createScheduleModal, showScheduleModal) => {
+let buildTable = (monthObj, createScheduleModal, showScheduleModal, scheduleDays) => {
 
+    console.log(scheduleDays)
     $("#month").remove();
     $("#year").remove();
     $("#row0").remove();
@@ -263,10 +264,10 @@ let buildTable = (month, createScheduleModal, showScheduleModal) => {
     $("#row4").remove();
     $("#row5").remove();
 
-    $("#menu").append(`<div id="month" class="col-2 ml-5"><h3>${mothsNames[month.month - 1]}</h3></div>`);
-    $("#menu").append(`<div id="year" class="col-2"><h3>${month.year}</h3></div>`);
+    $("#menu").append(`<div id="month" class="col-2 ml-5"><h3>${mothsNames[monthObj.month - 1]}</h3></div>`);
+    $("#menu").append(`<div id="year" class="col-2"><h3>${monthObj.year}</h3></div>`);
 
-    let daysOfMonth = daysOfMonthCreator(month);
+    let daysOfMonth = daysOfMonthCreator(monthObj);
     let counter = 0;
     for (let i = 0; i < 6; i++) {
 
@@ -274,17 +275,29 @@ let buildTable = (month, createScheduleModal, showScheduleModal) => {
         $("#calendar").append(`<div id=${currentID} class='row'></div>`);
 
         for (let j = 0; j < 7; j++) {
-            dayOfMonth = daysOfMonth[counter++];
-            yearOfMonth = month.year;
+            let day = daysOfMonth[counter++];
+            let month = monthObj.month;
+            let year = monthObj.year;
 
-            if (dayOfMonth == 0) {
+            if (day == 0) {
                 $(`#${currentID}`)
                     .append(`<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
                              </div>`)
             } else {
-                $(`#${currentID}`).append(createScheduleModal)
+                // $(`#${currentID}`).append(createScheduleModal(day, month, year))
+
+                if(scheduleDays.includes(day)) {
+                    $(`#${currentID}`).append(showScheduleModal(day, month, year))
+                } else {
+                    $(`#${currentID}`).append(createScheduleModal(day, month, year))
+                }
             }
         }
     }
 };
+
+function findSportCenterSchedulesByMonth(monthNum, scID) {
+    return fetch(`/rest/sport-centers/schedules-by-month/${scID}/${monthNum}`)
+        .then(resp => resp.json());
+}
 

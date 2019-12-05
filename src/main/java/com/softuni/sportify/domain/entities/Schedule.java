@@ -8,6 +8,7 @@ import java.util.List;
 public class Schedule extends BaseEntity {
 
     private SportCenter sportCenter;
+    private int day;
     private int month;
     private int year;
     private List<Event> time6;
@@ -39,6 +40,15 @@ public class Schedule extends BaseEntity {
 
     public void setSportCenter(SportCenter sportCenter) {
         this.sportCenter = sportCenter;
+    }
+
+    @Column(name = "day")
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 
     @Column(name = "month")

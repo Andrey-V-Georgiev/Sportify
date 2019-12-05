@@ -5,6 +5,7 @@ import java.util.List;
 public class ScheduleServiceModel extends BaseServiceModel {
 
     private SportCenterServiceModel sportCenter;
+    private int day;
     private int month;
     private int year;
     private List<EventServiceModel> time6;
@@ -34,6 +35,14 @@ public class ScheduleServiceModel extends BaseServiceModel {
 
     public void setSportCenter(SportCenterServiceModel sportCenter) {
         this.sportCenter = sportCenter;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 
     public int getMonth() {

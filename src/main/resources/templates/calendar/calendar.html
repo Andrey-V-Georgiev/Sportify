@@ -76,37 +76,40 @@
 </main>
 <script th:inline="javascript">
 
-    $(document).ready(function () {
-        buildTable(currentMonth, createScheduleModal, showScheduleModal);
+    let sportCenterID = [[${sportCenterID}]];
+
+    $(document).ready(async function () {
+        let scheduleDays = await findSportCenterSchedulesByMonth(currentMonth.month, sportCenterID);
+        buildTable(currentMonth, createScheduleModal, showScheduleModal, scheduleDays);
     });
 
     $("#now").on("click", (e) => {
         e.preventDefault();
-        buildTable(currentMonth, createScheduleModal, showScheduleModal);
+        let scheduleDays = findSportCenterSchedulesByMonth(currentMonth.month, sportCenterID);
+        buildTable(currentMonth, createScheduleModal, showScheduleModal, scheduleDays);
     });
 
-    $("#find-month").on("click", (e) => {
+    $("#find-month").on("click", async (e) => {
         e.preventDefault();
         let monthVal = $('#selectMonth option:selected').val();
         let yearVal = $('#selectYear option:selected').val();
         let month = findMonth(monthVal, yearVal);
-        buildTable(month, createScheduleModal, showScheduleModal);
+        let scheduleDays = await findSportCenterSchedulesByMonth(month.month, sportCenterID);
+        buildTable(month, createScheduleModal, showScheduleModal, scheduleDays);
     });
 
-let sportCenterID = [[${sportCenterID}]];
-
-let createScheduleModal = () => {
+    let createScheduleModal = (day, month, year) => {
         return `<div class='m-1 rounded rounded-sm border border-dark' style='width: 125px;height: 80px'>
 
-<div id="mybtn" data-toggle="modal" data-target="#aaa">
+<div id="mybtn" data-toggle="modal" data-target="#a${day}">
   <div class='bg-white rounded rounded-sm' style='width: 123px;height: 78px'>
 <h3 class="text-dark">
-${dayOfMonth}
+${day}
 </h3>
 </div>
 </div>
 
-<div class="modal fade" id="aaa" tabindex="-1" role="dialog"
+<div class="modal fade" id="a${day}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered w-25" role="document">
         <div class="modal-content">
@@ -121,7 +124,7 @@ ${dayOfMonth}
                 </h5>
             </div>
             <div class="modal-footer justify-content-center">
-                <form action="/sport-centers/create-schedule/${sportCenterID}/${dayOfMonth}/${yearOfMonth}"
+                <form action="/sport-centers/create-schedule/${sportCenterID}/${day}/${month}/${year}"
                       method="get" id="create-schedule-form" class="w-100">
                     <button type="submit" class="btn btn-block btn-warning">Create schedule</button>
                 </form>
@@ -130,15 +133,15 @@ ${dayOfMonth}
     </div>
 </div>
 </div>`
-    }
+    };
 
-let showScheduleModal = () => {
+    let showScheduleModal = (day, month, year) => {
         return `<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
 
 <div id="mybtn" data-toggle="modal" data-target="#aaa">
   <div class='bg-success rounded rounded-sm' style='width: 123px;height: 78px'>
 <h3 class="text-white">
-${dayOfMonth}
+${day}
 </h3>
 </div>
 </div>
@@ -171,7 +174,7 @@ ${dayOfMonth}
     </div>
 </div>
 </div>`
-    }
+    };
 
     $('#exampleModalCenter').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')

@@ -8,20 +8,18 @@ import java.util.List;
 public class SportCenterCreateBindingModel extends BaseBindingModel {
 
     private String name;
-    private MultipartFile iconImage;
-
-    private String description;
     private AddressCreateBindingModel address;
+    private String description;
+    private MultipartFile iconImage;
     private List<MultipartFile> sportCenterImages;
     private List<SportCreateBindingModel> sports;
-    private List<EventCreateBindingModel> events;
-
+    private List<ScheduleCreateBindingModel> calendar;
     public SportCenterCreateBindingModel() {
         this.description = "";
         this.address = new AddressCreateBindingModel();
         this.sportCenterImages = new ArrayList<>();
         this.sports = new ArrayList<>();
-        this.events = new ArrayList<>();
+        this.calendar = new ArrayList<>();
     }
 
     public String getName() {
@@ -72,11 +70,11 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
         this.sports = sports;
     }
 
-    public List<EventCreateBindingModel> getEvents() {
-        return events;
+    public List<ScheduleCreateBindingModel> getCalendar() {
+        return calendar;
     }
 
-    public void setEvents(List<EventCreateBindingModel> events) {
-        this.events = events;
+    public void setCalendar(List<ScheduleCreateBindingModel> calendar) {
+        this.calendar = calendar;
     }
 }

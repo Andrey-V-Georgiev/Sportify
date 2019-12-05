@@ -29,14 +29,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleServiceModel createSchedule(String sportCenterID, String dayOfMonth, String yearOfMonth) {
+    public ScheduleServiceModel createSchedule(SportCenterServiceModel sportCenterServiceModel, String day, String month, String year) {
 
-        SportCenter sportCenter = this.sportCenterRepository.findById(sportCenterID).orElse(null);
+        SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
         ScheduleServiceModel scheduleServiceModel = new ScheduleServiceModel();
 
         scheduleServiceModel.setSportCenter(this.modelMapper.map(sportCenter, SportCenterServiceModel.class));
-        scheduleServiceModel.setMonth(Integer.parseInt(dayOfMonth));
-        scheduleServiceModel.setYear(Integer.parseInt(yearOfMonth));
+        scheduleServiceModel.setDay(Integer.parseInt(day));
+        scheduleServiceModel.setMonth(Integer.parseInt(month));
+        scheduleServiceModel.setYear(Integer.parseInt(year));
 
         scheduleServiceModel.setTime6(new ArrayList<>());
         scheduleServiceModel.setTime7(new ArrayList<>());
@@ -58,7 +59,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         Schedule schedule = this.scheduleRepository.saveAndFlush(
                 this.modelMapper.map(scheduleServiceModel, Schedule.class));
-        sportCenter.getCalendar().add(schedule);
+        try {
+            sportCenter.getCalendar().add(schedule);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.sportCenterRepository.save(sportCenter);
 
         return this.modelMapper.map(schedule, ScheduleServiceModel.class);

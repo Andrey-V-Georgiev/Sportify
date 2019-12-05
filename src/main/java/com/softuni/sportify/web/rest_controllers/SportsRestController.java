@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rest/sports")
-public class SportRestController {
+public class SportsRestController {
 
     private final ImageService imageService;
     private final ModelMapper modelMapper;
@@ -19,10 +19,10 @@ public class SportRestController {
     private final SportService sportService;
 
     @Autowired
-    public SportRestController(ImageService imageService,
-                               ModelMapper modelMapper,
-                               ObjectMapper objectMapper,
-                               SportService sportService) {
+    public SportsRestController(ImageService imageService,
+                                ModelMapper modelMapper,
+                                ObjectMapper objectMapper,
+                                SportService sportService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.objectMapper = objectMapper;

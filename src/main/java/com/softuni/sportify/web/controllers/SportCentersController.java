@@ -210,17 +210,19 @@ public class SportCentersController {
         return modelAndView;
     }
 
-    @GetMapping("/create-schedule/{id}/{dayOfMonth}/{yearOfMonth}")
-    public ModelAndView createSchedule(@PathVariable("id") String sportCenterID,
-                                       @PathVariable("dayOfMonth") String dayOfMonth,
-                                       @PathVariable("yearOfMonth") String yearOfMonth,
+    @GetMapping("/create-schedule/{scID}/{day}/{month}/{year}")
+    public ModelAndView createSchedule(@PathVariable("scID") String sportCenterID,
+                                       @PathVariable("day") String day,
+                                       @PathVariable("month") String month,
+                                       @PathVariable("year") String year,
                                        ModelAndView modelAndView) {
 
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         ScheduleServiceModel scheduleServiceModel = this.scheduleService
-                .createSchedule(sportCenterID, dayOfMonth, yearOfMonth);
+                .createSchedule(sportCenterServiceModel, day, month, year);
 
-        modelAndView.addObject("sportCenterID", sportCenterID);
-        modelAndView.addObject("scheduleID", scheduleServiceModel.getId());
+        modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
+        modelAndView.addObject("scheduleServiceModel", scheduleServiceModel);
         modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
 
         return modelAndView;
