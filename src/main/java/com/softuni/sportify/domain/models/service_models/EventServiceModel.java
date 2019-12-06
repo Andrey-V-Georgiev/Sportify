@@ -1,29 +1,18 @@
 package com.softuni.sportify.domain.models.service_models;
 
-import com.softuni.sportify.constants.Level;
-
-import java.time.LocalDateTime;
-
 public class EventServiceModel extends BaseServiceModel {
 
-    private String name;
     private SportServiceModel sport;
-    private Level level;
-    private LocationServiceModel location;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String level;
+    private int floor;
+    private String hall;
+    private int dayOfMonth;
+    private int month;
+    private int year;
+    private String startTime;
     private int maxCapacity;
-    private int freePlaces;
 
     public EventServiceModel() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public SportServiceModel getSport() {
@@ -34,36 +23,60 @@ public class EventServiceModel extends BaseServiceModel {
         this.sport = sport;
     }
 
-    public Level getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Level level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
-    public LocationServiceModel getLocation() {
-        return location;
+    public int getFloor() {
+        return floor;
     }
 
-    public void setLocation(LocationServiceModel location) {
-        this.location = location;
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getHall() {
+        return hall;
+    }
+
+    public void setHall(String hall) {
+        this.hall = hall;
+    }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(int dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     public int getMaxCapacity() {
@@ -72,13 +85,5 @@ public class EventServiceModel extends BaseServiceModel {
 
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
-    }
-
-    public int getFreePlaces() {
-        return freePlaces;
-    }
-
-    public void setFreePlaces(int freePlaces) {
-        this.freePlaces = freePlaces;
     }
 }

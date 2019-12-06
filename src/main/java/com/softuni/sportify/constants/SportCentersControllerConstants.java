@@ -8,8 +8,4 @@ public abstract class SportCentersControllerConstants {
     public static final String VIEW_SHOW_ALL_SPORT_CENTERS = "sport_centers/show-all-sport-centers";
     public static final String VIEW_UPDATE_SPORT_CENTER_SPORTS = "sport_centers/update-sport-center-sports";
     public static final String VIEW_EDIT_SPORT_CENTER_IMAGE = "sport_centers/edit-sport-center-image";
-    public static final String VIEW_CALENDAR = "calendar/calendar";
-    public static final String VIEW_SCHEDULE_DETAILS = "calendar/schedule-details";
-    public static final String REDIRECT_EDIT_SCHEDULE_BY_ID = "redirect:/sport-centers/edit-schedule-by-id/";
-    public static final String REDIRECT_EDIT_SCHEDULE_BY_DETAILS = "redirect:/sport-centers/edit-schedule-by-details/";
 }

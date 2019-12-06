@@ -1,71 +1,82 @@
 package com.softuni.sportify.domain.models.binding_models;
 
-import com.softuni.sportify.constants.Level;
-import com.softuni.sportify.domain.entities.Location;
-import com.softuni.sportify.domain.entities.Sport;
-
-import java.time.LocalDateTime;
-
 public class EventEditBindingModel extends BaseBindingModel {
 
-    private String name;
-    private Sport sport;
-    private Level level;
-    private Location location;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private SportEditBindingModel sport;
+    private String level;
+    private int floor;
+    private String hall;
+    private int dayOfMonth;
+    private int month;
+    private int year;
+    private String startTime;
     private int maxCapacity;
-    private int freePlaces;
 
     public EventEditBindingModel() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Sport getSport() {
+    public SportEditBindingModel getSport() {
         return sport;
     }
 
-    public void setSport(Sport sport) {
+    public void setSport(SportEditBindingModel sport) {
         this.sport = sport;
     }
 
-    public Level getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Level level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
-    public Location getLocation() {
-        return location;
+    public int getFloor() {
+        return floor;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getHall() {
+        return hall;
+    }
+
+    public void setHall(String hall) {
+        this.hall = hall;
+    }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(int dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     public int getMaxCapacity() {
@@ -74,13 +85,5 @@ public class EventEditBindingModel extends BaseBindingModel {
 
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
-    }
-
-    public int getFreePlaces() {
-        return freePlaces;
-    }
-
-    public void setFreePlaces(int freePlaces) {
-        this.freePlaces = freePlaces;
     }
 }

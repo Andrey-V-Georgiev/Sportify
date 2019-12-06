@@ -1,71 +1,55 @@
 package com.softuni.sportify.domain.models.binding_models;
 
-import com.softuni.sportify.constants.Level;
-import com.softuni.sportify.domain.entities.Location;
-import com.softuni.sportify.domain.entities.Sport;
-
-import java.time.LocalDateTime;
-
 public class EventCreateBindingModel extends BaseBindingModel {
 
-    private String name;
-    private Sport sport;
-    private Level level;
-    private Location location;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String sport;
+    private String level;
+    private int floor;
+    private String hall;
+    private String startTime;
     private int maxCapacity;
-    private int freePlaces;
 
     public EventCreateBindingModel() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Sport getSport() {
+    public String getSport() {
         return sport;
     }
 
-    public void setSport(Sport sport) {
+    public void setSport(String sport) {
         this.sport = sport;
     }
 
-    public Level getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Level level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
-    public Location getLocation() {
-        return location;
+    public int getFloor() {
+        return floor;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getHall() {
+        return hall;
+    }
+
+    public void setHall(String hall) {
+        this.hall = hall;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     public int getMaxCapacity() {
@@ -74,13 +58,5 @@ public class EventCreateBindingModel extends BaseBindingModel {
 
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
-    }
-
-    public int getFreePlaces() {
-        return freePlaces;
-    }
-
-    public void setFreePlaces(int freePlaces) {
-        this.freePlaces = freePlaces;
     }
 }

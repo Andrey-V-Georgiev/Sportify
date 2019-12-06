@@ -48,7 +48,7 @@
                     </form>
                 </div>
                 <div class="col-6">
-                    <form th:action="@{/sport-centers/calendar/{id}(id=${sc.getId()})}"
+                    <form th:action="@{/calendar/show-calendar/{id}(id=${sc.getId()})}"
                           th:method="get" class="w-100">
                         <button class="btn btn-block btn-success">Calendar</button>
                     </form>

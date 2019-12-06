@@ -2,6 +2,7 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.entities.Schedule;
 import com.softuni.sportify.domain.entities.SportCenter;
+import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
 import com.softuni.sportify.repositories.ScheduleRepository;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static com.softuni.sportify.constants.EventHoursConstants.*;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -93,6 +96,69 @@ public class ScheduleServiceImpl implements ScheduleService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return this.modelMapper.map(schedule, ScheduleServiceModel.class);
+    }
+
+    @Override
+    public ScheduleServiceModel addEvent(ScheduleServiceModel scheduleServiceModel,
+                                         EventServiceModel eventServiceModel) {
+
+        switch (eventServiceModel.getStartTime()) {
+            case SIX_OCLOCK:
+                scheduleServiceModel.getTime6().add(eventServiceModel);
+                break;
+            case SEVEN_OCLOCK:
+                scheduleServiceModel.getTime7().add(eventServiceModel);
+                break;
+            case EIGHT_OCLOCK:
+                scheduleServiceModel.getTime8().add(eventServiceModel);
+                break;
+            case NINE_OCLOCK:
+                scheduleServiceModel.getTime9().add(eventServiceModel);
+                break;
+            case TEN_OCLOCK:
+                scheduleServiceModel.getTime10().add(eventServiceModel);
+                break;
+            case ELEVEN_OCLOCK:
+                scheduleServiceModel.getTime11().add(eventServiceModel);
+                break;
+            case TWELVE_OCLOCK:
+                scheduleServiceModel.getTime12().add(eventServiceModel);
+                break;
+            case THIRTEEN_OCLOCK:
+                scheduleServiceModel.getTime13().add(eventServiceModel);
+                break;
+            case FOURTEEN_OCLOCK:
+                scheduleServiceModel.getTime14().add(eventServiceModel);
+                break;
+            case FIFTEEN_OCLOCK:
+                scheduleServiceModel.getTime15().add(eventServiceModel);
+                break;
+            case SIXTEEN_OCLOCK:
+                scheduleServiceModel.getTime16().add(eventServiceModel);
+                break;
+            case SEVENTEEN_OCLOCK:
+                scheduleServiceModel.getTime17().add(eventServiceModel);
+                break;
+            case EIGHTEEN_OCLOCK:
+                scheduleServiceModel.getTime18().add(eventServiceModel);
+                break;
+            case NINETEEN_OCLOCK:
+                scheduleServiceModel.getTime19().add(eventServiceModel);
+                break;
+            case TWENTY_OCLOCK:
+                scheduleServiceModel.getTime20().add(eventServiceModel);
+                break;
+            case TWENTYONE_OCLOCK:
+                scheduleServiceModel.getTime21().add(eventServiceModel);
+                break;
+            case TWENTYTWO_OCLOCK:
+                scheduleServiceModel.getTime22().add(eventServiceModel);
+                break;
+        }
+        Schedule schedule = this.scheduleRepository.saveAndFlush(
+                this.modelMapper.map(scheduleServiceModel, Schedule.class));
 
         return this.modelMapper.map(schedule, ScheduleServiceModel.class);
     }

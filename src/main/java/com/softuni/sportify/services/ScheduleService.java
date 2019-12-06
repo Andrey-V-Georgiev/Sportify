@@ -1,5 +1,6 @@
 package com.softuni.sportify.services;
 
+import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
 import org.springframework.stereotype.Service;
@@ -14,5 +15,11 @@ public interface ScheduleService {
 
     ScheduleServiceModel findByID(String scheduleID);
 
-    ScheduleServiceModel findByDetails(String sportCenterID, String day, String month, String year);
+    ScheduleServiceModel findByDetails(String sportCenterID,
+                                       String day,
+                                       String month,
+                                       String year);
+
+    ScheduleServiceModel addEvent(ScheduleServiceModel scheduleServiceModel,
+                                  EventServiceModel eventServiceModel);
 }

@@ -53,13 +53,22 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public SportServiceModel findByID(String id) {
+
         Sport sport = this.sportRepository.findById(id).orElse(null);
+        return this.modelMapper.map(sport, SportServiceModel.class);
+    }
+
+    @Override
+    public SportServiceModel findByName(String name) {
+
+        Sport sport = this.sportRepository.findByName(name);
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
 
 
     @Override
     public SportServiceModel updateSportDescription(SportServiceModel sportServiceModel) {
+
         Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
         Sport updatedSport = this.sportRepository.saveAndFlush(sport);
         return this.modelMapper.map(updatedSport, SportServiceModel.class);
@@ -104,6 +113,7 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public void deleteSportImage(String sportID, String imageID) {
+
         Sport sport = this.sportRepository.findById(sportID).orElse(null);
         Image image = this.imageRepository.findById(imageID).orElse(null);
 
@@ -120,8 +130,18 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public SportServiceModel editIconImage(SportServiceModel sportServiceModel) {
+
         Sport sport = this.sportRepository.findById(sportServiceModel.getId()).orElse(null);
         sport.getIconImage().setName(sportServiceModel.getIconImage().getName());
         return this.modelMapper.map(this.sportRepository.saveAndFlush(sport), SportServiceModel.class);
+    }
+
+    @Override
+    public List<String> findAllSportsNames() {
+
+       return  this.sportRepository.findAll()
+               .stream()
+               .map(Sport::getName)
+               .collect(Collectors.toList());
     }
 }

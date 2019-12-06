@@ -14,6 +14,8 @@ public interface SportService {
 
     SportServiceModel findByID(String id);
 
+    SportServiceModel findByName(String name);
+
     SportServiceModel updateSportDescription(SportServiceModel sportServiceModel);
 
     SportServiceModel addSportImage(SportServiceModel sportServiceModel,
@@ -27,6 +29,8 @@ public interface SportService {
 
     SportServiceModel editIconImage(SportServiceModel sportServiceModel);
 
+    List<String> findAllSportsNames();
 
-//    void deleteImage(String sportID, String imageID) throws Exception;
+
+
 }

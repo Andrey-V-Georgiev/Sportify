@@ -14,8 +14,20 @@
 
 <main class="d-flex justify-content-center">
     <div class="jumbotron col-8 shadow-lg bg-white">
-        <h1>Schedule details</h1>
+        <div class="row">
+            <h2 class="col-4">Schedule details</h2>
+            <h2 class="col-2 text-center" th:text="${month}"></h2>
+            <h2 class="col-1 text-center" th:text="${scheduleEditBindingModel.getYear()}"></h2>
+        </div>
+
         <hr>
+
+        <th:block th:each="hourStr : ${EVENT_HOURS}">
+                            <th:block th:include="~{fragments/calendar/add-event-row}"></th:block>
+
+
+
+        </th:block>
 
 
     </div>

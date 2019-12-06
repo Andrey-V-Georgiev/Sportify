@@ -1,7 +1,5 @@
 package com.softuni.sportify.domain.entities;
 
-import com.softuni.sportify.constants.Level;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,28 +7,17 @@ import java.time.LocalDateTime;
 @Table(name = "events")
 public class Event extends BaseEntity {
 
-    private String name;
     private Sport sport;
-    private Level level;
-    private Location location;
+    private String level;
+    private int floor;
+    private String hall;
     private int dayOfMonth;
     private int month;
     private int year;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
     private int maxCapacity;
-    private int freePlaces;
 
     public Event() {
-    }
-
-    @Column(name = "name", nullable = false)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @ManyToOne(optional = false)
@@ -43,24 +30,30 @@ public class Event extends BaseEntity {
         this.sport = sport;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "level", nullable = false)
-    public Level getLevel() {
+    @Column(name = "level")
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Level level) {
+    public void setLevel(String level) {
         this.level = level;
     }
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name="location_id", nullable=false)
-    public Location getLocation() {
-        return location;
+    @Column(name = "floor")
+    public int getFloor() {
+        return floor;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    @Column(name = "hall")
+    public String getHall() {
+        return hall;
+    }
+
+    public void setHall(String hall) {
+        this.hall = hall;
     }
 
     @Column(name = "day_of_month")
@@ -91,21 +84,12 @@ public class Event extends BaseEntity {
     }
 
     @Column(name = "start_time", nullable = false)
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
-    }
-
-    @Column(name = "end_time", nullable = false)
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
     }
 
     @Column(name = "max_capacity", nullable = false)
@@ -117,12 +101,4 @@ public class Event extends BaseEntity {
         this.maxCapacity = maxCapacity;
     }
 
-    @Column(name = "free_places", nullable = false)
-    public int getFreePlaces() {
-        return freePlaces;
-    }
-
-    public void setFreePlaces(int freePlaces) {
-        this.freePlaces = freePlaces;
-    }
 }
