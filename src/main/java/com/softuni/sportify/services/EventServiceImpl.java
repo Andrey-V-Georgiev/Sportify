@@ -9,6 +9,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.softuni.sportify.constants.EventLevelConstants.*;
+
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -35,5 +43,40 @@ public class EventServiceImpl implements EventService {
         Event event = this.eventRepository.saveAndFlush(this.modelMapper.map(eventServiceModel, Event.class));
 
         return this.modelMapper.map(event, EventServiceModel.class);
+    }
+
+    @Override
+    public EventServiceModel findByID(String eventID) {
+
+        Event event = this.eventRepository.findById(eventID).orElse(null);
+        return this.modelMapper.map(event, EventServiceModel.class);
+    }
+
+    @Override
+    public List<String> findAllLevels() {
+
+        return new ArrayList<>(Arrays.asList(BEGINNER, MEDIUM, ADVANCED, PROFESSIONAL));
+    }
+
+    @Override
+    public List<String> findAllLevelsStartsWith(EventServiceModel eventServiceModel) {
+
+        String eventLevel = eventServiceModel.getLevel();
+        List<String> allLevels = new ArrayList<>(Arrays.asList(BEGINNER, MEDIUM, ADVANCED, PROFESSIONAL));
+        Comparator<String> startsWithLevel = Comparator.comparing(lev -> !lev.equals(eventLevel));
+        List<String> sortedLevels = allLevels
+                .stream()
+                .sorted(startsWithLevel)
+                .collect(Collectors.toList());
+
+        return sortedLevels;
+    }
+
+    @Override
+    public EventServiceModel updateEvent(EventServiceModel eventServiceModel) {
+
+        Event event = this.modelMapper.map(eventServiceModel, Event.class);
+        Event updatedEvent = this.eventRepository.saveAndFlush(event);
+        return this.modelMapper.map(updatedEvent, EventServiceModel.class);
     }
 }

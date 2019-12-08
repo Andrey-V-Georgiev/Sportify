@@ -1,11 +1,12 @@
 package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.EventCreateBindingModel;
+import com.softuni.sportify.domain.models.binding_models.EventEditBindingModel;
 import com.softuni.sportify.domain.models.binding_models.ScheduleEditBindingModel;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
-import com.softuni.sportify.domain.models.service_models.SportServiceModel;
+import com.softuni.sportify.domain.models.view_models.ScheduleViewModel;
 import com.softuni.sportify.services.EventService;
 import com.softuni.sportify.services.ScheduleService;
 import com.softuni.sportify.services.SportCenterService;
@@ -18,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static com.softuni.sportify.constants.CalendarControllerConstants.*;
 import static com.softuni.sportify.constants.EventHoursConstants.*;
-import static com.softuni.sportify.constants.EventLevelConstants.*;
 import static com.softuni.sportify.constants.MonthStrings.MONTH_STRINGS;
 
 @Controller
@@ -45,8 +45,9 @@ public class CalendarController {
     }
 
     @GetMapping("/show-calendar/{id}")
-    public ModelAndView showCalendar(@PathVariable("id") String sportCenterID,
-                                     ModelAndView modelAndView) {
+    public ModelAndView showCalendar(
+            @PathVariable("id") String sportCenterID,
+            ModelAndView modelAndView) {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
@@ -55,85 +56,137 @@ public class CalendarController {
     }
 
     @GetMapping("/create-schedule/{scID}/{day}/{month}/{year}")
-    public ModelAndView createSchedule(@PathVariable("scID") String sportCenterID,
-                                       @PathVariable("day") String day,
-                                       @PathVariable("month") String month,
-                                       @PathVariable("year") String year,
-                                       ModelAndView modelAndView) {
+    public ModelAndView createSchedule(
+            @PathVariable("scID") String sportCenterID,
+            @PathVariable("day") String day,
+            @PathVariable("month") String month,
+            @PathVariable("year") String year,
+            ModelAndView modelAndView) {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         ScheduleServiceModel scheduleServiceModel = this.scheduleService
                 .createSchedule(sportCenterServiceModel, day, month, year);
         String scheduleID = scheduleServiceModel.getId();
 
-        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + sportCenterID + "/" + scheduleID);
+        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
         return modelAndView;
     }
 
-    @GetMapping("/edit-schedule-by-id/{sportCenterID}/{scheduleID}")
-    public ModelAndView editScheduleByID(@PathVariable("sportCenterID") String sportCenterID,
-                                         @PathVariable("scheduleID") String scheduleID,
-                                         ModelAndView modelAndView) {
+    @GetMapping("/edit-schedule-by-id/{scheduleID}")
+    public ModelAndView editScheduleByID(
+            @PathVariable("scheduleID") String scheduleID,
+            ModelAndView modelAndView) {
 
-        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
-        ScheduleEditBindingModel scheduleEditBindingModel = this.modelMapper.map(scheduleServiceModel,
-                ScheduleEditBindingModel.class);
+        ScheduleViewModel scheduleViewModel = this.modelMapper.map(scheduleServiceModel, ScheduleViewModel.class);
 
-        modelAndView.addObject("scheduleEditBindingModel", scheduleEditBindingModel);
+        modelAndView.addObject("scheduleViewModel", scheduleViewModel);
         modelAndView.addObject("EVENT_HOURS", EVENT_HOURS);
-        modelAndView.addObject("month", MONTH_STRINGS.get(scheduleEditBindingModel.getMonth() - 1));
+        modelAndView.addObject("month", MONTH_STRINGS.get(scheduleViewModel.getMonth() - 1));
         modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
         return modelAndView;
     }
 
     @GetMapping("/edit-schedule-by-details/{scID}/{day}/{month}/{year}")
-    public ModelAndView editScheduleByDetails(@PathVariable("scID") String sportCenterID,
-                                              @PathVariable("day") String day,
-                                              @PathVariable("month") String month,
-                                              @PathVariable("year") String year,
-                                              ModelAndView modelAndView) {
+    public ModelAndView editScheduleByDetails(
+            @PathVariable("scID") String sportCenterID,
+            @PathVariable("day") String day,
+            @PathVariable("month") String month,
+            @PathVariable("year") String year,
+            ModelAndView modelAndView) {
 
-        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
-        ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByDetails(sportCenterID, day, month, year);
-        ScheduleEditBindingModel scheduleEditBindingModel = this.modelMapper.map(scheduleServiceModel,
-                ScheduleEditBindingModel.class);
+        ScheduleServiceModel scheduleServiceModel = this.scheduleService
+                .findByDetails(sportCenterID, day, month, year);
+        ScheduleViewModel scheduleViewModel = this.modelMapper.map(scheduleServiceModel, ScheduleViewModel.class);
 
-        modelAndView.addObject("scheduleEditBindingModel", scheduleEditBindingModel);
+        modelAndView.addObject("scheduleViewModel", scheduleViewModel);
         modelAndView.addObject("EVENT_HOURS", EVENT_HOURS);
-        modelAndView.addObject("month", MONTH_STRINGS.get(scheduleEditBindingModel.getMonth() - 1));
+        modelAndView.addObject("month", MONTH_STRINGS.get(scheduleViewModel.getMonth() - 1));
         modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
         return modelAndView;
     }
 
     @GetMapping("/create-event/{scheduleID}/{hourStr}")
-    public ModelAndView createEvent(@PathVariable("scheduleID") String scheduleID,
-                                    @PathVariable("hourStr") String hourStr,
-                                    ModelAndView modelAndView) {
+    public ModelAndView createScheduleEvent(
+            @PathVariable("scheduleID") String scheduleID,
+            @PathVariable("hourStr") String hourStr,
+            ModelAndView modelAndView) {
 
         modelAndView.addObject("scheduleID", scheduleID);
         modelAndView.addObject("hourStr", hourStr);
         modelAndView.addObject("sportsNames", this.sportService.findAllSportsNames());
-        modelAndView.addObject("EVENT_LEVELS", EVENT_LEVELS);
+        modelAndView.addObject("eventLevels", this.eventService.findAllLevels());
 
-        modelAndView.setViewName(VIEW_CREATE_EVENT);
+        modelAndView.setViewName(VIEW_CREATE_SCHEDULE_EVENT);
         return modelAndView;
     }
 
     @PostMapping("/create-event/{scheduleID}")
-    public ModelAndView createEventConfirm(@PathVariable("scheduleID") String scheduleID,
-                                           @ModelAttribute EventCreateBindingModel eventCreateBindingModel,
-                                           ModelAndView modelAndView) {
+    public ModelAndView createScheduleEventConfirm(
+            @PathVariable("scheduleID") String scheduleID,
+            @ModelAttribute EventCreateBindingModel eventCreateBindingModel,
+            ModelAndView modelAndView) {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
-        EventServiceModel eventServiceModel = this.modelMapper.map(eventCreateBindingModel, EventServiceModel.class);
+        EventServiceModel eventServiceModel = this.modelMapper
+                .map(eventCreateBindingModel, EventServiceModel.class);
         eventServiceModel.setSport(this.sportService.findByName(eventCreateBindingModel.getSport()));
         EventServiceModel savedEventServiceModel = this.eventService
-                                                       .createEvent(eventServiceModel, scheduleServiceModel);
+                .createEvent(eventServiceModel, scheduleServiceModel);
         this.scheduleService.addEvent(scheduleServiceModel, savedEventServiceModel);
 
         String sportCenterID = scheduleServiceModel.getSportCenter().getId();
         modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + sportCenterID + "/" + scheduleID);
+        return modelAndView;
+    }
+
+    @GetMapping("/edit-event/{scheduleID}/{eventID}")
+    public ModelAndView editScheduleEvent(
+            @PathVariable("scheduleID") String scheduleID,
+            @PathVariable("eventID") String eventID,
+            ModelAndView modelAndView) {
+
+        ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
+        EventServiceModel eventServiceModel = this.eventService.findByID(eventID);
+        EventEditBindingModel eventEditBindingModel = this.modelMapper
+                .map(eventServiceModel, EventEditBindingModel.class);
+
+        modelAndView.addObject("scheduleServiceModel", scheduleServiceModel);
+        modelAndView.addObject("eventEditBindingModel", eventEditBindingModel);
+        modelAndView.addObject("sportsNames",
+                this.sportService.findAllSportsNamesStartsWith(eventServiceModel.getSport()));
+        modelAndView.addObject("eventLevels",
+                this.eventService.findAllLevelsStartsWith(eventServiceModel));
+        modelAndView.setViewName(VIEW_EDIT_SCHEDULE_EVENT);
+        return modelAndView;
+    }
+
+    @PostMapping("/edit-event/{scheduleID}/{eventID}")
+    public ModelAndView editScheduleEventConfirm(@PathVariable("scheduleID") String scheduleID,
+                                                 @PathVariable("eventID") String eventID,
+                                                 @ModelAttribute EventEditBindingModel eventEditBindingModel,
+                                                 ModelAndView modelAndView) {
+
+        EventServiceModel eventServiceModel = this.modelMapper.map(eventEditBindingModel, EventServiceModel.class);
+        eventServiceModel.setId(eventID);
+        eventServiceModel.setSport(this.sportService.findByName(eventEditBindingModel.getSport()));
+
+        EventServiceModel updatedEventServiceModel = this.eventService.updateEvent(eventServiceModel);
+        ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
+        this.scheduleService.updateEvent(scheduleServiceModel, updatedEventServiceModel);
+
+        String sportCenterID = scheduleServiceModel.getSportCenter().getId();
+        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
+        return modelAndView;
+    }
+
+    @PostMapping("/delete-event/{scheduleID}/{eventID}")
+    public ModelAndView deleteScheduleEvent(
+            @PathVariable("scheduleID") String scheduleID,
+            @PathVariable("eventID") String eventID,
+            ModelAndView modelAndView) {
+
+
         return modelAndView;
     }
 }

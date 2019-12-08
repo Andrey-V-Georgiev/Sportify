@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Create event</title>
+</head>
+
+<body>
+
+
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+    <div class="jumbotron col-3 shadow-lg bg-white">
+        <h2 class="font-italic">Create event</h2>
+        <hr>
+
+        <div class="col-3 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
+
+            <form th:action="@{/calendar/create-event/{scheduleID}(scheduleID=${scheduleID})}"
+                  th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
+
+                <label for="selectSport" class="mt-2 font-italic">Sport: </label>
+                <select name="sport" id="selectSport" class="btn btn-block border text-left">
+                    <th:block th:each="sportName : ${sportsNames}">
+                        <option th:value="${sportName}" class="dropdown-item" th:text="${sportName}"></option>
+                    </th:block>
+                </select>
+
+                <label for="selectLevel" class="mt-2 font-italic">Level: </label>
+                <select name="level" id="selectLevel" class="btn btn-block border text-left">
+                    <th:block th:each="level : ${eventLevels}">
+                        <option th:value="${level}" class="dropdown-item" th:text="${level}"></option>
+                    </th:block>
+                </select>
+
+                <label for="floor" class="mt-2 font-italic">Floor: </label>
+                <input name="floor" id="floor" type="number"
+                       class="btn btn-block border text-left">
+
+                <label for="hall" class="mt-2 font-italic">Hall: </label>
+                <input name="hall" id="hall" type="text"
+                       class="btn btn-block border text-left">
+
+                <input name="startTime" th:value="${hourStr}" hidden>
+
+                <label for="maxCapacity" class="mt-2 font-italic">Max capacity: </label>
+                <input name="maxCapacity" id="maxCapacity" type="number"
+                       class="btn btn-block border text-left">
+
+                <hr>
+                <button type="submit" class="btn btn-lg btn-block btn-warning mb-2 mt-3">Create</button>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            </form>
+
+        </div>
+    </div>
+
+</main>
+
+</div>
+</body>
+</html>

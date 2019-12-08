@@ -3,7 +3,12 @@ package com.softuni.sportify.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.softuni.sportify.domain.models.binding_models.EventEditBindingModel;
+import com.softuni.sportify.domain.models.service_models.EventServiceModel;
+import com.softuni.sportify.domain.models.service_models.SportServiceModel;
+import com.softuni.sportify.services.SportService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,11 +19,6 @@ import javax.validation.Validator;
 
 @Configuration
 public class AppBeanConfig {
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
 
     @Bean
     public SpringSecurityDialect springSecurityDialect() {
@@ -44,4 +44,10 @@ public class AppBeanConfig {
     public Gson gson() {
         return new GsonBuilder().setPrettyPrinting().create();
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
 }

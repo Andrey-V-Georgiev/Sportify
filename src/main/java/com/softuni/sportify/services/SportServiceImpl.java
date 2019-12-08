@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -139,9 +140,38 @@ public class SportServiceImpl implements SportService {
     @Override
     public List<String> findAllSportsNames() {
 
-       return  this.sportRepository.findAll()
-               .stream()
-               .map(Sport::getName)
-               .collect(Collectors.toList());
+        return this.sportRepository.findAll()
+                .stream()
+                .map(Sport::getName)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SportServiceModel> findAllSportsStartsWith(SportServiceModel sportServiceModel) {
+
+        List<SportServiceModel> allSportServiceModels = this.findAllSports();
+        Comparator<SportServiceModel> startsWithSport = Comparator
+                .comparing(s -> !s.getId().equals(sportServiceModel.getId()));
+        List<SportServiceModel> sortedSports = allSportServiceModels
+                .stream()
+                .sorted(startsWithSport)
+                .collect(Collectors.toList());
+
+        return sortedSports;
+    }
+
+    @Override
+    public List<String> findAllSportsNamesStartsWith(SportServiceModel sportServiceModel) {
+
+        List<SportServiceModel> allSportServiceModels = this.findAllSports();
+        Comparator<SportServiceModel> startsWithSport = Comparator
+                .comparing(s -> !s.getId().equals(sportServiceModel.getId()));
+        List<String> sortedSportsNames = allSportServiceModels
+                .stream()
+                .sorted(startsWithSport)
+                .map(s->s.getName())
+                .collect(Collectors.toList());
+
+        return sortedSportsNames;
     }
 }

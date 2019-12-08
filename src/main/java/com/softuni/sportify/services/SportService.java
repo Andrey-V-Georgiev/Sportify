@@ -31,6 +31,7 @@ public interface SportService {
 
     List<String> findAllSportsNames();
 
+    List<SportServiceModel> findAllSportsStartsWith(SportServiceModel sportServiceModel);
 
-
+    List<String> findAllSportsNamesStartsWith(SportServiceModel sportServiceModel);
 }

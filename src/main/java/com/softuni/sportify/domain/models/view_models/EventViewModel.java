@@ -1,8 +1,8 @@
-package com.softuni.sportify.domain.models.binding_models;
+package com.softuni.sportify.domain.models.view_models;
 
-public class EventEditBindingModel extends BaseBindingModel {
+public class EventViewModel extends BaseViewModel {
 
-    private String sport;
+    private SportViewModel sport;
     private String level;
     private int floor;
     private String hall;
@@ -12,14 +12,14 @@ public class EventEditBindingModel extends BaseBindingModel {
     private String startTime;
     private int maxCapacity;
 
-    public EventEditBindingModel() {
+    public EventViewModel() {
     }
 
-    public String getSport() {
+    public SportViewModel getSport() {
         return sport;
     }
 
-    public void setSport(String sport) {
+    public void setSport(SportViewModel sport) {
         this.sport = sport;
     }
 

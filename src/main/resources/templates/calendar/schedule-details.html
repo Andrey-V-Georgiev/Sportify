@@ -17,18 +17,115 @@
         <div class="row">
             <h2 class="col-4">Schedule details</h2>
             <h2 class="col-2 text-center" th:text="${month}"></h2>
-            <h2 class="col-1 text-center" th:text="${scheduleEditBindingModel.getYear()}"></h2>
+            <h2 class="col-1 text-center" th:text="${scheduleViewModel.getYear()}"></h2>
         </div>
-
         <hr>
 
         <th:block th:each="hourStr : ${EVENT_HOURS}">
-                            <th:block th:include="~{fragments/calendar/add-event-row}"></th:block>
-
-
-
+            <div class="row">
+                <div class="col-2">
+                    <div class="col-2 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
+                        <h4 class="text-center" th:text="${hourStr}"></h4>
+                        <form th:action="@{/calendar/create-event/{scheduleID}/{hourStr}
+                                            (scheduleID=${scheduleViewModel.getId()},hourStr=${hourStr})}"
+                              th:method="get" class="w-100 mx-0">
+                            <button type="submit" class="btn btn-md w-100 btn-warning mb-1">Add event</button>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col d-flex flex-wrap pt-3 px-0">
+                    <th:block th:switch="${hourStr.split(':')[0]}">
+                        <div th:case="'06'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime6()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'07'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime7()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'08'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime8()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'09'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime9()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'10'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime10()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'11'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime11()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'12'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime12()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'13'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime13()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'14'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime14()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'15'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime15()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'16'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime16()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'17'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime17()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'18'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime18()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'19'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime19()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'20'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime20()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'21'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime21()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                        <div th:case="'22'">
+                            <th:block th:each="event : ${scheduleViewModel.getTime21()}">
+                                <th:block th:include="~{fragments/calendar/event-button-modal}"></th:block>
+                            </th:block>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+            <hr>
         </th:block>
-
 
     </div>
 </main>
