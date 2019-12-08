@@ -79,4 +79,11 @@ public class EventServiceImpl implements EventService {
         Event updatedEvent = this.eventRepository.saveAndFlush(event);
         return this.modelMapper.map(updatedEvent, EventServiceModel.class);
     }
+
+    @Override
+    public void deleteEvent(EventServiceModel eventServiceModel) {
+
+        Event event = this.modelMapper.map(eventServiceModel, Event.class);
+        this.eventRepository.delete(event);
+    }
 }

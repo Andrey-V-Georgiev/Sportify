@@ -113,11 +113,12 @@ public class CalendarController {
             ModelAndView modelAndView) {
 
         modelAndView.addObject("scheduleID", scheduleID);
+        //for the hidden input - important
         modelAndView.addObject("hourStr", hourStr);
         modelAndView.addObject("sportsNames", this.sportService.findAllSportsNames());
         modelAndView.addObject("eventLevels", this.eventService.findAllLevels());
 
-        modelAndView.setViewName(VIEW_CREATE_SCHEDULE_EVENT);
+        modelAndView.setViewName(VIEW_CREATE_EVENT);
         return modelAndView;
     }
 
@@ -136,7 +137,7 @@ public class CalendarController {
         this.scheduleService.addEvent(scheduleServiceModel, savedEventServiceModel);
 
         String sportCenterID = scheduleServiceModel.getSportCenter().getId();
-        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + sportCenterID + "/" + scheduleID);
+        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
         return modelAndView;
     }
 
@@ -186,7 +187,11 @@ public class CalendarController {
             @PathVariable("eventID") String eventID,
             ModelAndView modelAndView) {
 
+        ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
+        EventServiceModel eventServiceModel = this.eventService.findByID(eventID);
+        this.scheduleService.deleteEvent(scheduleServiceModel, eventServiceModel);
 
+        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
         return modelAndView;
     }
 }

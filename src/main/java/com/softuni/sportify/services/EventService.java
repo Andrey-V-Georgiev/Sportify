@@ -17,4 +17,6 @@ public interface EventService {
     List<String> findAllLevelsStartsWith(EventServiceModel eventServiceModel);
 
     EventServiceModel updateEvent(EventServiceModel eventServiceModel);
+
+    void deleteEvent(EventServiceModel eventServiceModel);
 }

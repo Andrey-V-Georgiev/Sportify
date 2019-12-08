@@ -1,6 +1,5 @@
 package com.softuni.sportify.services;
 
-import com.softuni.sportify.domain.entities.Event;
 import com.softuni.sportify.domain.entities.Schedule;
 import com.softuni.sportify.domain.entities.SportCenter;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
@@ -173,65 +172,139 @@ public class ScheduleServiceImpl implements ScheduleService {
                             EventServiceModel eventServiceModel) {
 
         EventServiceModel updatedEventServiceModel = this.eventService.updateEvent(eventServiceModel);
+
         switch (eventServiceModel.getStartTime()) {
             case SIX_OCLOCK:
-                scheduleServiceModel.setTime6(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime6(updateEventInList(scheduleServiceModel.getTime6(), updatedEventServiceModel));
             break;
             case SEVEN_OCLOCK:
-                scheduleServiceModel.setTime7(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime7(updateEventInList(scheduleServiceModel.getTime7(), updatedEventServiceModel));
                 break;
             case EIGHT_OCLOCK:
-                scheduleServiceModel.setTime8(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime8(updateEventInList(scheduleServiceModel.getTime8(), updatedEventServiceModel));
                 break;
             case NINE_OCLOCK:
-                scheduleServiceModel.setTime9(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime9(updateEventInList(scheduleServiceModel.getTime9(), updatedEventServiceModel));
                 break;
             case TEN_OCLOCK:
-                scheduleServiceModel.setTime10(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime10(updateEventInList(scheduleServiceModel.getTime10(), updatedEventServiceModel));
                 break;
             case ELEVEN_OCLOCK:
-                scheduleServiceModel.setTime11(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime11(updateEventInList(scheduleServiceModel.getTime11(), updatedEventServiceModel));
                 break;
             case TWELVE_OCLOCK:
-                scheduleServiceModel.setTime12(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime12(updateEventInList(scheduleServiceModel.getTime12(), updatedEventServiceModel));
                 break;
             case THIRTEEN_OCLOCK:
-                scheduleServiceModel.setTime13(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime13(updateEventInList(scheduleServiceModel.getTime13(), updatedEventServiceModel));
                 break;
             case FOURTEEN_OCLOCK:
-                scheduleServiceModel.setTime14(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime14(updateEventInList(scheduleServiceModel.getTime14(), updatedEventServiceModel));
                 break;
             case FIFTEEN_OCLOCK:
-                scheduleServiceModel.setTime15(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime15(updateEventInList(scheduleServiceModel.getTime15(), updatedEventServiceModel));
                 break;
             case SIXTEEN_OCLOCK:
-                scheduleServiceModel.setTime16(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime16(updateEventInList(scheduleServiceModel.getTime16(), updatedEventServiceModel));
                 break;
             case SEVENTEEN_OCLOCK:
-                scheduleServiceModel.setTime17(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime17(updateEventInList(scheduleServiceModel.getTime17(), updatedEventServiceModel));
                 break;
             case EIGHTEEN_OCLOCK:
-                scheduleServiceModel.setTime18(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime18(updateEventInList(scheduleServiceModel.getTime18(), updatedEventServiceModel));
                 break;
             case NINETEEN_OCLOCK:
-                scheduleServiceModel.setTime19(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime19(updateEventInList(scheduleServiceModel.getTime19(), updatedEventServiceModel));
                 break;
             case TWENTY_OCLOCK:
-                scheduleServiceModel.setTime20(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime20(updateEventInList(scheduleServiceModel.getTime20(), updatedEventServiceModel));
                 break;
             case TWENTYONE_OCLOCK:
-                scheduleServiceModel.setTime21(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime21(updateEventInList(scheduleServiceModel.getTime21(), updatedEventServiceModel));
                 break;
             case TWENTYTWO_OCLOCK:
-                scheduleServiceModel.setTime22(updateEventIInList(scheduleServiceModel, updatedEventServiceModel));
+                scheduleServiceModel.setTime22(updateEventInList(scheduleServiceModel.getTime22(), updatedEventServiceModel));
                 break;
         }
+        this.scheduleRepository.save(this.modelMapper.map(scheduleServiceModel, Schedule.class));
     }
 
-    private List<EventServiceModel> updateEventIInList(ScheduleServiceModel scheduleServiceModel,
-                                                       EventServiceModel updatedEventServiceModel) {
+    @Override
+    public void deleteEvent(ScheduleServiceModel scheduleServiceModel,
+                            EventServiceModel eventServiceModel) {
 
-        List<EventServiceModel> filteredEvents = scheduleServiceModel.getTime6()
+
+        switch (eventServiceModel.getStartTime()) {
+            case SIX_OCLOCK:
+                scheduleServiceModel.setTime6(deleteEventFromList(scheduleServiceModel.getTime6(), eventServiceModel));
+                break;
+            case SEVEN_OCLOCK:
+                scheduleServiceModel.setTime7(deleteEventFromList(scheduleServiceModel.getTime7(), eventServiceModel));
+                break;
+            case EIGHT_OCLOCK:
+                scheduleServiceModel.setTime8(deleteEventFromList(scheduleServiceModel.getTime8(), eventServiceModel));
+                break;
+            case NINE_OCLOCK:
+                scheduleServiceModel.setTime9(deleteEventFromList(scheduleServiceModel.getTime9(), eventServiceModel));
+                break;
+            case TEN_OCLOCK:
+                scheduleServiceModel.setTime10(deleteEventFromList(scheduleServiceModel.getTime10(), eventServiceModel));
+                break;
+            case ELEVEN_OCLOCK:
+                scheduleServiceModel.setTime11(deleteEventFromList(scheduleServiceModel.getTime11(), eventServiceModel));
+                break;
+            case TWELVE_OCLOCK:
+                scheduleServiceModel.setTime12(deleteEventFromList(scheduleServiceModel.getTime12(), eventServiceModel));
+                break;
+            case THIRTEEN_OCLOCK:
+                scheduleServiceModel.setTime13(deleteEventFromList(scheduleServiceModel.getTime13(), eventServiceModel));
+                break;
+            case FOURTEEN_OCLOCK:
+                scheduleServiceModel.setTime14(deleteEventFromList(scheduleServiceModel.getTime14(), eventServiceModel));
+                break;
+            case FIFTEEN_OCLOCK:
+                scheduleServiceModel.setTime15(deleteEventFromList(scheduleServiceModel.getTime15(), eventServiceModel));
+                break;
+            case SIXTEEN_OCLOCK:
+                scheduleServiceModel.setTime16(deleteEventFromList(scheduleServiceModel.getTime16(), eventServiceModel));
+                break;
+            case SEVENTEEN_OCLOCK:
+                scheduleServiceModel.setTime17(deleteEventFromList(scheduleServiceModel.getTime17(), eventServiceModel));
+                break;
+            case EIGHTEEN_OCLOCK:
+                scheduleServiceModel.setTime18(deleteEventFromList(scheduleServiceModel.getTime18(), eventServiceModel));
+                break;
+            case NINETEEN_OCLOCK:
+                scheduleServiceModel.setTime19(deleteEventFromList(scheduleServiceModel.getTime19(), eventServiceModel));
+                break;
+            case TWENTY_OCLOCK:
+                scheduleServiceModel.setTime20(deleteEventFromList(scheduleServiceModel.getTime20(), eventServiceModel));
+                break;
+            case TWENTYONE_OCLOCK:
+                scheduleServiceModel.setTime21(deleteEventFromList(scheduleServiceModel.getTime21(), eventServiceModel));
+                break;
+            case TWENTYTWO_OCLOCK:
+                scheduleServiceModel.setTime22(deleteEventFromList(scheduleServiceModel.getTime22(), eventServiceModel));
+                break;
+        }
+        this.scheduleRepository.save(this.modelMapper.map(scheduleServiceModel, Schedule.class));
+    }
+
+    private List<EventServiceModel> deleteEventFromList(List<EventServiceModel> eventServiceModelList,
+                                                        EventServiceModel eventServiceModel) {
+
+        this.eventService.deleteEvent(eventServiceModel);
+        List<EventServiceModel> filteredEventServiceModels = eventServiceModelList
+                .stream()
+                .filter(e -> !e.getId().equals(eventServiceModel.getId()))
+                .collect(Collectors.toList());
+        return filteredEventServiceModels;
+    }
+
+    private List<EventServiceModel> updateEventInList(List<EventServiceModel> eventServiceModelList,
+                                                      EventServiceModel updatedEventServiceModel) {
+
+        List<EventServiceModel> filteredEvents = eventServiceModelList
                 .stream()
                 .filter(e -> !e.getId().equals(updatedEventServiceModel.getId()))
                 .collect(Collectors.toList());

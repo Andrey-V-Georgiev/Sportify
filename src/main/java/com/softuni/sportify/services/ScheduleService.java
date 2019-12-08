@@ -26,4 +26,6 @@ public interface ScheduleService {
     void updateEvent(ScheduleServiceModel scheduleServiceModel,
                      EventServiceModel eventServiceModel);
 
+    void deleteEvent(ScheduleServiceModel scheduleServiceModel,
+                     EventServiceModel eventServiceModel);
 }
