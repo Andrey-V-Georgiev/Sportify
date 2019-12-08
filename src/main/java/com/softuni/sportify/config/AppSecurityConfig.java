@@ -21,8 +21,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrfTokenRepository(csrfTokenRepository());
 
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/register").anonymous()
-                .anyRequest().authenticated();
+                .antMatchers("/", "/login", "/register").anonymous();
+//                .anyRequest().authenticated();
 
         http.formLogin()
                 .loginPage("/login")

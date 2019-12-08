@@ -20,31 +20,26 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="row">
-                            <h6 class="col-3">Name: </h6>
-                            <p class="col-9" th:text="${image.getName()}"></p>
-                        </div>
-                    </div>
-
+                    <h2 class="col-8 mb-3 font-italic" th:text="${image.getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${image.getImageURL()}"
                          class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
-
             </div>
             <div class="modal-footer">
-                <form th:action="@{/sports/edit-sport-image/{sportID}/{imageID}
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{/sports/edit-sport-image/{sportID}/{imageID}
                 (sportID=${sportServiceModel.getId()}, imageID=${image.getId()})}"
-                      th:method="get">
-                    <button class="btn btn-warning">Edit image</button>
-                </form>
-                <form th:action="@{/sports/delete-sport-image/{sportID}/{imageID}
+                          th:method="get">
+                        <button class="btn btn-warning">Edit image</button>
+                    </form>
+                    <form th:action="@{/sports/delete-sport-image/{sportID}/{imageID}
                 (sportID=${sportServiceModel.getId()}, imageID=${image.getId()})}"
-                      th:method="post">
-                    <button class="btn btn-danger">Delete image</button>
-                </form>
+                          th:method="post">
+                        <button class="btn btn-danger">Delete image</button>
+                    </form>
+                </th:block>
             </div>
         </div>
     </div>

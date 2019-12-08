@@ -2,7 +2,6 @@ package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.EventCreateBindingModel;
 import com.softuni.sportify.domain.models.binding_models.EventEditBindingModel;
-import com.softuni.sportify.domain.models.binding_models.ScheduleEditBindingModel;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
@@ -13,10 +12,12 @@ import com.softuni.sportify.services.SportCenterService;
 import com.softuni.sportify.services.SportService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.softuni.sportify.constants.AuthConstants.HAS_ROLE_ADMIN;
 import static com.softuni.sportify.constants.CalendarControllerConstants.*;
 import static com.softuni.sportify.constants.EventHoursConstants.*;
 import static com.softuni.sportify.constants.MonthStrings.MONTH_STRINGS;
@@ -56,6 +57,7 @@ public class CalendarController {
     }
 
     @GetMapping("/create-schedule/{scID}/{day}/{month}/{year}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createSchedule(
             @PathVariable("scID") String sportCenterID,
             @PathVariable("day") String day,
@@ -73,6 +75,7 @@ public class CalendarController {
     }
 
     @GetMapping("/edit-schedule-by-id/{scheduleID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editScheduleByID(
             @PathVariable("scheduleID") String scheduleID,
             ModelAndView modelAndView) {
@@ -88,6 +91,7 @@ public class CalendarController {
     }
 
     @GetMapping("/edit-schedule-by-details/{scID}/{day}/{month}/{year}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editScheduleByDetails(
             @PathVariable("scID") String sportCenterID,
             @PathVariable("day") String day,
@@ -107,13 +111,14 @@ public class CalendarController {
     }
 
     @GetMapping("/create-event/{scheduleID}/{hourStr}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createScheduleEvent(
             @PathVariable("scheduleID") String scheduleID,
             @PathVariable("hourStr") String hourStr,
             ModelAndView modelAndView) {
 
         modelAndView.addObject("scheduleID", scheduleID);
-        //for the hidden input - important
+        /* for the hidden input - important */
         modelAndView.addObject("hourStr", hourStr);
         modelAndView.addObject("sportsNames", this.sportService.findAllSportsNames());
         modelAndView.addObject("eventLevels", this.eventService.findAllLevels());
@@ -123,6 +128,7 @@ public class CalendarController {
     }
 
     @PostMapping("/create-event/{scheduleID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createScheduleEventConfirm(
             @PathVariable("scheduleID") String scheduleID,
             @ModelAttribute EventCreateBindingModel eventCreateBindingModel,
@@ -142,6 +148,7 @@ public class CalendarController {
     }
 
     @GetMapping("/edit-event/{scheduleID}/{eventID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editScheduleEvent(
             @PathVariable("scheduleID") String scheduleID,
             @PathVariable("eventID") String eventID,
@@ -163,6 +170,7 @@ public class CalendarController {
     }
 
     @PostMapping("/edit-event/{scheduleID}/{eventID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editScheduleEventConfirm(@PathVariable("scheduleID") String scheduleID,
                                                  @PathVariable("eventID") String eventID,
                                                  @ModelAttribute EventEditBindingModel eventEditBindingModel,
@@ -182,6 +190,7 @@ public class CalendarController {
     }
 
     @PostMapping("/delete-event/{scheduleID}/{eventID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteScheduleEvent(
             @PathVariable("scheduleID") String scheduleID,
             @PathVariable("eventID") String eventID,

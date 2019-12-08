@@ -26,13 +26,7 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-6">
-                        <div class="row">
-                            <h6 class="col-3 pr-0">Sport name: </h6>
-                            <p class="col-3" th:text="${sport.getIconImage().getName()}"></p>
-                        </div>
-                    </div>
-
+                    <h2 class="col-8 mb-3 font-italic" th:text="${sport.getIconImage().getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${sport.getIconImage().getImageURL()}"
@@ -41,10 +35,16 @@
 
             </div>
             <div class="modal-footer">
-                <form th:action="@{/sports/sport-details/{id}(id=${sport.getId()})}"
+                <form th:action="@{/sports/guests-sport-details/{id}(id=${sport.getId()})}"
                       th:method="get" class="w-100">
-                    <button class="btn btn-block btn-secondary">Sport details</button>
+                    <button class="btn btn-block btn-outline-dark">Learn more</button>
                 </form>
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{/sports/sport-details/{id}(id=${sport.getId()})}"
+                          th:method="get" class="w-100">
+                        <button class="btn btn-block btn-warning border border-dark">Sport details</button>
+                    </form>
+                </th:block>
             </div>
         </div>
     </div>

@@ -29,17 +29,14 @@ public class SportsController {
     private final ModelMapper modelMapper;
     private final SportService sportService;
     private final ImageService imageService;
-    private final CloudinaryService cloudinaryService;
 
     @Autowired
     public SportsController(ModelMapper modelMapper,
                             SportService sportService,
-                            ImageService imageService,
-                            CloudinaryService cloudinaryService) {
+                            ImageService imageService) {
         this.modelMapper = modelMapper;
         this.sportService = sportService;
         this.imageService = imageService;
-        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping("/create-sport")
@@ -67,7 +64,6 @@ public class SportsController {
     }
 
     @GetMapping("/sport-details/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView sportDetails(@PathVariable String id,
                                      ModelAndView modelAndView) {
 
@@ -75,6 +71,17 @@ public class SportsController {
         modelAndView.addObject("sportServiceModel", sportServiceModel);
 
         modelAndView.setViewName(VIEW_SPORT_DETAILS);
+        return modelAndView;
+    }
+
+    @GetMapping("/guests-sport-details/{id}")
+    public ModelAndView guestsSportDetails(@PathVariable String id,
+                                     ModelAndView modelAndView) {
+
+        SportServiceModel sportServiceModel = this.sportService.findByID(id);
+        modelAndView.addObject("sportServiceModel", sportServiceModel);
+
+        modelAndView.setViewName(VIEW_GUESTS_SPORT_DETAILS);
         return modelAndView;
     }
 
@@ -109,6 +116,7 @@ public class SportsController {
     }
 
     @PostMapping("/add-sport-images/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addSportImages(@PathVariable("id") String sportID,
                                        ImageCreateBindingModel imageCreateBindingModel,
                                        ModelAndView modelAndView) throws IOException {
@@ -163,6 +171,7 @@ public class SportsController {
     }
 
     @PostMapping("/delete-sport-image/{sportID}/{imageID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteImage(@PathVariable("sportID") String sportID,
                                     @PathVariable("imageID") String imageID,
                                     ModelAndView modelAndView) throws Exception {

@@ -43,6 +43,7 @@ public class SportCentersController {
     }
 
     @GetMapping("/create-sport-center")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createSportCenter(ModelAndView modelAndView) {
 
         modelAndView.setViewName(VIEW_CREATE_SPORT_CENTER);
@@ -50,6 +51,7 @@ public class SportCentersController {
     }
 
     @PostMapping("/create-sport-center")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createSportCenterConfirmed(@ModelAttribute
                                                            SportCenterCreateBindingModel sportCenterCreateBindingModel,
                                                    ModelAndView modelAndView) throws IOException {
@@ -66,6 +68,7 @@ public class SportCentersController {
     }
 
     @GetMapping("/sport-center-details/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView sportCenterDetails(@PathVariable String id,
                                            ModelAndView modelAndView) {
 
@@ -76,7 +79,19 @@ public class SportCentersController {
         return modelAndView;
     }
 
+    @GetMapping("/guests-sport-center-details/{id}")
+    public ModelAndView guestsSportCenterDetails(@PathVariable String id,
+                                           ModelAndView modelAndView) {
+
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(id);
+        modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
+
+        modelAndView.setViewName(VIEW_GUESTS_SPORT_CENTER_DETAILS);
+        return modelAndView;
+    }
+
     @PostMapping("/edit-description/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editDescription(@PathVariable("id") String sportCenterID,
                                         @ModelAttribute SportCenterEditBindingModel sportCenterEditBindingModel,
                                         ModelAndView modelAndView) {
@@ -92,6 +107,7 @@ public class SportCentersController {
     }
 
     @PostMapping("/add-sport-center-images/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addSportCenterImages(@PathVariable("id") String sportCenterID,
                                              ImageCreateBindingModel imageCreateBindingModel,
                                              ModelAndView modelAndView) throws IOException {
@@ -136,6 +152,7 @@ public class SportCentersController {
     }
 
     @PostMapping("/delete-sport-center-image/{sportCenterID}/{imageID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteImage(@PathVariable("sportCenterID") String sportCenterID,
                                     @PathVariable("imageID") String imageID,
                                     ModelAndView modelAndView) throws Exception {
@@ -147,6 +164,7 @@ public class SportCentersController {
     }
 
     @PostMapping("/edit-sport-center-address/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editSportCenterAddress(@PathVariable("id") String sportCenterID,
                                                @ModelAttribute AddressEditBindingModel addressEditBindingModel,
                                                ModelAndView modelAndView) throws IOException {
@@ -176,6 +194,7 @@ public class SportCentersController {
     }
 
     @GetMapping("/update-sport-center-sports/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView updateSportCenterSports(@PathVariable("id") String sportCenterID,
                                                 @ModelAttribute UpdateSportCenterSportsBindingModel bindingModel,
                                                 ModelAndView modelAndView) throws IOException {
@@ -189,6 +208,7 @@ public class SportCentersController {
     }
 
     @PostMapping("/update-sport-center-sports/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView updateSportCenterSportsConfirm(@PathVariable("id") String sportCenterID,
                                                        @ModelAttribute UpdateSportCenterSportsBindingModel bindingModel,
                                                        ModelAndView modelAndView) throws IOException {

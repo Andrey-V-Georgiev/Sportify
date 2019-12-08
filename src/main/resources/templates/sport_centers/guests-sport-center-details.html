@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+    <title>Guests Sport Center details</title>
+</head>
+
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="d-flex justify-content-center">
+    <div class="jumbotron col-8 shadow-lg bg-white">
+
+        <div class="row">
+            <h2 class="font-italic ml-3" th:text="${sportCenterServiceModel.getName()}"></h2>
+        </div>
+        <hr>
+
+        <div class="row">
+            <img id="icon-img" th:src="${sportCenterServiceModel.getIconImage().getImageURL()}"
+                 class="m-3 rounded" style="height: 450px;" alt="...">
+        </div>
+        <hr>
+
+        <h5 class="font-italic">Address:</h5>
+        <div class="row">
+            <p class="px-3" th:text="${sportCenterServiceModel.getAddress().getStreet()}"></p>
+            <p class="px-3" th:text="${sportCenterServiceModel.getAddress().getCity()}"></p>
+            <p class="px-3" th:text="${sportCenterServiceModel.getAddress().getCountry()}"></p>
+        </div>
+        <hr>
+
+        <h5 class="font-italic">Description:</h5>
+        <div class="row">
+            <p class="px-3" th:text="${sportCenterServiceModel.getDescription()}"></p>
+        </div>
+        <hr>
+
+        <h5 class="font-italic">Sport center images:</h5>
+        <div class="row">
+            <div class="col d-flex flex-wrap pt-2 px-0">
+                <th:block th:each="image, iter : ${sportCenterServiceModel.getSportCenterImages()}">
+                    <th:block th:include="~{fragments/sport_centers/sport-center-details-image-modal}"></th:block>
+                </th:block>
+            </div>
+        </div>
+        <hr>
+
+        <h5 class="font-italic">Sports:</h5>
+        <div class="row">
+            <div class="col d-flex flex-wrap pt-2 px-0">
+                <th:block th:each="sport, iter : ${sportCenterServiceModel.getSports()}">
+                    <th:block th:include="~{fragments/sport_centers/sport-center-sport-image-modal}"></th:block>
+                </th:block>
+            </div>
+        </div>
+        <hr>
+
+        <a th:href="@{/sport-centers/show-all-sport-centers}" class="btn btn-lg btn-outline-success mt-3">
+            Show all sport centers
+        </a>
+
+    </div>
+</main>
+<script type="text/javascript">
+
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+</body>
+</html>

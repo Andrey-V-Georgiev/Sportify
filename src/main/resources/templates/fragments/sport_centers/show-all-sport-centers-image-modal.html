@@ -26,13 +26,7 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-6">
-                        <div class="row">
-                            <h6 class="col-3 pr-0">Sport center name: </h6>
-                            <p class="col-3" th:text="${sc.getIconImage().getName()}"></p>
-                        </div>
-                    </div>
-
+                    <h2 class="col-8 mb-3 font-italic" th:text="${sc.getIconImage().getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${sc.getIconImage().getImageURL()}"
@@ -41,18 +35,24 @@
 
             </div>
             <div class="modal-footer w-100">
-                <div class="col-6 pl-4 ml-3">
-                    <form th:action="@{/sport-centers/sport-center-details/{id}(id=${sc.getId()})}"
-                          th:method="get" class="w-100">
-                        <button class="btn btn-block btn-secondary">Details</button>
-                    </form>
-                </div>
-                <div class="col-6">
+
                     <form th:action="@{/calendar/show-calendar/{id}(id=${sc.getId()})}"
                           th:method="get" class="w-100">
-                        <button class="btn btn-block btn-success">Calendar</button>
+                        <button class="btn btn-block btn-outline-dark">Calendar</button>
                     </form>
-                </div>
+
+                    <form th:action="@{/sport-centers/guests-sport-center-details/{id}(id=${sc.getId()})}"
+                          th:method="get" class="w-100">
+                        <button class="btn btn-block btn-outline-dark">Learn more</button>
+                    </form>
+
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form th:action="@{/sport-centers/sport-center-details/{id}(id=${sc.getId()})}"
+                              th:method="get" class="w-100">
+                            <button class="btn btn-block btn-warning border border-dark">Details</button>
+                        </form>
+                </th:block>
+
             </div>
         </div>
     </div>
