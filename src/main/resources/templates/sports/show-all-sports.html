@@ -17,18 +17,11 @@
         <h2 class="font-italic">Sports</h2>
         <hr>
         <div class="d-flex flex-wrap">
-
             <th:block th:each="sport, iter : ${allSportServiceModels}">
                 <th:block th:include="~{fragments/sports/show-all-sports-image-modal}"></th:block>
             </th:block>
-
         </div>
         <hr>
-        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-            <form th:action="@{/admin/panel}" th:method="get">
-                <button class="btn btn-lg btn-outline-success">Admin panel</button>
-            </form>
-        </th:block>
     </div>
 </main>
 <script>

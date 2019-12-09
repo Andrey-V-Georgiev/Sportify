@@ -4,7 +4,6 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
-
     <title>Calendar</title>
 </head>
 
@@ -13,12 +12,11 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="d-flex justify-content-center">
-
     <div id="jumbotron" class="jumbotron col-8 pt-3 shadow-lg bg-white d-flex justify-content-center">
 
         <div id="calendar" class="w-75">
             <div class="row mt-2">
-                <h3 th:text="${sportCenterServiceModel.getName()}"></h3>
+                <h3 class="font-italic" th:text="${sportCenterServiceModel.getName()}"></h3>
             </div>
             <hr>
             <div id="menu" class="row my-4">
@@ -44,7 +42,6 @@
                     </select>
                     <div id="find-month" class="btn btn-success border border-dark">Find</div>
                 </div>
-
             </div>
 
             <div class="row mb-1">
@@ -70,13 +67,19 @@
                     <h5 class="text-center">Sat</h5>
                 </div>
             </div>
-
         </div>
+
     </div>
 </main>
-<script th:inline="javascript">
+
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <div id="isAdmin" th:text="YES"></div>
+</th:block>
+
+<script type="text/javascript" th:inline="javascript">
 
     let sportCenterID = [[${sportCenterServiceModel.getId()}]];
+    let isAdmin = $('#isAdmin').text();
 
     $(document).ready(async function () {
         let scheduleDays = await findSportCenterSchedulesByMonth(currentMonth.month, sportCenterID);
@@ -99,79 +102,53 @@
     });
 
     let createScheduleModal = (day, month, year) => {
+        let createScheduleBtn;
+        if (isAdmin === 'YES') {
+            createScheduleBtn = `<form action="/calendar/create-schedule/${sportCenterID}/${day}/${month}/${year}"
+                                       method="get" id="create-schedule-form" class="w-100">
+                                    <button type="submit" class="btn btn-block btn-warning">
+                                        Create schedule
+                                    </button>
+                                  </form>`
+        } else {
+            createScheduleBtn = ``
+        }
         return `<div class='m-1 rounded rounded-sm border border-dark' style='width: 125px;height: 80px'>
+                    <div id="mybtn" data-toggle="modal" data-target="#a${day}">
+                        <div class='bg-white rounded rounded-sm' style='width: 123px;height: 78px'>
+                        <h3 class="text-dark pt-1">${day}</h3>
+                    </div>
+                </div>
 
-<div id="mybtn" data-toggle="modal" data-target="#a${day}">
-  <div class='bg-white rounded rounded-sm' style='width: 123px;height: 78px'>
-<h3 class="text-dark pt-1">
-${day}
-</h3>
-</div>
-</div>
-
-<div class="modal fade" id="a${day}" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered w-25" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body justify-content-center">
-                <h5 class="text-center">
-                    There is no schedule for this day!
-                </h5>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <form action="/calendar/create-schedule/${sportCenterID}/${day}/${month}/${year}"
-                      method="get" id="create-schedule-form" class="w-100">
-                    <button type="submit" class="btn btn-block btn-warning">Create schedule</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>`
+                <div class="modal fade" id="a${day}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered w-25" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body justify-content-center">
+                                <h5 class="text-center">
+                                    There is no schedule for this day!
+                                </h5>
+                            </div>
+                            <div class="modal-footer justify-content-center">${createScheduleBtn}</div>
+                        </div>
+                    </div>
+                </div>`
     };
 
     let showScheduleModal = (day, month, year) => {
         return `<div class='m-1' style='width: 125px;height: 80px'>
-
-<form action="/calendar/edit-schedule-by-details/${sportCenterID}/${day}/${month}/${year}"
-          method="get" id="create-schedule-form" class="w-100">
-    <button  class='btn btn-success px-0 pb-5 text-left border border-dark' style='width: 125px;height: 80px'>
-        <h3 class="text-white pt-0">${day}</h3>
-    </button>
-</form>
-
-
-<div class="modal fade" id="aaa" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered w-25" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body justify-content-center">
-                <h3 class="text-center">
-
-                </h3>
-            </div>
-            <div class="modal-footer justify-content-center">
-
-                  <form action="/calendar/edit-schedule-by-details/${sportCenterID}/${day}/${month}/${year}"
-                        method="get" id="create-schedule-form" class="w-100">
-                    <button type="submit" class="btn btn-block btn-warning">Edit schedule</button>
-                  </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-</div>`
+                    <form action="/calendar/schedule-details/${sportCenterID}/${day}/${month}/${year}"
+                              method="get" id="create-schedule-form" class="w-100">
+                        <button  class='btn btn-success px-0 pb-5 text-left border border-dark' style='width: 125px;height: 80px'>
+                            <h3 class="text-white pt-0">${day}</h3>
+                        </button>
+                    </form>
+                </div>`
     };
 
     $('#exampleModalCenter').on('shown.bs.modal', function () {

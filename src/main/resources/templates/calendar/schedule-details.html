@@ -15,9 +15,11 @@
 <main class="d-flex justify-content-center">
     <div class="jumbotron col-8 shadow-lg bg-white">
         <div class="row">
-            <h2 class="col-4">Schedule details</h2>
-            <h2 class="col-2 text-center" th:text="${month}"></h2>
-            <h2 class="col-1 text-center" th:text="${scheduleViewModel.getYear()}"></h2>
+            <h3 class="col-3 font-italic" th:text="${scheduleViewModel.getSportCenter().getName()}"></h3>
+            <h3 class="col-6 font-italic"
+                th:text="${scheduleViewModel.getDay()} + ' / ' +
+                ${scheduleViewModel.getMonth()} + ' / ' +
+                ${scheduleViewModel.getYear()}"></h3>
         </div>
         <hr>
 
@@ -26,12 +28,14 @@
                 <div class="col-2">
                     <div class="col-2 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
                         <h4 class="text-center" th:text="${hourStr}"></h4>
-                        <form th:action="@{/calendar/create-event/{scheduleID}/{hourStr}
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                            <form th:action="@{/calendar/create-event/{scheduleID}/{hourStr}
                                             (scheduleID=${scheduleViewModel.getId()},hourStr=${hourStr})}"
-                              th:method="get" class="w-100 mx-0">
-                            <button type="submit" class="btn btn-md w-100 btn-warning mb-1">Add event</button>
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                        </form>
+                                  th:method="get" class="w-100 mx-0">
+                                <button type="submit" class="btn btn-md w-100 btn-warning mb-1">Add event</button>
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            </form>
+                        </th:block>
                     </div>
                 </div>
                 <div class="col d-flex flex-wrap pt-3 px-0">
@@ -128,7 +132,6 @@
             </div>
             <hr>
         </th:block>
-
     </div>
 </main>
 <script type="text/javascript">

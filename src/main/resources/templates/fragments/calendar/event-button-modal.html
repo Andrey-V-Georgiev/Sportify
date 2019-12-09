@@ -23,54 +23,54 @@
             <div class="modal-body justify-content-center">
 
                 <div class="row">
-                    <p class="col-3 ml-4 px-0 font-weight-bold">Sport: </p>
+                    <p class="col-3 ml-4 px-0 font-weight-bold font-italic">Sport: </p>
                     <p class="col-6 px-0" th:text="${event.getSport().getName()}"></p>
                 </div>
                 <div class="row">
-                    <p class="col-3 ml-4 px-0 font-weight-bold">Date: </p>
+                    <p class="col-3 ml-4 px-0 font-weight-bold font-italic">Date: </p>
                     <p class="col-3 px-0"
                        th:text="${event.getDayOfMonth()} + ' / ' + ${event.getMonth()} + ' / ' + ${event.getYear()}">
                     </p>
                 </div>
                 <div class="row">
-                    <p class="col-3 ml-4 px-0 font-weight-bold">Start time: </p>
+                    <p class="col-3 ml-4 px-0 font-weight-bold font-italic">Start time: </p>
                     <p class="col-6 px-0" th:text="${event.getStartTime()}"></p>
                 </div>
                 <div class="row">
-                    <p class="col-3 ml-4 px-0 font-weight-bold">Level: </p>
+                    <p class="col-3 ml-4 px-0 font-weight-bold font-italic">Level: </p>
                     <p class="col-6 px-0" th:text="${event.getLevel()}"></p>
                 </div>
                 <div class="row">
-                    <p class="col-3 ml-4 px-0 font-weight-bold">Floor: </p>
+                    <p class="col-3 ml-4 px-0 font-weight-bold font-italic">Floor: </p>
                     <p class="col-6 px-0" th:text="${event.getFloor()}"></p>
                 </div>
                 <div class="row">
-                    <p class="col-3 ml-4 px-0 font-weight-bold">Hall: </p>
+                    <p class="col-3 ml-4 px-0 font-weight-bold font-italic">Hall: </p>
                     <p class="col-6 px-0" th:text="${event.getHall()}"></p>
                 </div>
                 <div class="row">
-                    <p class="col-3 ml-4 px-0 font-weight-bold">Max capacity: </p>
+                    <p class="col-3 ml-4 px-0 font-weight-bold font-italic">Max capacity: </p>
                     <p class="col-6 px-0" th:text="${event.getMaxCapacity()}"></p>
                 </div>
 
             </div>
             <div class="modal-footer w-100">
-
-                <div class="col-6 pl-4 ml-3">
-                    <form th:action="@{/calendar/edit-event/{scheduleID}/{eventID}
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="col-6 pl-4 ml-3">
+                        <form th:action="@{/calendar/edit-event/{scheduleID}/{eventID}
                                         (scheduleID=${scheduleViewModel.getId()},eventID=${event.getId()})}"
-                          th:method="get" class="w-100">
-                        <button class="btn btn-block btn-warning border border-dark">Edit</button>
-                    </form>
-                </div>
-                <div class="col-6">
-                    <form th:action="@{/calendar/delete-event/{scheduleID}/{eventID}
+                              th:method="get" class="w-100">
+                            <button class="btn btn-block btn-warning border border-dark">Edit</button>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <form th:action="@{/calendar/delete-event/{scheduleID}/{eventID}
                                         (scheduleID=${scheduleViewModel.getId()},eventID=${event.getId()})}"
-                          th:method="post" class="w-100">
-                        <button class="btn btn-block btn-danger border border-dark">Delete</button>
-                    </form>
-                </div>
-
+                              th:method="post" class="w-100">
+                            <button class="btn btn-block btn-danger border border-dark">Delete</button>
+                        </form>
+                    </div>
+                </th:block>
             </div>
         </div>
     </div>

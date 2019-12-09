@@ -70,13 +70,13 @@ public class CalendarController {
                 .createSchedule(sportCenterServiceModel, day, month, year);
         String scheduleID = scheduleServiceModel.getId();
 
-        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
+        modelAndView.setViewName(REDIRECT_TO_SCHEDULE_DETAILS_BY_ID + scheduleID);
         return modelAndView;
     }
 
-    @GetMapping("/edit-schedule-by-id/{scheduleID}")
+    @GetMapping("/schedule-details-by-id/{scheduleID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editScheduleByID(
+    public ModelAndView scheduleDetailsByID(
             @PathVariable("scheduleID") String scheduleID,
             ModelAndView modelAndView) {
 
@@ -90,8 +90,7 @@ public class CalendarController {
         return modelAndView;
     }
 
-    @GetMapping("/edit-schedule-by-details/{scID}/{day}/{month}/{year}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
+    @GetMapping("/schedule-details/{scID}/{day}/{month}/{year}")
     public ModelAndView editScheduleByDetails(
             @PathVariable("scID") String sportCenterID,
             @PathVariable("day") String day,
@@ -143,7 +142,7 @@ public class CalendarController {
         this.scheduleService.addEvent(scheduleServiceModel, savedEventServiceModel);
 
         String sportCenterID = scheduleServiceModel.getSportCenter().getId();
-        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
+        modelAndView.setViewName(REDIRECT_TO_SCHEDULE_DETAILS_BY_ID + scheduleID);
         return modelAndView;
     }
 
@@ -185,7 +184,7 @@ public class CalendarController {
         this.scheduleService.updateEvent(scheduleServiceModel, updatedEventServiceModel);
 
         String sportCenterID = scheduleServiceModel.getSportCenter().getId();
-        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
+        modelAndView.setViewName(REDIRECT_TO_SCHEDULE_DETAILS_BY_ID + scheduleID);
         return modelAndView;
     }
 
@@ -200,7 +199,7 @@ public class CalendarController {
         EventServiceModel eventServiceModel = this.eventService.findByID(eventID);
         this.scheduleService.deleteEvent(scheduleServiceModel, eventServiceModel);
 
-        modelAndView.setViewName(REDIRECT_EDIT_SCHEDULE_BY_ID + scheduleID);
+        modelAndView.setViewName(REDIRECT_TO_SCHEDULE_DETAILS_BY_ID + scheduleID);
         return modelAndView;
     }
 }
