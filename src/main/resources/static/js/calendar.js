@@ -289,6 +289,14 @@ let buildTable = (monthObj, createScheduleModal, showScheduleModal, scheduleDays
             }
         }
     }
+    $(`#calendar`).append(`<hr><button onclick="goBack()" class="col-3 btn btn-md btn-outline-dark my-1 mr-2">
+                                            Go Back
+                                        </button>
+                                        <script>
+                                            function goBack() {
+                                                window.history.back();
+                                            }
+                                        </script>`)
 };
 
 function findSportCenterSchedulesByMonth(monthNum, scID) {

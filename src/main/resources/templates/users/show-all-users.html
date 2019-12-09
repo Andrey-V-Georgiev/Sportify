@@ -13,7 +13,7 @@
 </header>
 
 <main class="d-flex justify-content-center">
-    <div class="jumbotron col-10 shadow-lg bg-white">
+    <div class="jumbotron col-10 shadow-lg bg-white pb-4">
         <h3>Show all users</h3>
         <hr>
 
@@ -22,10 +22,7 @@
         </th:block>
 
         <hr>
-        <form th:action="@{/admin/panel}" th:method="get">
-            <button class="btn btn-lg btn-outline-success">Admin panel</button>
-        </form>
-
+        <th:block th:include="~{fragments/go-back-btn}"></th:block>
     </div>
 </main>
 <script>

@@ -187,7 +187,8 @@ public class SportsController {
     public ModelAndView deleteImage(@PathVariable String id,
                                     ModelAndView modelAndView) throws Exception {
 
-        this.sportService.deleteSport(id);
+            this.sportService.deleteSport(id);
+
         modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SPORTS);
         return modelAndView;
     }

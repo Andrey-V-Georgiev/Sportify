@@ -51,16 +51,9 @@
             </div>
         </div>
         <hr>
-        <form th:action="@{/admin/panel}" th:method="get">
-            <button class="btn btn-lg btn-outline-success">Go to admin panel</button>
-        </form>
-        <hr>
-        <a th:href="@{/sports/show-all-sports}" class="btn btn-lg btn-outline-success mt-3">
-            Show all sports
-        </a>
+        <th:block th:include="~{fragments/go-back-btn}"></th:block>
         <hr>
         <th:block th:include="~{fragments/sports/delete-sport-modal}"></th:block>
-        <hr>
     </div>
 </main>
 <script th:inline="javascript">

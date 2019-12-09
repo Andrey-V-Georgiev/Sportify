@@ -12,15 +12,15 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="d-flex justify-content-center">
-    <div id="jumbotron" class="jumbotron col-8 pt-3 shadow-lg bg-white d-flex justify-content-center">
+    <div id="jumbotron" class="jumbotron col-8 pt-3 pb-3 shadow-lg bg-white d-flex justify-content-center">
 
         <div id="calendar" class="w-75">
             <div class="row mt-2">
                 <h3 class="font-italic" th:text="${sportCenterServiceModel.getName()}"></h3>
             </div>
             <hr>
-            <div id="menu" class="row my-4">
-                <div class="btn-group" role="group" aria-label="Basic example">
+            <div id="menu" class="row my-3">
+                <div class="btn-group ml-1" role="group" aria-label="Basic example">
                     <div id="now" class="btn btn-success border border-dark">Now</div>
                     <select id="selectMonth" class="btn border border-dark">
                         <option value="1" class="dropdown-item" href="#">January</option>
@@ -73,7 +73,7 @@
 </main>
 
 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-    <div id="isAdmin" th:text="YES"></div>
+    <div id="isAdmin" th:text="YES" hidden></div>
 </th:block>
 
 <script type="text/javascript" th:inline="javascript">

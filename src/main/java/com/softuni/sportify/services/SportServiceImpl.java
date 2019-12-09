@@ -98,9 +98,8 @@ public class SportServiceImpl implements SportService {
             sportCenter.setSports(updatedSports);
             this.sportCenterRepository.save(sportCenter);
         }
-
-        this.sportRepository.deleteById(id);
-
+        Sport sport = this.sportRepository.findById(id).orElse(null);
+        this.sportRepository.delete(sport);
     }
 
     @Override
