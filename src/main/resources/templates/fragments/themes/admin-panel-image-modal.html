@@ -5,8 +5,27 @@
 
 <!-- Button trigger modal -->
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${image.getId()}">
-    <img th:src="${image.getImageURL()}"
-         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
+    <div class="card mx-2 shadow-lg" style="height: 240px; width: 140px">
+        <img th:src="${image.getImageURL()}"
+             class="card-img-top" style="height: 180px;" alt="...">
+
+        <div class="card-body px-0 py-3">
+            <th:block th:switch="${iter.index}">
+                <div th:case="0">
+                    <h6 class="card-text text-center">Users</h6>
+                </div>
+                <div th:case="1">
+                    <h6 class="card-text text-center">Themes</h6>
+                </div>
+                <div th:case="2">
+                    <h6 class="card-text text-center">Sport Centers</h6>
+                </div>
+                <div th:case="3">
+                    <h6 class="card-text text-center">Sports</h6>
+                </div>
+            </th:block>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -21,13 +40,7 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="row">
-                            <h6 class="col-3">Name: </h6>
-                            <p class="col-9" th:text="${image.getName()}"></p>
-                        </div>
-                    </div>
-
+                    <h2 class="col-8 mb-3 font-italic" th:text="${image.getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${image.getImageURL()}"
@@ -36,6 +49,11 @@
 
             </div>
             <div class="modal-footer">
+                <form th:action="@{/themes/edit-theme-image/{themeID}/{imageID}
+                (themeID=${themeServiceModel.getId()}, imageID=${image.getId()})}"
+                      th:method="get">
+                    <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
+                </form>
             </div>
         </div>
     </div>

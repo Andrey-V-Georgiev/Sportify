@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "settings")
-public class Setting extends BaseEntity {
+@Table(name = "themes")
+public class Theme extends BaseEntity {
 
     private String name;
     private Image iconImage;
@@ -13,7 +13,7 @@ public class Setting extends BaseEntity {
     private List<Image> homeCarouselImages;
     private List<Image> adminPanelImages;
 
-    public Setting() {
+    public Theme() {
     }
 
     @Column(name = "name")
@@ -26,7 +26,7 @@ public class Setting extends BaseEntity {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="setting_icon_image_id")
+    @JoinColumn(name="theme_icon_image_id")
     public Image getIconImage() {
         return iconImage;
     }

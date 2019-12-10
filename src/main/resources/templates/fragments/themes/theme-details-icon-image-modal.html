@@ -4,13 +4,13 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${settingServiceModel.getIconImage().getId()}">
-    <img th:src="${settingServiceModel.getIconImage().getImageURL()}"
-         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
+<div class="ml-2 my-3" id="mybtn" data-toggle="modal" th:data-target="'#a' + ${themeServiceModel.getIconImage().getId()}">
+    <img th:src="${themeServiceModel.getIconImage().getImageURL()}"
+         class="rounded shadow-lg" style="height: 255px;" alt="...">
 </div>
 
 <!-- Modal -->
-<div class="modal fade" th:id="'a' + ${settingServiceModel.getIconImage().getId()}" tabindex="-1" role="dialog"
+<div class="modal fade" th:id="'a' + ${themeServiceModel.getIconImage().getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -21,25 +21,18 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="row">
-                            <h6 class="col-3">Name: </h6>
-                            <p class="col-9" th:text="${settingServiceModel.getIconImage().getName()}"></p>
-                        </div>
-                    </div>
-
+                    <h2 class="col-8 mb-3 font-italic" th:text="${themeServiceModel.getIconImage().getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
-                    <img th:src="${settingServiceModel.getIconImage().getImageURL()}"
+                    <img th:src="${themeServiceModel.getIconImage().getImageURL()}"
                          class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
-
             </div>
             <div class="modal-footer">
-                <form th:action="@{/settings/edit-setting-image/{settingID}/{imageID}
-                (settingID=${settingServiceModel.getId()}, imageID=${settingServiceModel.getIconImage().getId()})}"
+                <form th:action="@{/themes/edit-theme-image/{themeID}/{imageID}
+                (themeID=${themeServiceModel.getId()}, imageID=${themeServiceModel.getIconImage().getId()})}"
                       th:method="get">
-                    <button class="btn btn-warning">Edit image</button>
+                    <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
                 </form>
             </div>
         </div>

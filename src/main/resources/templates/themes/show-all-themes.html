@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
-    <title>Show all settings</title>
+    <title>Show all themes</title>
 </head>
 
 <body>
@@ -14,17 +14,17 @@
 
 <main class="d-flex justify-content-center">
     <div class="jumbotron col-10 shadow-lg bg-white pb-4">
-        <h1>Show all settings</h1>
+        <h2 class="font-italic">Show all themes</h2>
         <hr>
         <div class="d-flex flex-wrap">
-
-            <th:block th:each="setting, iter : ${allSettingServiceModels}">
-                <th:block th:include="~{fragments/settings/show-all-settings-image-modal}"></th:block>
+            <th:block th:each="theme, iter : ${allThemesServiceModels}">
+                <th:block th:include="~{fragments/themes/show-all-themes-image-modal}"></th:block>
             </th:block>
-
         </div>
         <hr>
-        <th:block th:include="~{fragments/go-back-btn}"></th:block>
+        <div class="col-4">
+            <th:block th:include="~{fragments/go-back-btn}"></th:block>
+        </div>
     </div>
 </main>
 <script>

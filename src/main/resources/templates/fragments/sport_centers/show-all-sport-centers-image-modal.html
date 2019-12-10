@@ -7,7 +7,7 @@
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sc.getIconImage().getId()}">
     <div class="card m-2 shadow-lg" style="width: 21rem;">
         <img th:src="${sc.getIconImage().getImageURL()}"
-             class="mw-100 mh-100 rounded-top" style="height: 150px;" alt="...">
+             class="w-100 h-100 rounded-top" style="height: 150px;" alt="...">
         <div class="card-body p-1">
             <h6 class="card-text text-center mb-2" th:text="${sc.getName()}"></h6>
         </div>

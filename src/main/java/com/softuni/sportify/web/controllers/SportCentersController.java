@@ -193,7 +193,7 @@ public class SportCentersController {
     @GetMapping("/update-sport-center-sports/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView updateSportCenterSports(@PathVariable("id") String sportCenterID,
-                                                @ModelAttribute UpdateSportCenterSportsBindingModel bindingModel,
+                                                @ModelAttribute SportCenterUpdateSportsBindingModel bindingModel,
                                                 ModelAndView modelAndView) throws IOException {
 
         List<SportServiceModel> allSportServiceModels = this.sportService.findAllSports();
@@ -207,7 +207,7 @@ public class SportCentersController {
     @PostMapping("/update-sport-center-sports/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView updateSportCenterSportsConfirm(@PathVariable("id") String sportCenterID,
-                                                       @ModelAttribute UpdateSportCenterSportsBindingModel bindingModel,
+                                                       @ModelAttribute SportCenterUpdateSportsBindingModel bindingModel,
                                                        ModelAndView modelAndView) throws IOException {
 
         List<String> spotrsIDs = bindingModel.getSpotrsIDs();

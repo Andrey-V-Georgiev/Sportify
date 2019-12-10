@@ -1,9 +1,8 @@
 package com.softuni.sportify.domain.models.service_models;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SettingServiceModel extends BaseServiceModel {
+public class ThemeServiceModel extends BaseServiceModel {
 
     private String name;
     private ImageServiceModel iconImage;
@@ -11,7 +10,7 @@ public class SettingServiceModel extends BaseServiceModel {
     private List<ImageServiceModel> homeCarouselImages;
     private List<ImageServiceModel> adminPanelImages;
 
-    public SettingServiceModel() {
+    public ThemeServiceModel() {
 
     }
 

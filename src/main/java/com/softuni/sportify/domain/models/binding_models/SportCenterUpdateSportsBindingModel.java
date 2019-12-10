@@ -3,11 +3,11 @@ package com.softuni.sportify.domain.models.binding_models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateSportCenterSportsBindingModel extends BaseBindingModel {
+public class SportCenterUpdateSportsBindingModel extends BaseBindingModel {
 
     private List<String> spotrsIDs;
 
-    public UpdateSportCenterSportsBindingModel() {
+    public SportCenterUpdateSportsBindingModel() {
         this.spotrsIDs = new ArrayList<>();
     }
 

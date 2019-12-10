@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.softuni.sportify.constants.SettingsControllerConstants.*;
+import static com.softuni.sportify.constants.ThemesControllerConstants.*;
 
 @Service
 public class ImageServiceImpl implements ImageService {

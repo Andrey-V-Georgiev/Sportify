@@ -1,13 +1,11 @@
 package com.softuni.sportify.domain.models.binding_models;
 
-import com.softuni.sportify.domain.entities.Image;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingCreateBindingModel {
+public class ThemeCreateBindingModel {
 
     private String name;
     private MultipartFile iconImage;
@@ -15,7 +13,7 @@ public class SettingCreateBindingModel {
     private List<MultipartFile> homeCarouselImages;
     private List<MultipartFile> adminPanelImages;
 
-    public SettingCreateBindingModel() {
+    public ThemeCreateBindingModel() {
         this.indexCarouselImages = new ArrayList<>();
         this.homeCarouselImages = new ArrayList<>();
         this.adminPanelImages = new ArrayList<>();

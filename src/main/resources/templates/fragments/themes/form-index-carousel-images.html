@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded shadow-lg" style="height: 240px; width: 345px">
+    <form th:action="@{/themes/add-images-index-carousel/{id}(id=${themeServiceModel.getId()})}"
+          th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
+
+        <div class="btn-group-vertical w-100">
+            <input name="name" type="text" class="btn btn-block border text-left"
+                   placeholder="Image name...">
+        </div>
+
+        <p class="my-3 text-danger">1600 x 600 px and up to 1.0MB</p>
+
+        <input name="image" type="file" class="mb-1">
+        <hr>
+
+        <div th:if="${themeServiceModel.getIndexCarouselImages().size() < 3}">
+            <button type="submit" class="btn btn-md btn-block btn-warning my-2">Add image</button>
+        </div>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    </form>
+</div>
+</html>

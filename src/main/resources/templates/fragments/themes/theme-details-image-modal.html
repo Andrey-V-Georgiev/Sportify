@@ -6,7 +6,7 @@
 <!-- Button trigger modal -->
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${image.getId()}">
     <img th:src="${image.getImageURL()}"
-         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 150px;" alt="...">
+         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 240px;" alt="...">
 </div>
 
 <!-- Modal -->
@@ -21,13 +21,7 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="row">
-                            <h6 class="col-3">Name: </h6>
-                            <p class="col-9" th:text="${image.getName()}"></p>
-                        </div>
-                    </div>
-
+                    <h2 class="col-8 mb-3 font-italic" th:text="${image.getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${image.getImageURL()}"
@@ -36,15 +30,15 @@
 
             </div>
             <div class="modal-footer">
-                <form th:action="@{/settings/edit-setting-image/{settingID}/{imageID}
-                (settingID=${settingServiceModel.getId()}, imageID=${image.getId()})}"
+                <form th:action="@{/themes/edit-theme-image/{themeID}/{imageID}
+                (themeID=${themeServiceModel.getId()}, imageID=${image.getId()})}"
                       th:method="get">
-                    <button class="btn btn-warning">Edit image</button>
+                    <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
                 </form>
-                <form th:action="@{/settings/delete-setting-image/{settingID}/{imageID}
-                (settingID=${settingServiceModel.getId()}, imageID=${image.getId()})}"
+                <form th:action="@{/themes/delete-theme-image/{themeID}/{imageID}
+                (themeID=${themeServiceModel.getId()}, imageID=${image.getId()})}"
                       th:method="post">
-                    <button class="btn btn-danger">Delete image</button>
+                    <button class="btn btn-lg btn-danger">Delete image</button>
                 </form>
             </div>
         </div>
