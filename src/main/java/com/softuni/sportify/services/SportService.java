@@ -21,8 +21,6 @@ public interface SportService {
     SportServiceModel addSportImage(SportServiceModel sportServiceModel,
                                     ImageServiceModel imageServiceModel);
 
-    void deleteSport(String id);
-
     List<SportServiceModel> findAllSports();
 
     void deleteSportImage(String sportID, String imageID);

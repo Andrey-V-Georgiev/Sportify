@@ -26,14 +26,12 @@
                 </th:block>
             </div>
             <hr>
-            <button class="col-4 btn btn-lg btn-warning border border-dark">Save </button>
+            <button class="col-4 btn btn-lg btn-warning border border-dark">Save</button>
         </form>
-
         <hr>
-        <form th:action="@{/admin/panel}" th:method="get">
-            <button class="btn btn-lg btn-outline-success">Admin panel</button>
-        </form>
-
+        <div class="col-4 pl-0 ">
+            <th:block th:include="~{fragments/go-back-btn}"></th:block>
+        </div>
     </div>
 </main>
 <script>

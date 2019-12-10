@@ -1,16 +1,15 @@
-<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<div class="ml-3" id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sportCenterServiceModel.getIconImage().getId()}">
-    <img th:src="${sportCenterServiceModel.getIconImage().getImageURL()}"
-         class="rounded shadow-lg" style="height: 255px;" alt="...">
+<div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${image.getId()}">
+    <img th:src="${image.getImageURL()}"
+         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 255px;" alt="...">
 </div>
 
 <!-- Modal -->
-<div class="modal fade" th:id="'a' + ${sportCenterServiceModel.getIconImage().getId()}" tabindex="-1" role="dialog"
+<div class="modal fade" th:id="'a' + ${image.getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -21,22 +20,15 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <h2 class="col-8 mb-3 font-italic"
-                        th:text="${sportCenterServiceModel.getIconImage().getName()}"></h2>
+                    <h2 class="col-8 mb-3 font-italic" th:text="${image.getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
-                    <img th:src="${sportCenterServiceModel.getIconImage().getImageURL()}"
+                    <img th:src="${image.getImageURL()}"
                          class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
-
             </div>
             <div class="modal-footer">
-                <form th:action="@{/settings/edit-setting-image/{settingID}/{imageID}
-                (settingID=${sportCenterServiceModel.getId()},
-                 imageID=${sportCenterServiceModel.getIconImage().getId()})}"
-                      th:method="get">
-                    <button class="btn btn-lg btn-warning">Edit image</button>
-                </form>
+
             </div>
         </div>
     </div>

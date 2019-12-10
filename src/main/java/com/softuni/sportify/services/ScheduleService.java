@@ -28,4 +28,6 @@ public interface ScheduleService {
 
     void deleteEvent(ScheduleServiceModel scheduleServiceModel,
                      EventServiceModel eventServiceModel);
+
+    void deleteSchedule(ScheduleServiceModel scheduleServiceModel);
 }

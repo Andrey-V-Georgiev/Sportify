@@ -1,13 +1,12 @@
 package com.softuni.sportify.services;
 
-import com.softuni.sportify.domain.entities.Address;
-import com.softuni.sportify.domain.entities.Image;
-import com.softuni.sportify.domain.entities.Sport;
-import com.softuni.sportify.domain.entities.SportCenter;
+import com.softuni.sportify.domain.entities.*;
 import com.softuni.sportify.domain.models.service_models.AddressServiceModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
+import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
 import com.softuni.sportify.repositories.ImageRepository;
+import com.softuni.sportify.repositories.ScheduleRepository;
 import com.softuni.sportify.repositories.SportCenterRepository;
 import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
@@ -26,18 +25,24 @@ public class SportCenterServiceImpl implements SportCenterService {
     private final AddressService addressService;
     private final SportRepository sportRepository;
     private final ImageRepository imageRepository;
+    private final ScheduleRepository scheduleRepository;
+    private final ScheduleService scheduleService;
 
     @Autowired
     public SportCenterServiceImpl(ModelMapper modelMapper,
                                   SportCenterRepository sportCenterRepository,
                                   AddressService addressService,
                                   SportRepository sportRepository,
-                                  ImageRepository imageRepository) {
+                                  ImageRepository imageRepository,
+                                  ScheduleRepository scheduleRepository,
+                                  ScheduleService scheduleService) {
         this.modelMapper = modelMapper;
         this.sportCenterRepository = sportCenterRepository;
         this.addressService = addressService;
         this.sportRepository = sportRepository;
         this.imageRepository = imageRepository;
+        this.scheduleRepository = scheduleRepository;
+        this.scheduleService = scheduleService;
     }
 
     @Override
@@ -140,4 +145,19 @@ public class SportCenterServiceImpl implements SportCenterService {
 
         this.sportCenterRepository.save(sportCenter);
     }
+
+    @Override
+    public void deleteSportCenter(SportCenterServiceModel sportCenterServiceModel) {
+
+        SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
+        Schedule schedule = this.scheduleRepository.findAll()
+                .stream()
+                .filter(s -> s.getSportCenter().getId().equals(sportCenter.getId()))
+                .collect(Collectors.toList())
+                .get(0);
+        this.scheduleService.deleteSchedule(this.modelMapper.map(schedule, ScheduleServiceModel.class));
+        this.sportCenterRepository.delete(sportCenter);
+    }
+
+
 }

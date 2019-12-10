@@ -182,15 +182,4 @@ public class SportsController {
         return modelAndView;
     }
 
-    @PostMapping("/delete-sport/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView deleteImage(@PathVariable String id,
-                                    ModelAndView modelAndView) throws Exception {
-
-            this.sportService.deleteSport(id);
-
-        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SPORTS);
-        return modelAndView;
-    }
-
 }

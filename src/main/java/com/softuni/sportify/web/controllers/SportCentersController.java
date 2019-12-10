@@ -25,21 +25,18 @@ public class SportCentersController {
     private final SportCenterService sportCenterService;
     private final AddressService addressService;
     private final SportService sportService;
-    private final ScheduleService scheduleService;
 
     @Autowired
     public SportCentersController(ImageService imageService,
                                   ModelMapper modelMapper,
                                   SportCenterService sportCenterService,
                                   AddressService addressService,
-                                  SportService sportService,
-                                  ScheduleService scheduleService) {
+                                  SportService sportService) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.sportCenterService = sportCenterService;
         this.addressService = addressService;
         this.sportService = sportService;
-        this.scheduleService = scheduleService;
     }
 
     @GetMapping("/create-sport-center")
@@ -81,7 +78,7 @@ public class SportCentersController {
 
     @GetMapping("/guests-sport-center-details/{id}")
     public ModelAndView guestsSportCenterDetails(@PathVariable String id,
-                                           ModelAndView modelAndView) {
+                                                 ModelAndView modelAndView) {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(id);
         modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
@@ -218,6 +215,18 @@ public class SportCentersController {
         this.sportCenterService.updateSportCenterSports(sportCenterServiceModel, spotrsIDs);
 
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
+        return modelAndView;
+    }
+
+    @PostMapping("/delete-sport-center/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView deleteSportCenter(@PathVariable("id") String sportCenterID,
+                                          ModelAndView modelAndView) throws IOException {
+
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
+        this.sportCenterService.deleteSportCenter(sportCenterServiceModel);
+
+        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SPORT_CENTERS);
         return modelAndView;
     }
 }

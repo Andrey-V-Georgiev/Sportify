@@ -27,4 +27,6 @@ public interface SportCenterService {
                                                     List<String> sportCenterIDs);
 
     void deleteSportCenterImage(String sportCenterID, String imageID);
+
+    void deleteSportCenter(SportCenterServiceModel sportCenterServiceModel);
 }

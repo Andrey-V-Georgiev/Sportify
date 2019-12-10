@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-3 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
+<div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded shadow-lg" style="height: 255px;">
 
     <form th:action="@{/sports/add-sport-images/{id}(id=${sportServiceModel.getId()})}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
@@ -11,8 +11,8 @@
             <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">
         </div>
         <p class="text-danger mt-3">Images must be up to 1.0MB</p>
-        <input name="image" type="file" class="mb-3">
-
+        <input name="image" type="file" class="mb-2">
+        <hr>
         <button type="submit" class="btn btn-lg btn-block btn-warning mb-2">Add image</button>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>

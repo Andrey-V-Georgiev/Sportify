@@ -4,8 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sportServiceModel.getIconImage().getId()}">
-    <img id="icon-img" src="" class="mw-100 mh-100 m-3 rounded shadow-lg" style="height: 150px;" alt="...">
+<div class="ml-3" id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sportServiceModel.getIconImage().getId()}">
+    <img th:src="${sportServiceModel.getIconImage().getImageURL()}"
+         class="rounded shadow-lg" style="height: 255px;" alt="...">
 </div>
 
 <!-- Modal -->
@@ -20,13 +21,7 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="row">
-                            <h6 class="col-3">Name: </h6>
-                            <p class="col-9" th:text="${sportServiceModel.getIconImage().getName()}"></p>
-                        </div>
-                    </div>
-
+                     <h2 class="col-8 mb-3 font-italic" th:text="${sportServiceModel.getIconImage().getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img id="icon-modal-img" src="" class="mw-100 rounded" style="max-height: 500px;" alt="...">
@@ -34,10 +29,10 @@
 
             </div>
             <div class="modal-footer">
-                <form th:action="@{/settings/edit-setting-image/{settingID}/{imageID}
-                (settingID=${sportServiceModel.getId()}, imageID=${sportServiceModel.getIconImage().getId()})}"
+                <form th:action="@{/sports/edit-sport-image/{sportID}/{imageID}
+                (sportID=${sportServiceModel.getId()}, imageID=${sportServiceModel.getIconImage().getId()})}"
                       th:method="get">
-                    <button class="btn btn-warning">Edit image</button>
+                    <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
                 </form>
             </div>
         </div>

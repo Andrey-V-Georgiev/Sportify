@@ -290,6 +290,13 @@ public class ScheduleServiceImpl implements ScheduleService {
         this.scheduleRepository.save(this.modelMapper.map(scheduleServiceModel, Schedule.class));
     }
 
+    @Override
+    public void deleteSchedule(ScheduleServiceModel scheduleServiceModel) {
+
+        Schedule schedule = this.modelMapper.map(scheduleServiceModel, Schedule.class);
+        this.scheduleRepository.delete(schedule);
+    }
+
     private List<EventServiceModel> deleteEventFromList(List<EventServiceModel> eventServiceModelList,
                                                         EventServiceModel eventServiceModel) {
 

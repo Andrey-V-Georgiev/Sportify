@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-3 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
+<div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded shadow-lg" style="height: 255px;">
 
     <form id="edit-icon-form" th:action="@{/sports/edit-icon-image/{id}(id=${sportServiceModel.getId()})}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">

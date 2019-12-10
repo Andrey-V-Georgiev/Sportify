@@ -32,20 +32,11 @@
                     <img th:src="${sport.getIconImage().getImageURL()}"
                          class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
+                <div class="row">
+                    <p class=" px-4 pt-4" th:text="${sport.getSportDescription()}"></p>
+                </div>
+            </div>
 
-            </div>
-            <div class="modal-footer">
-                <!--                <form th:action="@{/sports/edit-sport-image/{sportID}/{imageID}-->
-                <!--                (sportID=${sport.getId()}, imageID=${sport.getIconImage().getId()})}"-->
-                <!--                      th:method="get">-->
-                <!--                    <button class="btn btn-warning">Edit image</button>-->
-                <!--                </form>-->
-                <!--                <form th:action="@{/sports/delete-sport-image/{sportID}/{imageID}-->
-                <!--                (sportID=${sport.getId()}, imageID=${sport.getIconImage().getId()})}"-->
-                <!--                      th:method="post">-->
-                <!--                    <button class="btn btn-danger">Delete image</button>-->
-                <!--                </form>-->
-            </div>
         </div>
     </div>
 </div>

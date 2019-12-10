@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-3 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
+<div class="col-3 mt-3 ml-3 mw-100 pt-3 pb-2 border rounded shadow-lg" style="height: 255px;">
 
     <form th:action="@{/sport-centers/edit-sport-center-address/{id}(id=${sportCenterServiceModel.getId()})}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
@@ -17,8 +17,7 @@
             <input name="details" type="text" th:value="${sportCenterServiceModel.getAddress().getDetails()}"
                    class="btn btn-block border text-left" placeholder="Details...">
         </div>
-        <hr>
-        <button type="submit" class="btn btn-lg btn-block btn-warning mb-2 mt-3">Save address</button>
+        <button type="submit" class="btn btn-lg btn-block btn-warning mb-2 mt-4">Save address</button>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
 

@@ -42,7 +42,9 @@
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                     <form th:action="@{/sports/sport-details/{id}(id=${sport.getId()})}"
                           th:method="get" class="w-100">
-                        <button class="btn btn-block btn-warning border border-dark">Sport details</button>
+                        <button class="btn btn-block btn-warning border border-dark font-weight-bold font-italic">
+                            Admin
+                        </button>
                     </form>
                 </th:block>
             </div>

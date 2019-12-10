@@ -13,7 +13,7 @@
 </header>
 
 <main class="d-flex justify-content-center">
-    <div class="jumbotron col-8 shadow-lg bg-white">
+    <div class="jumbotron col-8 shadow-lg bg-white pb-4">
 
         <div class="row">
             <h2 class="font-italic ml-3" th:text="${sportCenterServiceModel.getName()}"></h2>
@@ -44,13 +44,14 @@
         <div class="row">
             <div class="col d-flex flex-wrap pt-2 px-0">
                 <th:block th:each="image, iter : ${sportCenterServiceModel.getSportCenterImages()}">
-                    <th:block th:include="~{fragments/sport_centers/sport-center-details-image-modal}"></th:block>
+                    <th:block th:include="~{fragments/sport_centers/guests-details-image-modal}"></th:block>
                 </th:block>
             </div>
         </div>
         <hr>
 
         <h5 class="font-italic">Sports:</h5>
+
         <div class="row">
             <div class="col d-flex flex-wrap pt-2 px-0">
                 <th:block th:each="sport, iter : ${sportCenterServiceModel.getSports()}">

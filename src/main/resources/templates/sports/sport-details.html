@@ -14,32 +14,25 @@
 
 <main class="d-flex justify-content-center">
     <div class="jumbotron col-8 shadow-lg bg-white">
-        <h1>Sport details</h1>
-        <hr>
+
         <div class="row">
-            <h5 class="mx-3">Name:</h5>
-            <h5 th:text="${sportServiceModel.getName()}"></h5>
+            <h2 class="ml-3 font-italic" th:text="${sportServiceModel.getName()}"></h2>
         </div>
         <hr>
 
-        <h5>Icon image:</h5>
+        <h5 class=" font-italic">Icon image:</h5>
         <div class="row">
-            <div class="col-3">
-                <th:block th:include="~{fragments/sports/form-edit-sport-icon-image}"></th:block>
-            </div>
-            <div class="col-4">
-                <th:block th:include="~{fragments/sports/sport-details-icon-image-modal}"></th:block>
-            </div>
+            <th:block th:include="~{fragments/sports/sport-details-icon-image-modal}"></th:block>
         </div>
         <hr>
 
-        <h5>Description:</h5>
+        <h5 class=" font-italic">Description:</h5>
         <div class="row">
             <th:block th:include="~{fragments/sports/form-sport-description}"></th:block>
         </div>
         <hr>
 
-        <h5>Sport images:</h5>
+        <h5 class=" font-italic">Sport images:</h5>
         <div class="row">
             <div class="col-3">
                 <th:block th:include="~{fragments/sports/form-add-sport-images}"></th:block>
@@ -52,18 +45,16 @@
         </div>
         <hr>
         <th:block th:include="~{fragments/go-back-btn}"></th:block>
-        <hr>
-        <th:block th:include="~{fragments/sports/delete-sport-modal}"></th:block>
     </div>
 </main>
 <script th:inline="javascript">
     let id = [[${sportServiceModel.getIconImage().getId()}]];
 
     fetch("/rest/sports/load-icon-image/" + id)
-        .then(resp=>resp.json())
-        .then(resp=> {
-           $("#icon-img").attr("src", resp.imageURL);
-           $("#icon-modal-img").attr("src", resp.imageURL);
+        .then(resp => resp.json())
+        .then(resp => {
+            $("#icon-img").attr("src", resp.imageURL);
+            $("#icon-modal-img").attr("src", resp.imageURL);
         });
 
     $('#exampleModalCenter').on('shown.bs.modal', function () {
