@@ -96,7 +96,7 @@ public class SportCentersController {
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         sportCenterServiceModel.setDescription(sportCenterEditBindingModel.getDescription());
         SportCenterServiceModel updatedSportCenterServiceModel = this.sportCenterService
-                .updateSportCenterDescription(sportCenterServiceModel);
+                .updateSportCenter(sportCenterServiceModel);
 
         modelAndView.addObject("sportCenterServiceModel", updatedSportCenterServiceModel);
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);

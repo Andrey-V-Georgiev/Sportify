@@ -132,7 +132,10 @@
             </div>
             <hr>
         </th:block>
-        <th:block th:include="~{fragments/go-back-btn}"></th:block>
+        <form th:action="@{/calendar/show-calendar/{id}(id=${scheduleViewModel.getSportCenter().getId()})}"
+              th:method="get">
+            <button class="btn btn-lg btn-outline-dark">Go to Calendar</button>
+        </form>
     </div>
 </main>
 <script type="text/javascript">

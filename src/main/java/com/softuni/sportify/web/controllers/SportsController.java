@@ -172,7 +172,7 @@ public class SportsController {
 
     @PostMapping("/delete-sport-image/{sportID}/{imageID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView deleteImage(@PathVariable("sportID") String sportID,
+    public ModelAndView deleteSportImage(@PathVariable("sportID") String sportID,
                                     @PathVariable("imageID") String imageID,
                                     ModelAndView modelAndView) throws Exception {
 
@@ -182,4 +182,15 @@ public class SportsController {
         return modelAndView;
     }
 
+    @PostMapping("/delete-sport/{sportID}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView deleteSport(@PathVariable("sportID") String sportID,
+                                    ModelAndView modelAndView) throws Exception {
+
+        SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
+        this.sportService.deleteSport(sportServiceModel);
+
+        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_SPORTS);
+        return modelAndView;
+    }
 }

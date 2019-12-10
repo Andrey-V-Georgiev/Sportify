@@ -1,10 +1,7 @@
 package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.entities.*;
-import com.softuni.sportify.domain.models.service_models.AddressServiceModel;
-import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
-import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
-import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
+import com.softuni.sportify.domain.models.service_models.*;
 import com.softuni.sportify.repositories.ImageRepository;
 import com.softuni.sportify.repositories.ScheduleRepository;
 import com.softuni.sportify.repositories.SportCenterRepository;
@@ -25,24 +22,18 @@ public class SportCenterServiceImpl implements SportCenterService {
     private final AddressService addressService;
     private final SportRepository sportRepository;
     private final ImageRepository imageRepository;
-    private final ScheduleRepository scheduleRepository;
-    private final ScheduleService scheduleService;
 
     @Autowired
     public SportCenterServiceImpl(ModelMapper modelMapper,
                                   SportCenterRepository sportCenterRepository,
                                   AddressService addressService,
                                   SportRepository sportRepository,
-                                  ImageRepository imageRepository,
-                                  ScheduleRepository scheduleRepository,
-                                  ScheduleService scheduleService) {
+                                  ImageRepository imageRepository) {
         this.modelMapper = modelMapper;
         this.sportCenterRepository = sportCenterRepository;
         this.addressService = addressService;
         this.sportRepository = sportRepository;
         this.imageRepository = imageRepository;
-        this.scheduleRepository = scheduleRepository;
-        this.scheduleService = scheduleService;
     }
 
     @Override
@@ -73,15 +64,11 @@ public class SportCenterServiceImpl implements SportCenterService {
     }
 
     @Override
-    public SportCenterServiceModel updateSportCenterDescription(SportCenterServiceModel sportCenterServiceModel) {
+    public SportCenterServiceModel updateSportCenter(SportCenterServiceModel sportCenterServiceModel) {
 
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
-        SportCenter updatedSportCenter = null;
-        try {
-            updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SportCenter updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
+
         return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
     }
 
@@ -148,16 +135,32 @@ public class SportCenterServiceImpl implements SportCenterService {
 
     @Override
     public void deleteSportCenter(SportCenterServiceModel sportCenterServiceModel) {
-
-        SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
-        Schedule schedule = this.scheduleRepository.findAll()
+        /* get schedules IDs */
+        List<String> schedulesIDs = sportCenterServiceModel.getCalendar()
                 .stream()
-                .filter(s -> s.getSportCenter().getId().equals(sportCenter.getId()))
-                .collect(Collectors.toList())
-                .get(0);
-        this.scheduleService.deleteSchedule(this.modelMapper.map(schedule, ScheduleServiceModel.class));
-        this.sportCenterRepository.delete(sportCenter);
+                .map(s -> s.getId())
+                .collect(Collectors.toList());
+        /* empty sport center calendar ArrayList() */
+        sportCenterServiceModel.setCalendar(new ArrayList<>());
+        /* empty sport center sports ArrayList() */
+        sportCenterServiceModel.setSports(new ArrayList<>());
+        /* save changes */
+        SportCenterServiceModel updatedSportCenterServiceModel = this.updateSportCenter(sportCenterServiceModel);
+
+        this.sportCenterRepository.delete(this.modelMapper.map(updatedSportCenterServiceModel, SportCenter.class));
     }
 
+    @Override
+    public void removeCurrentSport(SportServiceModel sportServiceModel) {
 
+        List<SportCenter> allSportCenters = this.sportCenterRepository.findAll();
+        for(SportCenter sc : allSportCenters) {
+            List<Sport> filteredSports = sc.getSports()
+                    .stream()
+                    .filter(s -> !s.getId().equals(sportServiceModel.getId()))
+                    .collect(Collectors.toList());
+            sc.setSports(filteredSports);
+            this.sportCenterRepository.save(sc);
+        }
+    }
 }

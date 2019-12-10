@@ -13,7 +13,7 @@
 </header>
 
 <main class="d-flex justify-content-center">
-    <div class="jumbotron col-8 shadow-lg bg-white">
+    <div class="jumbotron col-8 shadow-lg bg-white pb-4">
 
         <div class="row">
             <h2 class="ml-3 font-italic" th:text="${sportCenterServiceModel.getName()}"></h2>
@@ -65,7 +65,7 @@
         <hr>
         <form th:action="@{/calendar/show-calendar/{id}(id=${sportCenterServiceModel.getId()})}"
               th:method="get" class="w-100">
-            <button class="col-3 btn btn-lg btn-outline-success">Show Calendar</button>
+            <button class="col-3 btn btn-lg btn-outline-dark">Show Calendar</button>
         </form>
         <hr>
         <th:block th:include="~{fragments/go-back-btn}"></th:block>

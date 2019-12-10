@@ -4,14 +4,13 @@ import com.softuni.sportify.domain.entities.Image;
 import com.softuni.sportify.domain.entities.Sport;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
-import com.softuni.sportify.repositories.EventRepository;
 import com.softuni.sportify.repositories.ImageRepository;
-import com.softuni.sportify.repositories.SportCenterRepository;
 import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,20 +21,23 @@ public class SportServiceImpl implements SportService {
     private final ModelMapper modelMapper;
     private final SportRepository sportRepository;
     private final ImageRepository imageRepository;
-    private final SportCenterRepository sportCenterRepository;
-    private final EventRepository eventRepository;
+    private final SportCenterService sportCenterService;
+    private final EventService eventService;
+    private final ScheduleService scheduleService;
 
     @Autowired
     public SportServiceImpl(ModelMapper modelMapper,
                             SportRepository sportRepository,
                             ImageRepository imageRepository,
-                            SportCenterRepository sportCenterRepository,
-                            EventRepository eventRepository) {
+                            SportCenterService sportCenterService,
+                            EventService eventService,
+                            ScheduleService scheduleService) {
         this.modelMapper = modelMapper;
         this.sportRepository = sportRepository;
         this.imageRepository = imageRepository;
-        this.sportCenterRepository = sportCenterRepository;
-        this.eventRepository = eventRepository;
+        this.sportCenterService = sportCenterService;
+        this.eventService = eventService;
+        this.scheduleService = scheduleService;
     }
 
     @Override
@@ -153,9 +155,21 @@ public class SportServiceImpl implements SportService {
         List<String> sortedSportsNames = allSportServiceModels
                 .stream()
                 .sorted(startsWithSport)
-                .map(s->s.getName())
+                .map(s -> s.getName())
                 .collect(Collectors.toList());
 
         return sortedSportsNames;
+    }
+
+    @Override
+    public void deleteSport(SportServiceModel sportServiceModel) {
+        /* remove current sport from sport centers structures */
+        this.sportCenterService.removeCurrentSport(sportServiceModel);
+        /* delete all events of this sport */
+        this.eventService.deleteAllBySport(sportServiceModel);
+        /* empty images list */
+        sportServiceModel.setSportImages(new ArrayList<>());
+
+        this.sportRepository.delete(this.modelMapper.map(sportServiceModel, Sport.class));
     }
 }

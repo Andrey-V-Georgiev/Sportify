@@ -3,7 +3,10 @@ package com.softuni.sportify.services;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
+import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface ScheduleService {
@@ -30,4 +33,9 @@ public interface ScheduleService {
                      EventServiceModel eventServiceModel);
 
     void deleteSchedule(ScheduleServiceModel scheduleServiceModel);
+
+    void deleteScheduleByID(String id);
+
+    void deleteSchedulesByIDs(List<String> schedulesIDs);
+
 }

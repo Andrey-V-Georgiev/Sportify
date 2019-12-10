@@ -32,8 +32,8 @@ public class Schedule extends BaseEntity {
     public Schedule() {
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="sport_center_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sport_center_id")
     public SportCenter getSportCenter() {
         return sportCenter;
     }

@@ -176,7 +176,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         switch (eventServiceModel.getStartTime()) {
             case SIX_OCLOCK:
                 scheduleServiceModel.setTime6(updateEventInList(scheduleServiceModel.getTime6(), updatedEventServiceModel));
-            break;
+                break;
             case SEVEN_OCLOCK:
                 scheduleServiceModel.setTime7(updateEventInList(scheduleServiceModel.getTime7(), updatedEventServiceModel));
                 break;
@@ -297,6 +297,20 @@ public class ScheduleServiceImpl implements ScheduleService {
         this.scheduleRepository.delete(schedule);
     }
 
+    @Override
+    public void deleteScheduleByID(String id) {
+
+        this.scheduleRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteSchedulesByIDs(List<String> schedulesIDs) {
+
+        for (String id : schedulesIDs) {
+            this.deleteScheduleByID(id);
+        }
+    }
+
     private List<EventServiceModel> deleteEventFromList(List<EventServiceModel> eventServiceModelList,
                                                         EventServiceModel eventServiceModel) {
 
@@ -318,6 +332,4 @@ public class ScheduleServiceImpl implements ScheduleService {
         filteredEvents.add(updatedEventServiceModel);
         return filteredEvents;
     }
-
-
 }

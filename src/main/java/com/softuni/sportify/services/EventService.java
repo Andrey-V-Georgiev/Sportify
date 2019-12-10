@@ -2,6 +2,7 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
+import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,4 +20,7 @@ public interface EventService {
     EventServiceModel updateEvent(EventServiceModel eventServiceModel);
 
     void deleteEvent(EventServiceModel eventServiceModel);
+
+    void deleteAllBySport(SportServiceModel sportServiceModel);
+
 }

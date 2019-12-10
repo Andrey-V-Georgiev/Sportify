@@ -3,8 +3,8 @@ package com.softuni.sportify.services;
 import com.softuni.sportify.domain.entities.Event;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
+import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.repositories.EventRepository;
-import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +22,12 @@ public class EventServiceImpl implements EventService {
 
     private final ModelMapper modelMapper;
     private final EventRepository eventRepository;
-    private final SportRepository sportRepository;
 
     @Autowired
     public EventServiceImpl(ModelMapper modelMapper,
-                            EventRepository eventRepository,
-                            SportRepository sportRepository) {
+                            EventRepository eventRepository) {
         this.modelMapper = modelMapper;
         this.eventRepository = eventRepository;
-        this.sportRepository = sportRepository;
     }
 
     @Override
@@ -85,5 +82,20 @@ public class EventServiceImpl implements EventService {
 
         Event event = this.modelMapper.map(eventServiceModel, Event.class);
         this.eventRepository.delete(event);
+    }
+
+    @Override
+    public void deleteAllBySport(SportServiceModel sportServiceModel) {
+        /* obtain events id's for the sport */
+        List<String> eventsIDs = this.eventRepository.findAll()
+                .stream()
+                .filter(e -> e.getSport().getId().equals(sportServiceModel.getId()))
+                .map(e -> e.getId())
+                .collect(Collectors.toList());
+
+        /* delete those events from DB */
+        for (String id : eventsIDs) {
+            this.eventRepository.deleteById(id);
+        }
     }
 }

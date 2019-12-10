@@ -2,6 +2,7 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
+import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface SportCenterService {
 
     SportCenterServiceModel findByID(String id);
 
-    SportCenterServiceModel updateSportCenterDescription(SportCenterServiceModel sportCenterServiceModel);
+    SportCenterServiceModel updateSportCenter(SportCenterServiceModel sportCenterServiceModel);
 
     SportCenterServiceModel addSportCenterImage(SportCenterServiceModel sportCenterServiceModel,
                                                 ImageServiceModel imageServiceModel);
@@ -29,4 +30,6 @@ public interface SportCenterService {
     void deleteSportCenterImage(String sportCenterID, String imageID);
 
     void deleteSportCenter(SportCenterServiceModel sportCenterServiceModel);
+
+    void removeCurrentSport(SportServiceModel sportServiceModel);
 }

@@ -32,4 +32,7 @@ public interface SportService {
     List<SportServiceModel> findAllSportsStartsWith(SportServiceModel sportServiceModel);
 
     List<String> findAllSportsNamesStartsWith(SportServiceModel sportServiceModel);
+
+    void deleteSport(SportServiceModel sportServiceModel);
+
 }
