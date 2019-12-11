@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded shadow-lg" style="height: 240px; width: 345px">
-    <form th:action="@{/themes/add-images-index-carousel/{id}(id=${themeServiceModel.getId()})}"
+    <form th:action="@{/themes/add-images-index-carousel/{id}(id=${themeViewModel.getId()})}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
 
         <div class="btn-group-vertical w-100">
@@ -17,7 +17,7 @@
         <input name="image" type="file" class="mb-1">
         <hr>
 
-        <div th:if="${themeServiceModel.getIndexCarouselImages().size() < 3}">
+        <div th:if="${themeViewModel.getIndexCarouselImages().size() < 3}">
             <button type="submit" class="btn btn-md btn-block btn-warning my-2">Add image</button>
         </div>
 

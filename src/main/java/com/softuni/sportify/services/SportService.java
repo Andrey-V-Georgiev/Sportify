@@ -29,9 +29,9 @@ public interface SportService {
 
     List<String> findAllSportsNames();
 
-    List<SportServiceModel> findAllSportsStartsWith(SportServiceModel sportServiceModel);
+    List<SportServiceModel> findAllSportsStartsWith(String id);
 
-    List<String> findAllSportsNamesStartsWith(SportServiceModel sportServiceModel);
+    List<String> findAllSportsNamesStartsWith(String id);
 
     void deleteSport(SportServiceModel sportServiceModel);
 

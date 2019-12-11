@@ -133,11 +133,11 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public List<SportServiceModel> findAllSportsStartsWith(SportServiceModel sportServiceModel) {
+    public List<SportServiceModel> findAllSportsStartsWith(String id) {
 
         List<SportServiceModel> allSportServiceModels = this.findAllSports();
         Comparator<SportServiceModel> startsWithSport = Comparator
-                .comparing(s -> !s.getId().equals(sportServiceModel.getId()));
+                .comparing(s -> !s.getId().equals(id));
         List<SportServiceModel> sortedSports = allSportServiceModels
                 .stream()
                 .sorted(startsWithSport)
@@ -147,11 +147,11 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public List<String> findAllSportsNamesStartsWith(SportServiceModel sportServiceModel) {
+    public List<String> findAllSportsNamesStartsWith(String id) {
 
         List<SportServiceModel> allSportServiceModels = this.findAllSports();
         Comparator<SportServiceModel> startsWithSport = Comparator
-                .comparing(s -> !s.getId().equals(sportServiceModel.getId()));
+                .comparing(s -> !s.getId().equals(id));
         List<String> sortedSportsNames = allSportServiceModels
                 .stream()
                 .sorted(startsWithSport)

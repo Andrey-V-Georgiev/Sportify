@@ -5,6 +5,7 @@ public class ImageViewModel extends BaseViewModel {
     private String name;
     private String imageURL;
     private String publicID;
+    private String ownerObjectID;
 
     public ImageViewModel() {
     }
@@ -31,5 +32,13 @@ public class ImageViewModel extends BaseViewModel {
 
     public void setPublicID(String publicID) {
         this.publicID = publicID;
+    }
+
+    public String getOwnerObjectID() {
+        return ownerObjectID;
+    }
+
+    public void setOwnerObjectID(String ownerObjectID) {
+        this.ownerObjectID = ownerObjectID;
     }
 }

@@ -16,24 +16,24 @@
     <div class="jumbotron col-8 py-4 shadow-lg bg-white">
 
         <div class="row">
-            <h2 class="font-italic ml-3" th:text="${sportServiceModel.getName()}"></h2>
+            <h2 class="font-italic ml-3" th:text="${sportViewModel.getName()}"></h2>
         </div>
 
         <div class="row">
-            <img id="icon-img" th:src="${sportServiceModel.getIconImage()}"
+            <img id="icon-img" th:src="${sportViewModel.getIconImage()}"
                  class="m-3 rounded" style="height: 450px;" alt="...">
         </div>
         <hr>
 
         <div class="row">
-            <p class="px-3 font-italic" th:text="${sportServiceModel.getSportDescription()}"></p>
+            <p class="px-3 font-italic" th:text="${sportViewModel.getSportDescription()}"></p>
         </div>
         <hr>
 
         <h5 class="font-italic">Sport images:</h5>
         <div class="row">
             <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="image, iter : ${sportServiceModel.getSportImages()}">
+                <th:block th:each="image, iter : ${sportViewModel.getSportImages()}">
                     <th:block th:include="~{fragments/sports/guests-details-image-modal}"></th:block>
                 </th:block>
             </div>
@@ -43,7 +43,7 @@
     </div>
 </main>
 <script th:inline="javascript">
-    let id = [[${sportServiceModel.getIconImage().getId()}]];
+    let id = [[${sportViewModel.getIconImage().getId()}]];
 
     fetch("/rest/sports/load-icon-image/" + id)
         .then(resp => resp.json())

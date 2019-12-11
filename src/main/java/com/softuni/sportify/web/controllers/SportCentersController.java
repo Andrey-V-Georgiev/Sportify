@@ -2,6 +2,8 @@ package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.*;
 import com.softuni.sportify.domain.models.service_models.*;
+import com.softuni.sportify.domain.models.view_models.ImageViewModel;
+import com.softuni.sportify.domain.models.view_models.SportCenterViewModel;
 import com.softuni.sportify.services.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.softuni.sportify.constants.AuthConstants.HAS_ROLE_ADMIN;
 import static com.softuni.sportify.constants.SportCentersControllerConstants.*;
@@ -49,9 +52,9 @@ public class SportCentersController {
 
     @PostMapping("/create-sport-center")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView createSportCenterConfirmed(@ModelAttribute
-                                                           SportCenterCreateBindingModel sportCenterCreateBindingModel,
-                                                   ModelAndView modelAndView) throws IOException {
+    public ModelAndView createSportCenterConfirmed(
+            @ModelAttribute SportCenterCreateBindingModel sportCenterCreateBindingModel,
+            ModelAndView modelAndView) throws IOException {
 
         ImageServiceModel iconImageServiceModel = this.imageService.createImageMultipartFile(
                 sportCenterCreateBindingModel.getIconImage(), sportCenterCreateBindingModel.getName());
@@ -66,22 +69,28 @@ public class SportCentersController {
 
     @GetMapping("/sport-center-details/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView sportCenterDetails(@PathVariable String id,
-                                           ModelAndView modelAndView) {
+    public ModelAndView sportCenterDetails(
+            @PathVariable String id,
+            ModelAndView modelAndView) {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(id);
-        modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
+        SportCenterViewModel sportCenterViewModel = this.modelMapper
+                .map(sportCenterServiceModel, SportCenterViewModel.class);
+        modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
 
         modelAndView.setViewName(VIEW_SPORT_CENTER_DETAILS);
         return modelAndView;
     }
 
     @GetMapping("/guests-sport-center-details/{id}")
-    public ModelAndView guestsSportCenterDetails(@PathVariable String id,
-                                                 ModelAndView modelAndView) {
+    public ModelAndView guestsSportCenterDetails(
+            @PathVariable String id,
+            ModelAndView modelAndView) {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(id);
-        modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
+        SportCenterViewModel sportCenterViewModel = this.modelMapper
+                .map(sportCenterServiceModel, SportCenterViewModel.class);
+        modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
 
         modelAndView.setViewName(VIEW_GUESTS_SPORT_CENTER_DETAILS);
         return modelAndView;
@@ -89,16 +98,20 @@ public class SportCentersController {
 
     @PostMapping("/edit-description/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editDescription(@PathVariable("id") String sportCenterID,
-                                        @ModelAttribute SportCenterEditBindingModel sportCenterEditBindingModel,
-                                        ModelAndView modelAndView) {
+    public ModelAndView editDescription(
+            @PathVariable("id") String sportCenterID,
+            @ModelAttribute SportCenterEditBindingModel sportCenterEditBindingModel,
+            ModelAndView modelAndView) {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         sportCenterServiceModel.setDescription(sportCenterEditBindingModel.getDescription());
         SportCenterServiceModel updatedSportCenterServiceModel = this.sportCenterService
                 .updateSportCenter(sportCenterServiceModel);
+        SportCenterViewModel sportCenterViewModel = this.modelMapper
+                .map(updatedSportCenterServiceModel, SportCenterViewModel.class);
 
-        modelAndView.addObject("sportCenterServiceModel", updatedSportCenterServiceModel);
+        modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
         return modelAndView;
     }
@@ -112,26 +125,29 @@ public class SportCentersController {
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), sportCenterServiceModel.getName());
-
         SportCenterServiceModel updatedSportCenterServiceModel = this.sportCenterService
                 .addSportCenterImage(sportCenterServiceModel, imageServiceModel);
+        SportCenterViewModel sportCenterViewModel = this.modelMapper
+                .map(updatedSportCenterServiceModel, SportCenterViewModel.class);
 
-        modelAndView.addObject("sportCenterServiceModel", updatedSportCenterServiceModel);
+        modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
         return modelAndView;
     }
 
-    @GetMapping("/edit-sport-center-image/{sportID}/{imageID}")
+    @GetMapping("/edit-sport-center-image/{sportCenterID}/{imageID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editSportCenterImage(@PathVariable("sportID") String sportID,
-                                             @PathVariable("imageID") String imageID,
-                                             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
-                                             ModelAndView modelAndView) {
+    public ModelAndView editSportCenterImage(
+            @PathVariable("sportCenterID") String sportCenterID,
+            @PathVariable("imageID") String imageID,
+            ModelAndView modelAndView) {
 
         ImageServiceModel imageServiceModel = this.imageService.findImageByID(imageID);
-        this.modelMapper.map(imageServiceModel, imageEditBindingModel);
-        imageEditBindingModel.setOwnerObjectID(sportID);
-        modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+        ImageViewModel imageViewModel = this.modelMapper.map(imageServiceModel, ImageViewModel.class);
+        imageViewModel.setOwnerObjectID(sportCenterID);
+
+        modelAndView.addObject("imageViewModel", imageViewModel);
 
         modelAndView.setViewName(VIEW_EDIT_SPORT_CENTER_IMAGE);
         return modelAndView;
@@ -139,8 +155,9 @@ public class SportCentersController {
 
     @PostMapping("/edit-sport-center-image")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editSportCenterImageConfirmed(@ModelAttribute ImageEditBindingModel imageEditBindingModel,
-                                                      ModelAndView modelAndView) throws IOException {
+    public ModelAndView editSportCenterImageConfirmed(
+            @ModelAttribute ImageEditBindingModel imageEditBindingModel,
+            ModelAndView modelAndView) throws IOException {
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
@@ -150,32 +167,37 @@ public class SportCentersController {
 
     @PostMapping("/delete-sport-center-image/{sportCenterID}/{imageID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView deleteImage(@PathVariable("sportCenterID") String sportCenterID,
-                                    @PathVariable("imageID") String imageID,
-                                    ModelAndView modelAndView) throws Exception {
+    public ModelAndView deleteImage(
+            @PathVariable("sportCenterID") String sportCenterID,
+            @PathVariable("imageID") String imageID,
+            ModelAndView modelAndView) throws Exception {
 
         this.sportCenterService.deleteSportCenterImage(sportCenterID, imageID);
         this.imageService.deleteImage(imageID);
+
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
         return modelAndView;
     }
 
     @PostMapping("/edit-sport-center-address/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editSportCenterAddress(@PathVariable("id") String sportCenterID,
-                                               @ModelAttribute AddressEditBindingModel addressEditBindingModel,
-                                               ModelAndView modelAndView) throws IOException {
+    public ModelAndView editSportCenterAddress(
+            @PathVariable("id") String sportCenterID,
+            @ModelAttribute AddressEditBindingModel addressEditBindingModel,
+            ModelAndView modelAndView) throws IOException {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         addressEditBindingModel.setId(sportCenterServiceModel.getAddress().getId());
         AddressServiceModel addressServiceModel = this.modelMapper.map(
                 addressEditBindingModel, AddressServiceModel.class);
         sportCenterServiceModel.setAddress(this.addressService.editAddress(addressServiceModel));
-
         SportCenterServiceModel updatedSportCenterServiceModel = this.sportCenterService
                 .editSportCenterAddress(sportCenterServiceModel);
+        SportCenterViewModel sportCenterViewModel = this.modelMapper
+                .map(updatedSportCenterServiceModel, SportCenterViewModel.class);
 
-        modelAndView.addObject("sportCenterServiceModel", updatedSportCenterServiceModel);
+        modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + sportCenterID);
         return modelAndView;
     }
@@ -183,8 +205,12 @@ public class SportCentersController {
     @GetMapping("/show-all-sport-centers")
     public ModelAndView showAllSports(ModelAndView modelAndView) {
 
-        List<SportCenterServiceModel> allSportCenterServiceModels = this.sportCenterService.findAllSportCenters();
-        modelAndView.addObject("allSportCenterServiceModels", allSportCenterServiceModels);
+        List<SportCenterViewModel> sportCenterViewModels = this.sportCenterService.findAllSportCenters()
+                .stream()
+                .map(sc -> this.modelMapper.map(sc, SportCenterViewModel.class))
+                .collect(Collectors.toList());
+
+        modelAndView.addObject("sportCenterViewModels", sportCenterViewModels);
 
         modelAndView.setViewName(VIEW_SHOW_ALL_SPORT_CENTERS);
         return modelAndView;
@@ -192,23 +218,29 @@ public class SportCentersController {
 
     @GetMapping("/update-sport-center-sports/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView updateSportCenterSports(@PathVariable("id") String sportCenterID,
-                                                @ModelAttribute SportCenterUpdateSportsBindingModel bindingModel,
-                                                ModelAndView modelAndView) throws IOException {
+    public ModelAndView updateSportCenterSports(
+            @PathVariable("id") String sportCenterID,
+            @ModelAttribute SportCenterUpdateSportsBindingModel bindingModel,
+            ModelAndView modelAndView) throws IOException {
 
-        List<SportServiceModel> allSportServiceModels = this.sportService.findAllSports();
+        List<SportCenterViewModel> sportCenterViewModels = this.sportService.findAllSports()
+                .stream()
+                .map(sc -> this.modelMapper.map(sc, SportCenterViewModel.class))
+                .collect(Collectors.toList());
 
-        modelAndView.addObject("allSportServiceModels", allSportServiceModels);
+        modelAndView.addObject("sportCenterViewModels", sportCenterViewModels);
         modelAndView.addObject("sportCenterID", sportCenterID);
+
         modelAndView.setViewName(VIEW_UPDATE_SPORT_CENTER_SPORTS);
         return modelAndView;
     }
 
     @PostMapping("/update-sport-center-sports/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView updateSportCenterSportsConfirm(@PathVariable("id") String sportCenterID,
-                                                       @ModelAttribute SportCenterUpdateSportsBindingModel bindingModel,
-                                                       ModelAndView modelAndView) throws IOException {
+    public ModelAndView updateSportCenterSportsConfirm(
+            @PathVariable("id") String sportCenterID,
+            @ModelAttribute SportCenterUpdateSportsBindingModel bindingModel,
+            ModelAndView modelAndView) throws IOException {
 
         List<String> spotrsIDs = bindingModel.getSpotrsIDs();
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
@@ -220,8 +252,9 @@ public class SportCentersController {
 
     @PostMapping("/delete-sport-center/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView deleteSportCenter(@PathVariable("id") String sportCenterID,
-                                          ModelAndView modelAndView) throws IOException {
+    public ModelAndView deleteSportCenter(
+            @PathVariable("id") String sportCenterID,
+            ModelAndView modelAndView) throws IOException {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         this.sportCenterService.deleteSportCenter(sportCenterServiceModel);

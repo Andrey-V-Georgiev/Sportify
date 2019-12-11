@@ -18,7 +18,9 @@ public class HomeController {
     private final ImageService imageService;
 
     @Autowired
-    public HomeController(ModelMapper modelMapper, ImageService imageService) {
+    public HomeController(ModelMapper modelMapper,
+                          ImageService imageService) {
+
         this.modelMapper = modelMapper;
         this.imageService = imageService;
     }

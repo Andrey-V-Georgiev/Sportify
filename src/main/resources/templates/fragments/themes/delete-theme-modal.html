@@ -21,7 +21,7 @@
                Are you sure you want to delete this theme?
             </div>
             <div class="modal-footer">
-                <form th:action="@{/settings/delete-setting/{id}(id=${themeServiceModel.getId()})}"
+                <form th:action="@{/settings/delete-setting/{id}(id=${themeViewModel.getId()})}"
                       th:method="post">
                     <button class="btn btn-lg btn-danger">Confirm deleting</button>
                 </form>

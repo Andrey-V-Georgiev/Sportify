@@ -5,7 +5,7 @@
 
 <div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded shadow-lg" style="height: 255px;">
 
-    <form th:action="@{/sport-centers/add-sport-center-images/{id}(id=${sportCenterServiceModel.getId()})}"
+    <form th:action="@{/sport-centers/add-sport-center-images/{id}(id=${sportCenterViewModel.getId()})}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
         <div class="btn-group-vertical w-100">
             <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">

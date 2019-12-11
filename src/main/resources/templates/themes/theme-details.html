@@ -14,7 +14,7 @@
 
 <main class="d-flex justify-content-center">
     <div class="jumbotron col-9 shadow-lg bg-white pb-4">
-        <h2 class="font-italic ml-1" th:text="${themeServiceModel.getName()}"></h2>
+        <h2 class="font-italic ml-1" th:text="${themeViewModel.getName()}"></h2>
         <hr>
 
         <h5 class="font-italic ml-1">Icon image:</h5>
@@ -31,7 +31,7 @@
                 <th:block th:include="~{fragments/themes/form-index-carousel-images}"></th:block>
             </div>
             <div class="col d-flex flex-wrap pt-2">
-                <th:block th:each="image, iter : ${themeServiceModel.getIndexCarouselImages()}">
+                <th:block th:each="image, iter : ${themeViewModel.getIndexCarouselImages()}">
                     <th:block th:include="~{fragments/themes/theme-details-image-modal}"></th:block>
                 </th:block>
             </div>
@@ -44,7 +44,7 @@
                 <th:block th:include="~{fragments/themes/form-home-carousel-images}"></th:block>
             </div>
             <div class="col d-flex flex-wrap pt-2">
-                <th:block th:each="image, iter : ${themeServiceModel.getHomeCarouselImages()}">
+                <th:block th:each="image, iter : ${themeViewModel.getHomeCarouselImages()}">
                     <th:block th:include="~{fragments/themes/theme-details-image-modal}"></th:block>
                 </th:block>
             </div>
@@ -57,7 +57,7 @@
                 <th:block th:include="~{fragments/themes/form-admin-panel-images}"></th:block>
             </div>
             <div class="col d-flex flex-wrap pt-3">
-                <th:block th:each="image, iter : ${themeServiceModel.getAdminPanelImages()}">
+                <th:block th:each="image, iter : ${themeViewModel.getAdminPanelImages()}">
                     <th:block th:include="~{fragments/themes/admin-panel-image-modal}"></th:block>
                 </th:block>
             </div>

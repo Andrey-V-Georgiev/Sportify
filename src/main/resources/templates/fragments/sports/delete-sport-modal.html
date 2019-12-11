@@ -22,7 +22,7 @@
             </div>
             <div class="modal-footer">
                 <form th:action="@{/sports/delete-sport/{sportID}
-                                 (sportID=${sportServiceModel.getId()})}" th:method="post">
+                                 (sportID=${sportViewModel.getId()})}" th:method="post">
                     <button class="btn btn-lg btn-danger">Confirm deleting</button>
                 </form>
             </div>

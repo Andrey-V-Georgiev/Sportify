@@ -5,16 +5,16 @@
 
 <div class="col-3 mt-3 ml-3 mw-100 pt-3 pb-2 border rounded shadow-lg" style="height: 255px;">
 
-    <form th:action="@{/sport-centers/edit-sport-center-address/{id}(id=${sportCenterServiceModel.getId()})}"
+    <form th:action="@{/sport-centers/edit-sport-center-address/{id}(id=${sportCenterViewModel.getId()})}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
         <div class="btn-group-vertical w-100">
-            <input name="country" type="text" th:value="${sportCenterServiceModel.getAddress().getCountry()}"
+            <input name="country" type="text" th:value="${sportCenterViewModel.getAddress().getCountry()}"
                    class="btn btn-block border text-left" placeholder="Country...">
-            <input name="city" type="text" th:value="${sportCenterServiceModel.getAddress().getCity()}"
+            <input name="city" type="text" th:value="${sportCenterViewModel.getAddress().getCity()}"
                    class="btn btn-block border text-left" placeholder="City...">
-            <input name="street" type="text" th:value="${sportCenterServiceModel.getAddress().getStreet()}"
+            <input name="street" type="text" th:value="${sportCenterViewModel.getAddress().getStreet()}"
                    class="btn btn-block border text-left" placeholder="Street...">
-            <input name="details" type="text" th:value="${sportCenterServiceModel.getAddress().getDetails()}"
+            <input name="details" type="text" th:value="${sportCenterViewModel.getAddress().getDetails()}"
                    class="btn btn-block border text-left" placeholder="Details...">
         </div>
         <button type="submit" class="btn btn-lg btn-block btn-warning mb-2 mt-4">Save address</button>

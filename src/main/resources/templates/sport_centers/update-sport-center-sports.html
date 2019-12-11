@@ -20,7 +20,7 @@
         <form th:action="@{/sport-centers/update-sport-center-sports/{id}(id=${sportCenterID})}"
               th:method="post">
             <div class="d-flex flex-wrap">
-                <th:block th:each="sport, iter : ${allSportServiceModels}">
+                <th:block th:each="sport, iter : ${sportCenterViewModels}">
                     <th:block th:include="~{fragments/sport_centers/show-all-sport-center-sports-image-modal}">
                     </th:block>
                 </th:block>

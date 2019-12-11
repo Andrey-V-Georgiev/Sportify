@@ -4,12 +4,12 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <div class="col-8 mt-3 ml-3 mw-100 pt-4 border rounded shadow-lg" style="height: 255px;">
-    <form th:action="@{/sports/edit-description/{id}(id=${sportServiceModel.getId()})}"
+    <form th:action="@{/sports/edit-description/{id}(id=${sportViewModel.getId()})}"
           th:method="post" id="sportDescription" class="w-100 mx-0">
         <div class="btn-group-vertical w-100">
             <label>
                 <textarea rows="6" cols="120" name="sportDescription"
-                          th:text="${sportServiceModel.getSportDescription()}">
+                          th:text="${sportViewModel.getSportDescription()}">
                 </textarea>
             </label>
         </div>

@@ -17,7 +17,7 @@
         <h2 class="font-italic">Sport Centers</h2>
         <hr>
         <div class="d-flex flex-wrap">
-            <th:block th:each="sc, iter : ${allSportCenterServiceModels}">
+            <th:block th:each="sc, iter : ${sportCenterViewModels}">
                 <th:block th:include="~{fragments/sport_centers/show-all-sport-centers-image-modal}"></th:block>
             </th:block>
         </div>

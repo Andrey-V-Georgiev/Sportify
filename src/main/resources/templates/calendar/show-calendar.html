@@ -16,7 +16,7 @@
 
         <div id="calendar" class="w-75">
             <div class="row mt-2">
-                <h3 class="font-italic" th:text="${sportCenterServiceModel.getName()}"></h3>
+                <h3 class="font-italic" th:text="${sportCenterViewModel.getName()}"></h3>
             </div>
             <hr>
             <div id="menu" class="row my-3">
@@ -78,7 +78,7 @@
 
 <script type="text/javascript" th:inline="javascript">
 
-    let sportCenterID = [[${sportCenterServiceModel.getId()}]];
+    let sportCenterID = [[${sportCenterViewModel.getId()}]];
     let isAdmin = $('#isAdmin').text();
 
     $(document).ready(async function () {

@@ -5,10 +5,10 @@
 
 <div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded shadow-lg" style="height: 255px;">
 
-    <form id="edit-icon-form" th:action="@{/sports/edit-icon-image/{id}(id=${sportServiceModel.getId()})}"
+    <form id="edit-icon-form" th:action="@{/sports/edit-icon-image/{id}(id=${sportViewModel.getId()})}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
         <div class="btn-group-vertical w-100">
-            <input name="name" th:value="${sportServiceModel.getIconImage().getName()}"
+            <input name="name" th:value="${sportViewModel.getIconImage().getName()}"
                    type="text" class="btn btn-block border text-left" placeholder="Name...">
         </div>
         <hr>

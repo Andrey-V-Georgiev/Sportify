@@ -17,7 +17,7 @@
         <h2 class="font-italic">Show all themes</h2>
         <hr>
         <div class="d-flex flex-wrap">
-            <th:block th:each="theme, iter : ${allThemesServiceModels}">
+            <th:block th:each="theme, iter : ${themeViewModels}">
                 <th:block th:include="~{fragments/themes/show-all-themes-image-modal}"></th:block>
             </th:block>
         </div>

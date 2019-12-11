@@ -5,7 +5,9 @@ import com.softuni.sportify.domain.models.binding_models.EventEditBindingModel;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
+import com.softuni.sportify.domain.models.view_models.EventViewModel;
 import com.softuni.sportify.domain.models.view_models.ScheduleViewModel;
+import com.softuni.sportify.domain.models.view_models.SportCenterViewModel;
 import com.softuni.sportify.services.EventService;
 import com.softuni.sportify.services.ScheduleService;
 import com.softuni.sportify.services.SportCenterService;
@@ -16,6 +18,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 import static com.softuni.sportify.constants.AuthConstants.HAS_ROLE_ADMIN;
 import static com.softuni.sportify.constants.CalendarControllerConstants.*;
@@ -50,8 +54,12 @@ public class CalendarController {
             @PathVariable("id") String sportCenterID,
             ModelAndView modelAndView) {
 
-        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
-        modelAndView.addObject("sportCenterServiceModel", sportCenterServiceModel);
+        SportCenterServiceModel sportCenterServiceModel = this.sportCenterService
+                .findByID(sportCenterID);
+        SportCenterViewModel sportCenterViewModel = this.modelMapper
+                .map(sportCenterServiceModel, SportCenterViewModel.class);
+        modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+
         modelAndView.setViewName(VIEW_CALENDAR);
         return modelAndView;
     }
@@ -81,11 +89,12 @@ public class CalendarController {
             ModelAndView modelAndView) {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
-        ScheduleViewModel scheduleViewModel = this.modelMapper.map(scheduleServiceModel, ScheduleViewModel.class);
-
+        ScheduleViewModel scheduleViewModel = this.modelMapper
+                .map(scheduleServiceModel, ScheduleViewModel.class);
         modelAndView.addObject("scheduleViewModel", scheduleViewModel);
         modelAndView.addObject("EVENT_HOURS", EVENT_HOURS);
         modelAndView.addObject("month", MONTH_STRINGS.get(scheduleViewModel.getMonth() - 1));
+
         modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
         return modelAndView;
     }
@@ -100,11 +109,12 @@ public class CalendarController {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService
                 .findByDetails(sportCenterID, day, month, year);
-        ScheduleViewModel scheduleViewModel = this.modelMapper.map(scheduleServiceModel, ScheduleViewModel.class);
-
+        ScheduleViewModel scheduleViewModel = this.modelMapper
+                .map(scheduleServiceModel, ScheduleViewModel.class);
         modelAndView.addObject("scheduleViewModel", scheduleViewModel);
         modelAndView.addObject("EVENT_HOURS", EVENT_HOURS);
         modelAndView.addObject("month", MONTH_STRINGS.get(scheduleViewModel.getMonth() - 1));
+
         modelAndView.setViewName(VIEW_SCHEDULE_DETAILS);
         return modelAndView;
     }
@@ -140,8 +150,8 @@ public class CalendarController {
         EventServiceModel savedEventServiceModel = this.eventService
                 .createEvent(eventServiceModel, scheduleServiceModel);
         this.scheduleService.addEvent(scheduleServiceModel, savedEventServiceModel);
+        scheduleServiceModel.getSportCenter().getId();
 
-        String sportCenterID = scheduleServiceModel.getSportCenter().getId();
         modelAndView.setViewName(REDIRECT_TO_SCHEDULE_DETAILS_BY_ID + scheduleID);
         return modelAndView;
     }
@@ -153,27 +163,30 @@ public class CalendarController {
             @PathVariable("eventID") String eventID,
             ModelAndView modelAndView) {
 
-        ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
+        ScheduleViewModel scheduleViewModel = this.modelMapper
+                .map(this.scheduleService.findByID(scheduleID), ScheduleViewModel.class);
         EventServiceModel eventServiceModel = this.eventService.findByID(eventID);
-        EventEditBindingModel eventEditBindingModel = this.modelMapper
-                .map(eventServiceModel, EventEditBindingModel.class);
+        List<String> sportsNames = this.sportService
+                .findAllSportsNamesStartsWith(eventServiceModel.getSport().getId());
+        List<String> eventLevels = this.eventService.findAllLevelsStartsWith(eventServiceModel);
+        EventViewModel eventViewModel = this.modelMapper.map(eventServiceModel, EventViewModel.class);
 
-        modelAndView.addObject("scheduleServiceModel", scheduleServiceModel);
-        modelAndView.addObject("eventEditBindingModel", eventEditBindingModel);
-        modelAndView.addObject("sportsNames",
-                this.sportService.findAllSportsNamesStartsWith(eventServiceModel.getSport()));
-        modelAndView.addObject("eventLevels",
-                this.eventService.findAllLevelsStartsWith(eventServiceModel));
+        modelAndView.addObject("scheduleViewModel", scheduleViewModel);
+        modelAndView.addObject("eventViewModel", eventViewModel);
+        modelAndView.addObject("sportsNames", sportsNames);
+        modelAndView.addObject("eventLevels", eventLevels);
+
         modelAndView.setViewName(VIEW_EDIT_SCHEDULE_EVENT);
         return modelAndView;
     }
 
     @PostMapping("/edit-event/{scheduleID}/{eventID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editScheduleEventConfirm(@PathVariable("scheduleID") String scheduleID,
-                                                 @PathVariable("eventID") String eventID,
-                                                 @ModelAttribute EventEditBindingModel eventEditBindingModel,
-                                                 ModelAndView modelAndView) {
+    public ModelAndView editScheduleEventConfirm(
+            @PathVariable("scheduleID") String scheduleID,
+            @PathVariable("eventID") String eventID,
+            @ModelAttribute EventEditBindingModel eventEditBindingModel,
+            ModelAndView modelAndView) {
 
         EventServiceModel eventServiceModel = this.modelMapper.map(eventEditBindingModel, EventServiceModel.class);
         eventServiceModel.setId(eventID);
@@ -183,7 +196,7 @@ public class CalendarController {
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
         this.scheduleService.updateEvent(scheduleServiceModel, updatedEventServiceModel);
 
-        String sportCenterID = scheduleServiceModel.getSportCenter().getId();
+        scheduleServiceModel.getSportCenter().getId();
         modelAndView.setViewName(REDIRECT_TO_SCHEDULE_DETAILS_BY_ID + scheduleID);
         return modelAndView;
     }

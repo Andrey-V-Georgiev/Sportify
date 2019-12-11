@@ -22,7 +22,7 @@
         <div class="col-3 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
 
             <form th:action="@{/calendar/edit-event/{scheduleID}/{eventID}
-                             (scheduleID=${scheduleServiceModel.getId()},eventID=${eventEditBindingModel.getId()})}"
+                             (scheduleID=${scheduleViewModel.getId()},eventID=${eventViewModel.getId()})}"
                   th:method="post" class="w-100 mx-0" >
 
                 <label for="selectSport" class="mt-2 font-italic">Sport: </label>
@@ -40,17 +40,17 @@
                 </select>
 
                 <label for="floor" class="mt-2 font-italic">Floor: </label>
-                <input th:value="${eventEditBindingModel.getFloor()}"
+                <input th:value="${eventViewModel.getFloor()}"
                        id="floor" name="floor" type="number" class="btn btn-block border text-left">
 
                 <label for="hall" class="mt-2 font-italic">Hall: </label>
-                <input th:value="${eventEditBindingModel.getHall()}"
+                <input th:value="${eventViewModel.getHall()}"
                        name="hall" id="hall" type="text" class="btn btn-block border text-left">
 
-                <input name="startTime" th:value="${eventEditBindingModel.getStartTime()}" hidden>
+                <input name="startTime" th:value="${eventViewModel.getStartTime()}" hidden>
 
                 <label for="maxCapacity" class="mt-2 font-italic">Max capacity: </label>
-                <input th:value="${eventEditBindingModel.getMaxCapacity()}"
+                <input th:value="${eventViewModel.getMaxCapacity()}"
                        name="maxCapacity" id="maxCapacity" type="number" class="btn btn-block border text-left">
 
                 <hr>

@@ -23,10 +23,9 @@ public class AuthController {
     private final UserService userService;
     private final ModelMapper modelMapper;
 
-
     @Autowired
     public AuthController(UserService userService,
-                          ModelMapper modelMapper ) {
+                          ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
     }
@@ -34,18 +33,21 @@ public class AuthController {
     @GetMapping("/register")
     @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView register(ModelAndView modelAndView) {
+
         modelAndView.setViewName(VIEW_REGISTER);
         return modelAndView;
     }
 
     @PostMapping("/register")
     @PreAuthorize(IS_ANONYMOUS)
-    public ModelAndView registerConfirm(@ModelAttribute(name = "model") UserRegisterBindingModel model,
-                                        BindingResult bindingResult,
-                                        ModelAndView modelAndView) {
+    public ModelAndView registerConfirm(
+            @ModelAttribute(name = "model") UserRegisterBindingModel model,
+            BindingResult bindingResult,
+            ModelAndView modelAndView) {
 
         UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);
+
         modelAndView.setViewName(REDIRECT_TO_LOGIN);
         return modelAndView;
     }
@@ -53,6 +55,7 @@ public class AuthController {
     @GetMapping("/login")
     @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView login(ModelAndView modelAndView) {
+
         modelAndView.setViewName(VIEW_LOGIN);
         return modelAndView;
     }

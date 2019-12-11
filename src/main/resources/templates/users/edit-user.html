@@ -17,12 +17,12 @@
 <main class="d-flex justify-content-center">
 
     <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5 bg-white">
-        <form th:action="@{/users/edit-user/{id}(id=${userServiceModel.getId()})}" th:method="post" class="w-100 mx-0">
+        <form th:action="@{/users/edit-user/{id}(id=${userViewModel.getId()})}" th:method="post" class="w-100 mx-0">
             <div class="btn-group-vertical w-100">
                 <input type="text" class="btn btn-outline-secondary btn-block border"
-                       th:value="${userServiceModel.getUsername()}" disabled>
+                       th:value="${userViewModel.getUsername()}" disabled>
                 <input type="text" class="btn btn-outline-secondary btn-block border"
-                       th:value="${userServiceModel.getEmail()}" disabled>
+                       th:value="${userViewModel.getEmail()}" disabled>
             </div>
 
             <div class="row my-4">

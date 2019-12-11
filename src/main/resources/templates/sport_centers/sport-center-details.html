@@ -16,7 +16,7 @@
     <div class="jumbotron col-8 shadow-lg bg-white pb-4">
 
         <div class="row">
-            <h2 class="ml-3 font-italic" th:text="${sportCenterServiceModel.getName()}"></h2>
+            <h2 class="ml-3 font-italic" th:text="${sportCenterViewModel.getName()}"></h2>
         </div>
         <hr>
 
@@ -44,7 +44,7 @@
                 <th:block th:include="~{fragments/sport_centers/form-add-sport-center-images}"></th:block>
             </div>
             <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="image, iter : ${sportCenterServiceModel.getSportCenterImages()}">
+                <th:block th:each="image, iter : ${sportCenterViewModel.getSportCenterImages()}">
                     <th:block th:include="~{fragments/sport_centers/sport-center-details-image-modal}"></th:block>
                 </th:block>
             </div>
@@ -57,13 +57,13 @@
                 <th:block th:include="~{fragments/sport_centers/form-update-sport-center-sports}"></th:block>
             </div>
             <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="sport, iter : ${sportCenterServiceModel.getSports()}">
+                <th:block th:each="sport, iter : ${sportCenterViewModel.getSports()}">
                     <th:block th:include="~{fragments/sport_centers/sport-center-sport-image-modal}"></th:block>
                 </th:block>
             </div>
         </div>
         <hr>
-        <form th:action="@{/calendar/show-calendar/{id}(id=${sportCenterServiceModel.getId()})}"
+        <form th:action="@{/calendar/show-calendar/{id}(id=${sportCenterViewModel.getId()})}"
               th:method="get" class="w-100">
             <button class="col-3 btn btn-lg btn-outline-dark">Show Calendar</button>
         </form>

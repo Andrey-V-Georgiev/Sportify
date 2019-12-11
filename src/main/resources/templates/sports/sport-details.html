@@ -16,7 +16,7 @@
     <div class="jumbotron col-8 shadow-lg bg-white">
 
         <div class="row">
-            <h2 class="ml-3 font-italic" th:text="${sportServiceModel.getName()}"></h2>
+            <h2 class="ml-3 font-italic" th:text="${sportViewModel.getName()}"></h2>
         </div>
         <hr>
 
@@ -38,7 +38,7 @@
                 <th:block th:include="~{fragments/sports/form-add-sport-images}"></th:block>
             </div>
             <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="image, iter : ${sportServiceModel.getSportImages()}">
+                <th:block th:each="image, iter : ${sportViewModel.getSportImages()}">
                     <th:block th:include="~{fragments/sports/sport-details-image-modal}"></th:block>
                 </th:block>
             </div>
@@ -50,7 +50,7 @@
     </div>
 </main>
 <script th:inline="javascript">
-    let id = [[${sportServiceModel.getIconImage().getId()}]];
+    let id = [[${sportViewModel.getIconImage().getId()}]];
 
     fetch("/rest/sports/load-icon-image/" + id)
         .then(resp => resp.json())

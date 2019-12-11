@@ -17,12 +17,14 @@
         <h3>Show all users</h3>
         <hr>
 
-        <th:block th:each="user, iter : ${allUserServiceModels}">
+        <th:block th:each="user, iter : ${userViewModels}">
             <th:block th:include="~{fragments/users/show-all-users-nav}"></th:block>
         </th:block>
 
         <hr>
-        <th:block th:include="~{fragments/go-back-btn}"></th:block>
+        <div class="col-4">
+            <th:block th:include="~{fragments/go-back-btn}"></th:block>
+        </div>
     </div>
 </main>
 <script>

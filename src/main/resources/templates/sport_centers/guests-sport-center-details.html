@@ -16,34 +16,34 @@
     <div class="jumbotron col-8 shadow-lg bg-white pb-4">
 
         <div class="row">
-            <h2 class="font-italic ml-3" th:text="${sportCenterServiceModel.getName()}"></h2>
+            <h2 class="font-italic ml-3" th:text="${sportCenterViewModel.getName()}"></h2>
         </div>
         <hr>
 
         <div class="row">
-            <img id="icon-img" th:src="${sportCenterServiceModel.getIconImage().getImageURL()}"
+            <img id="icon-img" th:src="${sportCenterViewModel.getIconImage().getImageURL()}"
                  class="m-3 rounded" style="height: 450px;" alt="...">
         </div>
         <hr>
 
         <h5 class="font-italic">Address:</h5>
         <div class="row">
-            <p class="px-3" th:text="${sportCenterServiceModel.getAddress().getStreet()}"></p>
-            <p class="px-3" th:text="${sportCenterServiceModel.getAddress().getCity()}"></p>
-            <p class="px-3" th:text="${sportCenterServiceModel.getAddress().getCountry()}"></p>
+            <p class="px-3" th:text="${sportCenterViewModel.getAddress().getStreet()}"></p>
+            <p class="px-3" th:text="${sportCenterViewModel.getAddress().getCity()}"></p>
+            <p class="px-3" th:text="${sportCenterViewModel.getAddress().getCountry()}"></p>
         </div>
         <hr>
 
         <h5 class="font-italic">Description:</h5>
         <div class="row">
-            <p class="px-3" th:text="${sportCenterServiceModel.getDescription()}"></p>
+            <p class="px-3" th:text="${sportCenterViewModel.getDescription()}"></p>
         </div>
         <hr>
 
         <h5 class="font-italic">Sport center images:</h5>
         <div class="row">
             <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="image, iter : ${sportCenterServiceModel.getSportCenterImages()}">
+                <th:block th:each="image, iter : ${sportCenterViewModel.getSportCenterImages()}">
                     <th:block th:include="~{fragments/sport_centers/guests-details-image-modal}"></th:block>
                 </th:block>
             </div>
@@ -54,7 +54,7 @@
 
         <div class="row">
             <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="sport, iter : ${sportCenterServiceModel.getSports()}">
+                <th:block th:each="sport, iter : ${sportCenterViewModel.getSports()}">
                     <th:block th:include="~{fragments/sport_centers/sport-center-sport-image-modal}"></th:block>
                 </th:block>
             </div>

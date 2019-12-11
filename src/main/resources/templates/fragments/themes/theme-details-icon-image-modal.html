@@ -4,13 +4,13 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<div class="ml-2 my-3" id="mybtn" data-toggle="modal" th:data-target="'#a' + ${themeServiceModel.getIconImage().getId()}">
-    <img th:src="${themeServiceModel.getIconImage().getImageURL()}"
+<div class="ml-2 my-3" id="mybtn" data-toggle="modal" th:data-target="'#a' + ${themeViewModel.getIconImage().getId()}">
+    <img th:src="${themeViewModel.getIconImage().getImageURL()}"
          class="rounded shadow-lg" style="height: 255px;" alt="...">
 </div>
 
 <!-- Modal -->
-<div class="modal fade" th:id="'a' + ${themeServiceModel.getIconImage().getId()}" tabindex="-1" role="dialog"
+<div class="modal fade" th:id="'a' + ${themeViewModel.getIconImage().getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -21,16 +21,16 @@
             </div>
             <div class="modal-body justify-content-center">
                 <div class="row">
-                    <h2 class="col-8 mb-3 font-italic" th:text="${themeServiceModel.getIconImage().getName()}"></h2>
+                    <h2 class="col-8 mb-3 font-italic" th:text="${themeViewModel.getIconImage().getName()}"></h2>
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
-                    <img th:src="${themeServiceModel.getIconImage().getImageURL()}"
+                    <img th:src="${themeViewModel.getIconImage().getImageURL()}"
                          class="mw-100 rounded" style="max-height: 500px;" alt="...">
                 </div>
             </div>
             <div class="modal-footer">
                 <form th:action="@{/themes/edit-theme-image/{themeID}/{imageID}
-                (themeID=${themeServiceModel.getId()}, imageID=${themeServiceModel.getIconImage().getId()})}"
+                (themeID=${themeViewModel.getId()}, imageID=${themeViewModel.getIconImage().getId()})}"
                       th:method="get">
                     <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
                 </form>
