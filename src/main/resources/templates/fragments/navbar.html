@@ -30,10 +30,7 @@
         <h1 class="text-success">Sportify</h1>
     </div>
 
-    </div>
-
-    <div class="d-flex justify-content-end  mr-2">
-
+    <div class="d-flex justify-content-end mr-2">
         <div sec:authorize="isAuthenticated()">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
@@ -51,15 +48,24 @@
                 </form>
             </div>
         </div>
-
         <div sec:authorize="!isAuthenticated()">
             <div class="btn-group mr-3" role="group">
                 <a th:href="@{/login}" class="btn btn-lg btn-success border border-secondary">Login</a>
                 <a th:href="@{/register}" class="btn btn-lg btn-success border border-secondary">Register</a>
             </div>
         </div>
-
     </div>
 
 </nav>
+
+<nav class="navbar navbar-light d-flex flex-row-reverse bd-highlight px-0" style="margin-top: 70px;">
+    <div class="row mr-5">
+        <div class="col px-0">
+            <div sec:authorize="isAuthenticated()">
+                <p class="text-dark font-italic" th:text="${welcomeGreeting}"></p>
+            </div>
+        </div>
+    </div>
+</nav>
+
 </html>
