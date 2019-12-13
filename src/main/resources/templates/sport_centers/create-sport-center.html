@@ -27,8 +27,7 @@
             <div class="btn-group w-100" role="group" aria-label="Basic example">
                 <button type="submit"
                         class="col-8 btn btn-lg btn-success border border-dark">Create sport center</button>
-                <a th:href="@{/admin/panel}"
-                   class="col-4 btn btn-lg btn-outline-dark">Cancel</a>
+                <a th:href="@{/admin-panel}" class="col-4 btn btn-lg btn-outline-dark">Cancel</a>
             </div>
 
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

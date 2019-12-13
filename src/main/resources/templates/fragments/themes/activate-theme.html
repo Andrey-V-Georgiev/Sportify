@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<button type="button" class="col-3 btn btn-lg btn-outline-success text-dark" data-toggle="modal" data-target="#activateTheme">
+<button type="button" class="col-3 btn btn-lg btn-outline-dark" data-toggle="modal" data-target="#activateTheme">
     Activate theme
 </button>
 
@@ -23,7 +23,7 @@
             <div class="modal-footer">
                 <form th:action="@{/themes/activate-theme/{id}(id=${themeViewModel.getId()})}"
                       th:method="post">
-                    <button class="btn btn-lg btn-success">Confirm activation</button>
+                    <button class="btn btn-lg btn-block btn-success">Confirm activation</button>
                 </form>
             </div>
         </div>
