@@ -12,6 +12,7 @@ public class Theme extends BaseEntity {
     private List<Image> indexCarouselImages;
     private List<Image> homeCarouselImages;
     private List<Image> adminPanelImages;
+    private Boolean active;
 
     public Theme() {
     }
@@ -72,5 +73,14 @@ public class Theme extends BaseEntity {
 
     public void setAdminPanelImages(List<Image> adminPanelImages) {
         this.adminPanelImages = adminPanelImages;
+    }
+
+    @Column(name = "active")
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

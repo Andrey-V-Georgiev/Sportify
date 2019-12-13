@@ -34,7 +34,7 @@
         <div sec:authorize="isAuthenticated()">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/admin/panel}" class="btn btn-lg btn-light border border-secondary">
+                    <a th:href="@{/admin-panel}" class="btn btn-lg btn-light border border-secondary">
                         <h5 class="m-1 font-weight-normal">Admin panel</h5>
                     </a>
                 </th:block>

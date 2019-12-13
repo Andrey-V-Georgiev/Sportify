@@ -4,12 +4,12 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <!-- Button trigger modal -->
-<button type="button" class="col-3 btn btn-lg btn-danger" data-toggle="modal" data-target="#deleteTheme">
-    Delete theme
+<button type="button" class="col-3 btn btn-lg btn-outline-success text-dark" data-toggle="modal" data-target="#activateTheme">
+    Activate theme
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="deleteTheme" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="activateTheme" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content col-8">
             <div class="modal-header">
@@ -18,12 +18,12 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-               Are you sure you want to delete this theme?
+                With this confirmation you will activate this theme!
             </div>
             <div class="modal-footer">
-                <form th:action="@{/themes/delete-theme/{id}(id=${themeViewModel.getId()})}"
+                <form th:action="@{/themes/activate-theme/{id}(id=${themeViewModel.getId()})}"
                       th:method="post">
-                    <button class="btn btn-lg btn-danger">Confirm deleting</button>
+                    <button class="btn btn-lg btn-success">Confirm activation</button>
                 </form>
             </div>
         </div>

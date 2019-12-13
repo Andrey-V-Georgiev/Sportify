@@ -9,6 +9,7 @@ public class ThemeServiceModel extends BaseServiceModel {
     private List<ImageServiceModel> indexCarouselImages;
     private List<ImageServiceModel> homeCarouselImages;
     private List<ImageServiceModel> adminPanelImages;
+    private Boolean active;
 
     public ThemeServiceModel() {
 
@@ -52,5 +53,13 @@ public class ThemeServiceModel extends BaseServiceModel {
 
     public void setAdminPanelImages(List<ImageServiceModel> adminPanelImages) {
         this.adminPanelImages = adminPanelImages;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

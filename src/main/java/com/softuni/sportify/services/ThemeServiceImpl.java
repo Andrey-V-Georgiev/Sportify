@@ -37,6 +37,7 @@ public class ThemeServiceImpl implements ThemeService {
         Theme theme = this.modelMapper.map(themeServiceModel, Theme.class);
         Image image = this.modelMapper.map(imageServiceModel, Image.class);
         theme.setIconImage(image);
+        theme.setActive(false);
         Theme savedTheme = this.themeRepository.saveAndFlush(theme);
 
         return this.modelMapper.map(savedTheme, ThemeServiceModel.class);
@@ -129,7 +130,11 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public void deleteTheme(String id) {
-        this.themeRepository.deleteById(id);
+        try {
+            this.themeRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -138,5 +143,39 @@ public class ThemeServiceImpl implements ThemeService {
         themeServiceModel.setAdminPanelImages(new ArrayList<>());
         Theme theme = this.modelMapper.map(themeServiceModel, Theme.class);
         this.themeRepository.save(theme);
+    }
+
+    @Override
+    public ThemeServiceModel activateTheme(ThemeServiceModel themeServiceModel) {
+
+        List<Theme> allThemes = this.themeRepository.findAll();
+        allThemes.forEach(t -> {
+            if(!t.getId().equals(themeServiceModel.getId())) {
+                t.setActive(false);
+            } else {
+                t.setActive(true);
+            }
+        });
+
+        for (Theme t : allThemes) {
+            this.themeRepository.save(t);
+        }
+
+       return this.modelMapper
+               .map(this.findByID(themeServiceModel.getId()), ThemeServiceModel.class);
+    }
+
+    @Override
+    public ThemeServiceModel findTheActiveTheme() {
+
+        List<Theme> activeThemes = this.themeRepository.findAll()
+                .stream()
+                .filter(Theme::getActive)
+                .collect(Collectors.toList());
+
+        if(activeThemes.size() == 0) {
+            return null;
+        }
+        return this.modelMapper.map(activeThemes.get(0), ThemeServiceModel.class);
     }
 }

@@ -12,6 +12,7 @@ public class ThemeCreateBindingModel {
     private List<MultipartFile> indexCarouselImages;
     private List<MultipartFile> homeCarouselImages;
     private List<MultipartFile> adminPanelImages;
+    private Boolean active;
 
     public ThemeCreateBindingModel() {
         this.indexCarouselImages = new ArrayList<>();
@@ -57,5 +58,13 @@ public class ThemeCreateBindingModel {
 
     public void setAdminPanelImages(List<MultipartFile> adminPanelImages) {
         this.adminPanelImages = adminPanelImages;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

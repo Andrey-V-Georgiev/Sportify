@@ -26,6 +26,11 @@ public interface ThemeService {
     void deleteTheme(String id);
 
     void deleteAdminPanelImages(ThemeServiceModel themeServiceModel);
+
+
+    ThemeServiceModel activateTheme(ThemeServiceModel themeServiceModel);
+
+    ThemeServiceModel findTheActiveTheme();
 }
 
 

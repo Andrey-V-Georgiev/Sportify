@@ -54,12 +54,12 @@ public class ThemesController {
             @ModelAttribute ThemeCreateBindingModel themeCreateBindingModel,
             ModelAndView modelAndView) throws IOException {
 
-        ThemeServiceModel settingServiceModel = this.modelMapper
+        ThemeServiceModel themeServiceModel = this.modelMapper
                 .map(themeCreateBindingModel, ThemeServiceModel.class);
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(themeCreateBindingModel.getIconImage(), themeCreateBindingModel.getName());
         ThemeServiceModel newThemeServiceModel = this.themeService
-                .createNewTheme(settingServiceModel, imageServiceModel);
+                .createNewTheme(themeServiceModel, imageServiceModel);
 
         modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + newThemeServiceModel.getId());
         return modelAndView;
@@ -207,6 +207,18 @@ public class ThemesController {
             ModelAndView modelAndView) throws Exception {
 
         this.themeService.deleteTheme(id);
+
+        modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_THEMES);
+        return modelAndView;
+    }
+
+    @PostMapping("/activate-theme/{id}")
+    public ModelAndView activateTheme(
+            @PathVariable("id") String themeID,
+            ModelAndView modelAndView ) {
+
+        ThemeServiceModel themeServiceModel = this.themeService.findByID(themeID);
+        ThemeServiceModel activeThemeServiceModel = this.themeService.activateTheme(themeServiceModel);
 
         modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_THEMES);
         return modelAndView;
