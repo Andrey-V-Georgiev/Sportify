@@ -11,11 +11,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.Properties;
 
 @Configuration
 public class AppBeanConfig {
@@ -50,4 +53,22 @@ public class AppBeanConfig {
         return new ModelMapper();
     }
 
+    @Bean
+    public JavaMailSenderImpl javaMailSenderImpl() {
+
+        JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+        javaMailSenderImpl.setHost("smtp.gmail.com");
+        javaMailSenderImpl.setPort(587);
+
+        javaMailSenderImpl.setUsername("sportifyappdiplomadefence@gmail.com");
+        javaMailSenderImpl.setPassword("sportifyApp");
+
+        Properties props = javaMailSenderImpl.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return javaMailSenderImpl;
+    }
 }
