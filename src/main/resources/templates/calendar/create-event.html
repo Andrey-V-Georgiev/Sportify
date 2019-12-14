@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
@@ -21,8 +21,11 @@
 
         <div class="col-3 mt-3 mw-100 pt-3 pb-2 border rounded shadow-lg">
 
-            <form th:action="@{/calendar/create-event/{scheduleID}(scheduleID=${scheduleID})}"
+            <form th:action="@{/calendar/create-event/{scheduleID}/{hourStr}
+                             (scheduleID=${scheduleID}, hourStr=${hourStr})}"
+                  th:object="${eventCreateBindingModel}"
                   th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
+
 
                 <label for="selectSport" class="mt-2 font-italic">Sport: </label>
                 <select name="sport" id="selectSport" class="btn btn-block border text-left">
@@ -41,16 +44,29 @@
                 <label for="floor" class="mt-2 font-italic">Floor: </label>
                 <input name="floor" id="floor" type="number"
                        class="btn btn-block border text-left">
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('floor')}"
+                           th:text="${'floor can be number between -2 and 10'}">
+                    </small>
+                </div>
 
                 <label for="hall" class="mt-2 font-italic">Hall: </label>
                 <input name="hall" id="hall" type="text"
                        class="btn btn-block border text-left">
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('hall')}" th:text="${error}"></small>
+                </div>
 
                 <input name="startTime" th:value="${hourStr}" hidden>
 
                 <label for="maxCapacity" class="mt-2 font-italic">Max capacity: </label>
                 <input name="maxCapacity" id="maxCapacity" type="number"
                        class="btn btn-block border text-left">
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('maxCapacity')}"
+                           th:text="${'floor can be number between 1 and 100'}">
+                    </small>
+                </div>
 
                 <hr>
                 <button type="submit" class="btn btn-lg btn-block btn-warning mb-2 mt-3">Create</button>

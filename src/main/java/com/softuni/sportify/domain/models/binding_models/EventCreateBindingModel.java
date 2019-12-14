@@ -18,7 +18,6 @@ public class EventCreateBindingModel extends BaseBindingModel {
     }
 
     @NotNull
-    @Size(min = 2, max = 30)
     public String getSport() {
         return sport;
     }

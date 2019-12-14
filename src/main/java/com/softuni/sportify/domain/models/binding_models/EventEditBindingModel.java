@@ -60,7 +60,6 @@ public class EventEditBindingModel extends BaseBindingModel {
         this.hall = hall;
     }
 
-    @NotNull
     public int getDayOfMonth() {
         return dayOfMonth;
     }
@@ -69,7 +68,6 @@ public class EventEditBindingModel extends BaseBindingModel {
         this.dayOfMonth = dayOfMonth;
     }
 
-    @NotNull
     public int getMonth() {
         return month;
     }
@@ -78,7 +76,6 @@ public class EventEditBindingModel extends BaseBindingModel {
         this.month = month;
     }
 
-    @NotNull
     public int getYear() {
         return year;
     }
@@ -87,7 +84,6 @@ public class EventEditBindingModel extends BaseBindingModel {
         this.year = year;
     }
 
-    @NotNull
     public String getStartTime() {
         return startTime;
     }
