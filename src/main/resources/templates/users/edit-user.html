@@ -8,16 +8,16 @@
 </head>
 
 <body>
-
-
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 
 <main class="d-flex justify-content-center">
-
     <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5 bg-white">
-        <form th:action="@{/users/edit-user/{id}(id=${userViewModel.getId()})}" th:method="post" class="w-100 mx-0">
+        <form th:action="@{/users/edit-user/{id}(id=${userViewModel.getId()})}"
+              th:object="${userEditBindingModel}"
+              th:method="post" class="w-100 mx-0">
+
             <div class="btn-group-vertical w-100">
                 <input type="text" class="btn btn-outline-secondary btn-block border"
                        th:value="${userViewModel.getUsername()}" disabled>
@@ -25,25 +25,31 @@
                        th:value="${userViewModel.getEmail()}" disabled>
             </div>
 
-            <div class="row my-4">
-                <div class="col-6 pl-5">
+            <div class="row my-4 d-flex justify-content-center px-4">
+                <div class="col-6 pl-5 mb-2">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio"
                                name="authority" id="inlineRadio1" value="ROLE_USER">
                         <label class="form-check-label" for="inlineRadio1">ROLE_USER</label>
                     </div>
                 </div>
-                <div class="col-6 pl-2">
+                <div class="col-6 pl-2 mb-2">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio"
                                name="authority" id="inlineRadio2" value="ROLE_ADMIN">
                         <label class="form-check-label" for="inlineRadio2">ROLE_ADMIN</label>
                     </div>
                 </div>
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('authority')}"
+                           th:text="${'User authority status is required!'}">
+                    </small>
+                </div>
             </div>
+
             <div class="btn-group w-100" role="group" aria-label="Basic example">
-                <a th:href="@{/users/show-all-users}" class="col-6 btn btn-lg btn-outline-dark">Cancel</a>
                 <button type="submit" class="col-6 btn btn-lg btn-warning border border-dark">Edit</button>
+                <a th:href="@{/users/show-all-users}" class="col-6 btn btn-lg btn-outline-dark">Cancel</a>
             </div>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         </form>

@@ -14,18 +14,31 @@
 <main class="d-flex justify-content-center">
 
     <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5 bg-white">
-        <form class="w-100 mx-0" th:action="@{/sports/create-sport}" th:method="post" enctype="multipart/form-data">
+        <form class="w-100 mx-0" th:action="@{/sports/create-sport}"
+              th:object="${sportCreateBindingModel}"
+              th:method="post" enctype="multipart/form-data">
 
             <div class="btn-group-vertical w-100">
-                <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">
+                <input name="name" type="text" th:value="${sportCreateBindingModel.getName()}"
+                       class="btn btn-block border text-left" placeholder="Name...">
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('name')}"
+                           th:text="${error}">
+                    </small>
+                </div>
             </div>
 
-            <p class="my-3 text-danger">Icon image must be 1600 x 600px and up to 1.0MB</p>
-            <input name="iconImage" type="file" class=" mb-3">
+            <input name="iconImage" type="file" class=" my-3">
+            <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                <small th:each="error : ${#fields.errors('iconImage')}"
+                       th:text="${'Image is required and must be up to 1.0MB!'}">
+                </small>
+            </div>
 
             <div class="btn-group w-100" role="group" aria-label="Basic example">
-                <button type="submit"
-                        class="col-8 btn btn-lg btn-success border border-dark">Create sport</button>
+                <button type="submit" class="col-8 btn btn-lg btn-success border border-dark">
+                    Create sport
+                </button>
                 <a th:href="@{/admin-panel}" class="col-4 btn btn-lg btn-outline-dark">Cancel</a>
             </div>
 

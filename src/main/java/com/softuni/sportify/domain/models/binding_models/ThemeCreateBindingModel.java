@@ -1,5 +1,6 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import com.softuni.sportify.validation.ImageMultipartFileConstraints;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -32,7 +33,7 @@ public class ThemeCreateBindingModel {
         this.name = name;
     }
 
-    @NotNull
+    @ImageMultipartFileConstraints
     public MultipartFile getIconImage() {
         return iconImage;
     }

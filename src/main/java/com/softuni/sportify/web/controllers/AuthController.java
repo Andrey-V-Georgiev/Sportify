@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 import static com.softuni.sportify.constants.AuthConstants.IS_ANONYMOUS;
 import static com.softuni.sportify.constants.AuthControllerConstants.*;
 
@@ -34,6 +36,7 @@ public class AuthController {
     @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView register(ModelAndView modelAndView) {
 
+        modelAndView.addObject("userRegisterBindingModel", new UserRegisterBindingModel());
         modelAndView.setViewName(VIEW_REGISTER);
         return modelAndView;
     }
@@ -41,11 +44,18 @@ public class AuthController {
     @PostMapping("/register")
     @PreAuthorize(IS_ANONYMOUS)
     public ModelAndView registerConfirm(
-            @ModelAttribute(name = "model") UserRegisterBindingModel model,
-            BindingResult bindingResult,
+            @Valid
+            @ModelAttribute UserRegisterBindingModel userRegisterBindingModel,
+            BindingResult userBindingResult,
             ModelAndView modelAndView) {
 
-        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
+        if(userBindingResult.hasErrors()) {
+            modelAndView.addObject("userRegisterBindingModel", userRegisterBindingModel);
+            modelAndView.setViewName(VIEW_REGISTER);
+            return modelAndView;
+        }
+
+        UserServiceModel userServiceModel = this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);
 
         modelAndView.setViewName(REDIRECT_TO_LOGIN);

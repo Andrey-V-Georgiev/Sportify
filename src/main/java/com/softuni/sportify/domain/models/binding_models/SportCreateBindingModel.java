@@ -1,6 +1,6 @@
 package com.softuni.sportify.domain.models.binding_models;
 
-import com.softuni.sportify.domain.entities.SportCenter;
+import com.softuni.sportify.validation.ImageMultipartFileConstraints;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -37,7 +37,7 @@ public class SportCreateBindingModel extends BaseBindingModel {
         this.sportDescription = sportDescription;
     }
 
-    @NotNull
+    @ImageMultipartFileConstraints
     public MultipartFile getIconImage() {
         return iconImage;
     }

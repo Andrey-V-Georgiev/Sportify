@@ -47,6 +47,7 @@ public class SportsController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addNewSport(ModelAndView modelAndView) {
 
+        modelAndView.addObject("sportCreateBindingModel", new SportCreateBindingModel());
         modelAndView.setViewName(VIEW_CREATE_SPORT);
         return modelAndView;
     }
@@ -54,8 +55,16 @@ public class SportsController {
     @PostMapping("/create-sport")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editImageConfirmed(
+            @Valid
             @ModelAttribute SportCreateBindingModel sportCreateBindingModel,
+            BindingResult sportBindingResult,
             ModelAndView modelAndView) throws IOException {
+
+        if(sportBindingResult.hasErrors()) {
+            modelAndView.addObject("sportCreateBindingModel", sportCreateBindingModel);
+            modelAndView.setViewName(VIEW_CREATE_SPORT);
+            return modelAndView;
+        }
 
         SportServiceModel sportServiceModel = this.modelMapper.map(sportCreateBindingModel, SportServiceModel.class);
         ImageServiceModel iconImageServiceModel = this.imageService

@@ -51,7 +51,6 @@ public class SportCentersController {
     public ModelAndView createSportCenter(ModelAndView modelAndView) {
 
         modelAndView.addObject("sportCenterCreateBindingModel", new SportCenterCreateBindingModel());
-        modelAndView.addObject("addressCreateBindingModel", new AddressCreateBindingModel());
         modelAndView.setViewName(VIEW_CREATE_SPORT_CENTER);
         return modelAndView;
     }

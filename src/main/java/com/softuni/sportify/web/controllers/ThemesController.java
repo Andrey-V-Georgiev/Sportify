@@ -46,6 +46,7 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createNewTheme(ModelAndView modelAndView) {
 
+        modelAndView.addObject("themeCreateBindingModel", new ThemeCreateBindingModel());
         modelAndView.setViewName(VIEW_CREATE_NEW_THEME);
         return modelAndView;
     }
@@ -53,8 +54,16 @@ public class ThemesController {
     @PostMapping("/create-new-theme")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createNewThemeConfirmed(
+            @Valid
             @ModelAttribute ThemeCreateBindingModel themeCreateBindingModel,
+            BindingResult themeBindingResult,
             ModelAndView modelAndView) throws IOException {
+
+        if(themeBindingResult.hasErrors()) {
+            modelAndView.addObject("themeCreateBindingModel", themeCreateBindingModel);
+            modelAndView.setViewName(VIEW_CREATE_NEW_THEME);
+            return modelAndView;
+        }
 
         ThemeServiceModel themeServiceModel = this.modelMapper
                 .map(themeCreateBindingModel, ThemeServiceModel.class);
@@ -269,6 +278,7 @@ public class ThemesController {
     }
 
     @PostMapping("/activate-theme/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView activateTheme(
             @PathVariable("id") String themeID,
             ModelAndView modelAndView ) {

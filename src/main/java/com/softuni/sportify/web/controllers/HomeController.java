@@ -48,7 +48,7 @@ public class HomeController {
                 themeServiceModel.getIndexCarouselImages().size() < 3) {
             image3 = VIEW_OLYMPIC_LOGO;
         } else {
-            image3 = themeServiceModel.getAdminPanelImages().get(2).getImageURL();
+            image3 = themeServiceModel.getIndexCarouselImages().get(2).getImageURL();
         }
 
         modelAndView.addObject("image1", image1);

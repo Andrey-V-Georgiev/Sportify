@@ -18,12 +18,25 @@
 
     <div class="jumbotron col-3 pb-4 pt-5 shadow-lg  mt-5 bg-white">
         <form class="w-100 mx-0" th:action="@{/themes/create-new-theme}"
+              th:object="${themeCreateBindingModel}"
               th:method="post" enctype="multipart/form-data">
+
             <div class="btn-group-vertical w-100">
-                <input name="name" type="text" class="btn btn-block border text-left" placeholder="Theme name...">
+                <input name="name" type="text" th:value="${themeCreateBindingModel.getName()}"
+                       class="btn btn-block border text-left" placeholder="Theme name...">
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('name')}"
+                           th:text="${error}">
+                    </small>
+                </div>
             </div>
-            <p class="my-3 text-danger">Icon image must be 1600 x 600 px and up to 1.0MB</p>
-            <input name="iconImage" type="file" class=" mb-3">
+
+            <input name="iconImage" type="file" class=" my-3">
+            <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                <small th:each="error : ${#fields.errors('iconImage')}"
+                       th:text="${'Image is required and must be up to 1.0MB!'}">
+                </small>
+            </div>
 
             <div class="btn-group w-100" role="group" aria-label="Basic example">
                 <button type="submit"
