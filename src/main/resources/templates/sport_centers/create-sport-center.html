@@ -18,7 +18,6 @@
               th:object="${sportCenterCreateBindingModel}"
               th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
 
-
             <div class="btn-group-vertical w-100" th:classappend="${#fields.hasErrors()} ? 'text-danger'">
 
                 <input name="name" th:value="${sportCenterCreateBindingModel.getName()}"
