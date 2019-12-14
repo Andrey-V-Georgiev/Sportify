@@ -1,5 +1,7 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class UserRegisterBindingModel {
@@ -12,7 +14,8 @@ public class UserRegisterBindingModel {
 
     public UserRegisterBindingModel() {
     }
-
+    @NotNull
+    @Size(min=2, max=30)
     public String getUsername() {
         return username;
     }
@@ -20,7 +23,8 @@ public class UserRegisterBindingModel {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    @NotNull
+    @Size(min=2, max=60)
     public String getEmail() {
         return email;
     }
@@ -29,6 +33,8 @@ public class UserRegisterBindingModel {
         this.email = email;
     }
 
+    @NotNull
+    @Size(min=1, max=30)
     public String getPassword() {
         return password;
     }
@@ -36,7 +42,8 @@ public class UserRegisterBindingModel {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @NotNull
+    @Size(min=1, max=30)
     public String getConfirmPassword() {
         return confirmPassword;
     }

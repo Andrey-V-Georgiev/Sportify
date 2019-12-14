@@ -1,5 +1,8 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class ScheduleEditBindingModel extends BaseBindingModel {
@@ -37,6 +40,9 @@ public class ScheduleEditBindingModel extends BaseBindingModel {
         this.sportCenter = sportCenter;
     }
 
+    @NotNull
+    @Min(1)
+    @Max(31)
     public int getDay() {
         return day;
     }
@@ -45,6 +51,9 @@ public class ScheduleEditBindingModel extends BaseBindingModel {
         this.day = day;
     }
 
+    @NotNull
+    @Min(1)
+    @Max(12)
     public int getMonth() {
         return month;
     }
@@ -53,6 +62,9 @@ public class ScheduleEditBindingModel extends BaseBindingModel {
         this.month = month;
     }
 
+    @NotNull
+    @Min(1990)
+    @Max(2050)
     public int getYear() {
         return year;
     }

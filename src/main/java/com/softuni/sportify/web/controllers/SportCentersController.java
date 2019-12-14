@@ -9,9 +9,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +49,8 @@ public class SportCentersController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createSportCenter(ModelAndView modelAndView) {
 
+        modelAndView.addObject("sportCenterCreateBindingModel", new SportCenterCreateBindingModel());
+        modelAndView.addObject("addressCreateBindingModel", new AddressCreateBindingModel());
         modelAndView.setViewName(VIEW_CREATE_SPORT_CENTER);
         return modelAndView;
     }
@@ -53,15 +58,33 @@ public class SportCentersController {
     @PostMapping("/create-sport-center")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView createSportCenterConfirmed(
+            @Valid
             @ModelAttribute SportCenterCreateBindingModel sportCenterCreateBindingModel,
+            BindingResult bindingResultSportCenter,
             ModelAndView modelAndView) throws IOException {
+
+        long size = sportCenterCreateBindingModel.getIconImage().getSize();
+        if (bindingResultSportCenter.hasErrors()) {
+            modelAndView.addObject("sportCenterCreateBindingModel", sportCenterCreateBindingModel);
+            modelAndView.setViewName(VIEW_CREATE_SPORT_CENTER);
+            return modelAndView;
+        }
+
+        SportCenterServiceModel sportCenterServiceModel = this.modelMapper.map(
+                sportCenterCreateBindingModel, SportCenterServiceModel.class);
 
         ImageServiceModel iconImageServiceModel = this.imageService.createImageMultipartFile(
                 sportCenterCreateBindingModel.getIconImage(), sportCenterCreateBindingModel.getName());
-        SportCenterServiceModel sportCenterServiceModel = this.modelMapper.map(
-                sportCenterCreateBindingModel, SportCenterServiceModel.class);
-        SportCenterServiceModel newSportCenterServiceModel = this.sportCenterService.createSportCenter(
-                sportCenterServiceModel, iconImageServiceModel);
+
+        sportCenterServiceModel.setIconImage(iconImageServiceModel);
+
+        AddressServiceModel addressServiceModel = this.addressService
+                .createAddress(this.modelMapper.map(sportCenterCreateBindingModel, AddressServiceModel.class));
+
+        sportCenterServiceModel.setAddress(addressServiceModel);
+
+        SportCenterServiceModel newSportCenterServiceModel = this.sportCenterService
+                .createSportCenter(sportCenterServiceModel);
 
         modelAndView.setViewName(REDIRECT_TO_SPORT_CENTER_DETAILS + newSportCenterServiceModel.getId());
         return modelAndView;

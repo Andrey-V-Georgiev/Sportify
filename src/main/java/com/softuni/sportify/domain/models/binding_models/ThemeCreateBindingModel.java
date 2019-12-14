@@ -2,6 +2,8 @@ package com.softuni.sportify.domain.models.binding_models;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class ThemeCreateBindingModel {
         this.adminPanelImages = new ArrayList<>();
     }
 
+    @NotNull
+    @Size(min=2, max=30)
     public String getName() {
         return name;
     }
@@ -28,6 +32,7 @@ public class ThemeCreateBindingModel {
         this.name = name;
     }
 
+    @NotNull
     public MultipartFile getIconImage() {
         return iconImage;
     }

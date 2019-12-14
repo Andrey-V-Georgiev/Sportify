@@ -4,6 +4,8 @@ import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class SportCenterEditBindingModel extends BaseBindingModel {
@@ -19,7 +21,8 @@ public class SportCenterEditBindingModel extends BaseBindingModel {
 
     public SportCenterEditBindingModel() {
     }
-
+    @NotNull
+    @Size(min=2, max=30)
     public String getName() {
         return name;
     }
@@ -27,7 +30,7 @@ public class SportCenterEditBindingModel extends BaseBindingModel {
     public void setName(String name) {
         this.name = name;
     }
-
+    @NotNull
     public ImageServiceModel getIconImage() {
         return iconImage;
     }

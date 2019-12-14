@@ -1,5 +1,8 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class ImageEditBindingModel extends BaseBindingModel {
 
     private String name;
@@ -10,6 +13,8 @@ public class ImageEditBindingModel extends BaseBindingModel {
     public ImageEditBindingModel() {
     }
 
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getName() {
         return name;
     }
@@ -18,6 +23,9 @@ public class ImageEditBindingModel extends BaseBindingModel {
         this.name = name;
     }
 
+    @NotNull
+    @NotNull
+    @Size(min = 10)
     public String getImageURL() {
         return imageURL;
     }
@@ -26,6 +34,7 @@ public class ImageEditBindingModel extends BaseBindingModel {
         this.imageURL = imageURL;
     }
 
+    @NotNull
     public String getPublicID() {
         return publicID;
     }
@@ -34,6 +43,7 @@ public class ImageEditBindingModel extends BaseBindingModel {
         this.publicID = publicID;
     }
 
+    @NotNull
     public String getOwnerObjectID() {
         return ownerObjectID;
     }

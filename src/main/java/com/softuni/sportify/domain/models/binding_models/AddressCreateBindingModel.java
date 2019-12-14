@@ -1,5 +1,8 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class AddressCreateBindingModel extends BaseBindingModel{
 
     private String country;
@@ -14,6 +17,8 @@ public class AddressCreateBindingModel extends BaseBindingModel{
         this.details = "";
     }
 
+    @NotNull
+    @Size(min=3)
     public String getCountry() {
         return country;
     }
@@ -22,6 +27,8 @@ public class AddressCreateBindingModel extends BaseBindingModel{
         this.country = country;
     }
 
+    @NotNull
+    @Size(min=2)
     public String getCity() {
         return city;
     }
@@ -30,6 +37,8 @@ public class AddressCreateBindingModel extends BaseBindingModel{
         this.city = city;
     }
 
+    @NotNull
+    @Size(min=2)
     public String getStreet() {
         return street;
     }
@@ -38,6 +47,8 @@ public class AddressCreateBindingModel extends BaseBindingModel{
         this.street = street;
     }
 
+    @NotNull
+    @Size(min=8)
     public String getDetails() {
         return details;
     }

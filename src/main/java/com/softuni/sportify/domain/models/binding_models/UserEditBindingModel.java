@@ -1,5 +1,7 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import javax.validation.constraints.NotNull;
+
 public class UserEditBindingModel extends BaseBindingModel {
 
     private String username;
@@ -25,6 +27,7 @@ public class UserEditBindingModel extends BaseBindingModel {
         this.email = email;
     }
 
+    @NotNull
     public String getAuthority() {
         return authority;
     }

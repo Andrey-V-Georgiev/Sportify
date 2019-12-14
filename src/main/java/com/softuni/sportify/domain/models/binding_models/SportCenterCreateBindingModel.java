@@ -1,7 +1,10 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import com.softuni.sportify.validation.ImageMultipartFileConstraints;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,11 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
     private List<MultipartFile> sportCenterImages;
     private List<SportCreateBindingModel> sports;
     private List<ScheduleCreateBindingModel> calendar;
+    private String country;
+    private String city;
+    private String street;
+    private String details;
+
     public SportCenterCreateBindingModel() {
         this.description = "";
         this.address = new AddressCreateBindingModel();
@@ -22,6 +30,8 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
         this.calendar = new ArrayList<>();
     }
 
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getName() {
         return name;
     }
@@ -30,6 +40,7 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
         this.name = name;
     }
 
+    @ImageMultipartFileConstraints
     public MultipartFile getIconImage() {
         return iconImage;
     }
@@ -76,5 +87,45 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
 
     public void setCalendar(List<ScheduleCreateBindingModel> calendar) {
         this.calendar = calendar;
+    }
+
+    @NotNull
+    @Size(min = 3, max = 40)
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @NotNull
+    @Size(min = 2, max = 40)
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @NotNull
+    @Size(min = 2, max = 40)
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @NotNull
+    @Size(min = 8, max = 200)
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 }

@@ -19,33 +19,24 @@ public class SportCenterServiceImpl implements SportCenterService {
 
     private final ModelMapper modelMapper;
     private final SportCenterRepository sportCenterRepository;
-    private final AddressService addressService;
     private final SportRepository sportRepository;
     private final ImageRepository imageRepository;
 
     @Autowired
     public SportCenterServiceImpl(ModelMapper modelMapper,
                                   SportCenterRepository sportCenterRepository,
-                                  AddressService addressService,
                                   SportRepository sportRepository,
                                   ImageRepository imageRepository) {
         this.modelMapper = modelMapper;
         this.sportCenterRepository = sportCenterRepository;
-        this.addressService = addressService;
         this.sportRepository = sportRepository;
         this.imageRepository = imageRepository;
     }
 
     @Override
-    public SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel,
-                                                     ImageServiceModel iconImageServiceModel) {
+    public SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel) {
 
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
-        AddressServiceModel addressServiceModel = this.addressService.createAddress(
-                this.modelMapper.map(sportCenterServiceModel.getAddress(), AddressServiceModel.class));
-
-        sportCenter.setAddress(this.modelMapper.map(addressServiceModel, Address.class));
-        sportCenter.setIconImage(this.modelMapper.map(iconImageServiceModel, Image.class));
 
         SportCenter newSportCenter = null;
         try {

@@ -4,6 +4,8 @@ import com.softuni.sportify.domain.entities.SportCenter;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class SportEditBindingModel {
@@ -15,7 +17,8 @@ public class SportEditBindingModel {
 
     public SportEditBindingModel() {
     }
-
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getName() {
         return name;
     }

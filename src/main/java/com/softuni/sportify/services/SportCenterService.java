@@ -10,8 +10,7 @@ import java.util.List;
 @Service
 public interface SportCenterService {
 
-    SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel,
-                                              ImageServiceModel iconImageServiceModel);
+    SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel);
 
     SportCenterServiceModel findByID(String id);
 
