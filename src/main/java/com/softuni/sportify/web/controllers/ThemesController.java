@@ -13,9 +13,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,8 +71,20 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addImagesIndexCarouselConfirm(
             @PathVariable String id,
+            @Valid
             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException {
+
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(1);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -85,8 +99,20 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addImagesHomeCarouselConfirm(
             @PathVariable String id,
+            @Valid
             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException {
+
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(2);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -101,8 +127,20 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addAdminPanelImagesConfirm(
             @PathVariable String id,
+            @Valid
             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException {
+
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(3);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -138,6 +176,7 @@ public class ThemesController {
                 .map(this.themeService.findByID(id), ThemeViewModel.class);
 
         modelAndView.addObject("themeViewModel", themeViewModel);
+        modelAndView.addObject("imageCreateBindingModel", new ImageCreateBindingModel());
 
         modelAndView.setViewName(VIEW_THEME_DETAILS);
         return modelAndView;
@@ -151,25 +190,42 @@ public class ThemesController {
             @PathVariable("imageID") String imageID,
             ModelAndView modelAndView) {
 
+        ThemeViewModel themeViewModel = this.modelMapper
+                .map(this.themeService.findByID(themeID), ThemeViewModel.class);
         ImageServiceModel imageServiceModel = this.imageService.findImageByID(imageID);
         ImageViewModel imageViewModel = this.modelMapper.map(imageServiceModel, ImageViewModel.class);
-        imageViewModel.setOwnerObjectID(themeID);
 
+        modelAndView.addObject("themeViewModel", themeViewModel);
         modelAndView.addObject("imageViewModel", imageViewModel);
+        modelAndView.addObject("imageEditBindingModel", new ImageEditBindingModel());
 
         modelAndView.setViewName(VIEW_EDIT_THEME_IMAGE);
         return modelAndView;
     }
 
-    @PostMapping("/edit-theme-image")
+    @PostMapping("/edit-theme-image/{themeID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editThemeImageConfirmed(
+            @PathVariable("themeID") String themeID,
+            @Valid
             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
+            BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException {
+
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(themeID), ThemeViewModel.class);
+            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageViewModel", imageViewModel);
+            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+            modelAndView.setViewName(VIEW_EDIT_THEME_IMAGE);
+            return modelAndView;
+        }
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
-        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + imageEditBindingModel.getOwnerObjectID());
+        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + themeID);
         return modelAndView;
     }
 

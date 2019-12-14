@@ -21,19 +21,27 @@
             <img th:src="${imageViewModel.getImageURL()}"
                  class="mw-100 rounded" style="max-height: 300px;" alt="...">
         </div>
-        <form th:action="@{/themes/edit-theme-image}" th:method="post"
+        <form th:action="@{/themes/edit-theme-image/{themeID}(themeID=${themeViewModel.getId()})}"
+              th:object="${imageEditBindingModel}"
+              th:method="post"
               class="w-100 mx-0" enctype="multipart/form-data">
+
             <div class="btn-group-vertical w-100">
                 <input name="name" th:value="${imageViewModel.getName()}" aria-describedby="name"
                        type="text" class="btn btn-block border text-left" placeholder="Name...">
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('name')}"
+                           th:text="${'Image is required and must be up to 1.0MB!'}">
+                    </small>
+                </div>
             </div>
             <input type="hidden" name="id" th:value="${imageViewModel.getId()}">
             <input type="hidden" name="imageURL" th:value="${imageViewModel.getImageURL()}">
             <input type="hidden" name="publicID" th:value="${imageViewModel.getPublicID()}">
-            <input type="hidden" name="ownerObjectID" th:value="${imageViewModel.getOwnerObjectID()}">
 
             <th:block th:include="~{fragments/edit-or-cancel-group}"></th:block>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
         </form>
     </div>
 

@@ -30,8 +30,8 @@
             </div>
             <div class="modal-footer">
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                    <form th:action="@{/sport-centers/edit-sport-center-image/{sportID}/{imageID}
-                (sportID=${sportCenterViewModel.getId()}, imageID=${image.getId()})}"
+                    <form th:action="@{/sport-centers/edit-sport-center-image/{sportCenterID}/{imageID}
+                (sportCenterID=${sportCenterViewModel.getId()}, imageID=${image.getId()})}"
                           th:method="get">
                         <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
                     </form>

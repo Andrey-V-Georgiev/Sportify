@@ -14,9 +14,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,6 +75,7 @@ public class SportsController {
         SportServiceModel sportServiceModel = this.sportService.findByID(id);
         SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
         modelAndView.addObject("sportViewModel", sportViewModel);
+        modelAndView.addObject("imageCreateBindingModel", new ImageCreateBindingModel());
 
         modelAndView.setViewName(VIEW_SPORT_DETAILS);
         return modelAndView;
@@ -88,24 +91,6 @@ public class SportsController {
         modelAndView.addObject("sportViewModel", sportViewModel);
 
         modelAndView.setViewName(VIEW_GUESTS_SPORT_DETAILS);
-        return modelAndView;
-    }
-
-    @PostMapping("/edit-icon-image/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView editIconImage(
-            @PathVariable("id") String sportID,
-            ImageEditBindingModel imageEditBindingModel,
-            ModelAndView modelAndView) {
-
-        SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
-        sportServiceModel.getIconImage().setName(imageEditBindingModel.getName());
-        SportServiceModel updatedSportServiceModel = this.sportService.editIconImage(sportServiceModel);
-        SportViewModel sportViewModel = this.modelMapper.map(updatedSportServiceModel, SportViewModel.class);
-
-        modelAndView.addObject("sportViewModel", sportViewModel);
-
-        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + sportID);
         return modelAndView;
     }
 
@@ -131,10 +116,22 @@ public class SportsController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView addSportImages(
             @PathVariable("id") String sportID,
-            ImageCreateBindingModel imageCreateBindingModel,
+            @Valid
+            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException {
 
         SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
+
+        if(imageBindingResult.hasErrors()) {
+            SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
+            modelAndView.addObject("sportViewModel", sportViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+
+            modelAndView.setViewName(VIEW_SPORT_DETAILS);
+            return modelAndView;
+        }
+
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), sportServiceModel.getName());
         SportServiceModel updatedSportServiceModel = this.sportService
@@ -168,25 +165,43 @@ public class SportsController {
             @PathVariable("imageID") String imageID,
             ModelAndView modelAndView) {
 
+        SportViewModel sportViewModel = this.modelMapper
+                .map(this.sportService.findByID(sportID), SportViewModel.class);
         ImageServiceModel imageServiceModel = this.imageService.findImageByID(imageID);
         ImageViewModel imageViewModel = this.modelMapper.map(imageServiceModel, ImageViewModel.class);
-        imageViewModel.setOwnerObjectID(sportID);
 
+        modelAndView.addObject("sportViewModel", sportViewModel);
         modelAndView.addObject("imageViewModel", imageViewModel);
+        modelAndView.addObject("imageEditBindingModel", new ImageEditBindingModel());
 
         modelAndView.setViewName(VIEW_EDIT_SPORT_IMAGE);
         return modelAndView;
     }
 
-    @PostMapping("/edit-sport-image")
+    @PostMapping("/edit-sport-image/{sportID}")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editSportImageConfirmed(
+            @PathVariable("sportID") String sportID,
+            @Valid
             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
+            BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException {
+
+        if(imageBindingResult.hasErrors()) {
+            SportViewModel sportViewModel = this.modelMapper
+                    .map(this.sportService.findByID(sportID), SportViewModel.class);
+            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
+            modelAndView.addObject("sportViewModel", sportViewModel);
+            modelAndView.addObject("imageViewModel", imageViewModel);
+            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+
+            modelAndView.setViewName(VIEW_EDIT_SPORT_IMAGE);
+            return modelAndView;
+        }
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
-        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + imageEditBindingModel.getOwnerObjectID());
+        modelAndView.setViewName(REDIRECT_TO_SPORT_DETAILS + sportID);
         return modelAndView;
     }
 

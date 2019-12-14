@@ -26,25 +26,36 @@ public class HomeController {
     public ModelAndView index(ModelAndView modelAndView) {
 
         ThemeServiceModel themeServiceModel = this.themeService.findTheActiveTheme();
-
         String image1 = "";
         String image2 = "";
         String image3 = "";
-        if (themeServiceModel == null) {
+
+        if (themeServiceModel.getIndexCarouselImages() == null ||
+                themeServiceModel.getIndexCarouselImages().size() < 1) {
             image1 = VIEW_OLYMPIC_LOGO;
-            image2 = VIEW_OLYMPIC_LOGO;
-            image3 = VIEW_OLYMPIC_LOGO;
         } else {
             image1 = themeServiceModel.getIndexCarouselImages().get(0).getImageURL();
-            image2 = themeServiceModel.getIndexCarouselImages().get(1).getImageURL();
-            image3 = themeServiceModel.getIndexCarouselImages().get(2).getImageURL();
         }
+
+        if (themeServiceModel.getIndexCarouselImages() == null ||
+                themeServiceModel.getIndexCarouselImages().size() < 2) {
+            image2 = VIEW_OLYMPIC_LOGO;
+        } else {
+            image2 = themeServiceModel.getIndexCarouselImages().get(1).getImageURL();
+        }
+
+        if (themeServiceModel.getIndexCarouselImages() == null ||
+                themeServiceModel.getIndexCarouselImages().size() < 3) {
+            image3 = VIEW_OLYMPIC_LOGO;
+        } else {
+            image3 = themeServiceModel.getAdminPanelImages().get(2).getImageURL();
+        }
+
         modelAndView.addObject("image1", image1);
         modelAndView.addObject("image2", image2);
         modelAndView.addObject("image3", image3);
 
         modelAndView.setViewName(VIEW_INDEX);
-
         return modelAndView;
     }
 
@@ -56,13 +67,25 @@ public class HomeController {
         String image1 = "";
         String image2 = "";
         String image3 = "";
-        if (themeServiceModel == null) {
+
+        if (themeServiceModel.getHomeCarouselImages() == null ||
+                themeServiceModel.getHomeCarouselImages().size() < 1) {
             image1 = VIEW_OLYMPIC_LOGO;
-            image2 = VIEW_OLYMPIC_LOGO;
-            image3 = VIEW_OLYMPIC_LOGO;
         } else {
             image1 = themeServiceModel.getHomeCarouselImages().get(0).getImageURL();
+        }
+
+        if (themeServiceModel.getHomeCarouselImages() == null ||
+                themeServiceModel.getHomeCarouselImages().size() < 2) {
+            image2 = VIEW_OLYMPIC_LOGO;
+        } else {
             image2 = themeServiceModel.getHomeCarouselImages().get(1).getImageURL();
+        }
+
+        if (themeServiceModel.getHomeCarouselImages() == null ||
+                themeServiceModel.getHomeCarouselImages().size() < 3) {
+            image3 = VIEW_OLYMPIC_LOGO;
+        } else {
             image3 = themeServiceModel.getHomeCarouselImages().get(2).getImageURL();
         }
 
@@ -83,15 +106,32 @@ public class HomeController {
         String imagesImage = "";
         String sportCentersImage = "";
         String sportsImage = "";
-        if (themeServiceModel == null) {
+
+        if (themeServiceModel.getAdminPanelImages() == null ||
+                themeServiceModel.getAdminPanelImages().size() < 1) {
             usersImage = VIEW_OLYMPIC_LOGO;
-            imagesImage = VIEW_OLYMPIC_LOGO;
-            sportCentersImage = VIEW_OLYMPIC_LOGO;
-            sportsImage = VIEW_OLYMPIC_LOGO;
         } else {
             usersImage = themeServiceModel.getAdminPanelImages().get(0).getImageURL();
+        }
+
+        if (themeServiceModel.getAdminPanelImages() == null ||
+                themeServiceModel.getAdminPanelImages().size() < 2) {
+            imagesImage = VIEW_OLYMPIC_LOGO;
+        } else {
             imagesImage = themeServiceModel.getAdminPanelImages().get(1).getImageURL();
+        }
+
+        if (themeServiceModel.getAdminPanelImages() == null ||
+                themeServiceModel.getAdminPanelImages().size() < 3) {
+            sportCentersImage = VIEW_OLYMPIC_LOGO;
+        } else {
             sportCentersImage = themeServiceModel.getAdminPanelImages().get(2).getImageURL();
+        }
+
+        if (themeServiceModel.getAdminPanelImages() == null ||
+                themeServiceModel.getAdminPanelImages().size() < 4) {
+            sportsImage = VIEW_OLYMPIC_LOGO;
+        } else {
             sportsImage = themeServiceModel.getAdminPanelImages().get(3).getImageURL();
         }
 

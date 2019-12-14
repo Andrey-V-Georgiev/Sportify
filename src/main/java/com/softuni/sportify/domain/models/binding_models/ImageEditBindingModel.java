@@ -8,7 +8,6 @@ public class ImageEditBindingModel extends BaseBindingModel {
     private String name;
     private String imageURL;
     private String publicID;
-    private String ownerObjectID;
 
     public ImageEditBindingModel() {
     }
@@ -23,7 +22,6 @@ public class ImageEditBindingModel extends BaseBindingModel {
         this.name = name;
     }
 
-    @NotNull
     @NotNull
     @Size(min = 10)
     public String getImageURL() {
@@ -43,12 +41,4 @@ public class ImageEditBindingModel extends BaseBindingModel {
         this.publicID = publicID;
     }
 
-    @NotNull
-    public String getOwnerObjectID() {
-        return ownerObjectID;
-    }
-
-    public void setOwnerObjectID(String ownerObjectID) {
-        this.ownerObjectID = ownerObjectID;
-    }
 }

@@ -10,6 +10,7 @@ public class ThemeViewModel extends BaseViewModel {
     private List<ImageViewModel> homeCarouselImages;
     private List<ImageViewModel> adminPanelImages;
     private Boolean active;
+    private int section;
 
     public ThemeViewModel() {
     }
@@ -60,5 +61,13 @@ public class ThemeViewModel extends BaseViewModel {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public int getSection() {
+        return section;
+    }
+
+    public void setSection(int section) {
+        this.section = section;
     }
 }

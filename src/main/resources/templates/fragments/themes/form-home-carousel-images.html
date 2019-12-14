@@ -3,18 +3,31 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded shadow-lg" style="height: 240px; width: 345px">
+<div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded">
     <form th:action="@{/themes/add-images-home-carousel/{id}(id=${themeViewModel.getId()})}"
+          th:object="${imageCreateBindingModel}"
           th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
 
         <div class="btn-group-vertical w-100">
             <input name="name" type="text" class="btn btn-block border text-left"
                    placeholder="Image name...">
+            <th:block th:if="${themeViewModel.getSection() == 2}">
+                <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                    <small th:each="error : ${#fields.errors('name')}"
+                           th:text="${error}">
+                    </small>
+                </div>
+            </th:block>
         </div>
 
-        <p class="my-3 text-danger">1600 x 600 px and up to 1.0MB</p>
-
-        <input name="image" type="file" class="mb-1">
+        <input name="image" type="file" class="my-3">
+        <th:block th:if="${themeViewModel.getSection() == 2}">
+            <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                <small th:each="error : ${#fields.errors('image')}"
+                       th:text="${'Image is required and must be up to 1.0MB!'}">
+                </small>
+            </div>
+        </th:block>
         <hr>
 
         <div th:if="${themeViewModel.getHomeCarouselImages().size() < 3}">

@@ -1,5 +1,6 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import com.softuni.sportify.validation.ImageMultipartFileConstraints;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -24,7 +25,7 @@ public class ImageCreateBindingModel extends BaseBindingModel {
         this.name = name;
     }
 
-    @NotNull
+    @ImageMultipartFileConstraints
     public MultipartFile getImage() {
         return image;
     }
@@ -33,7 +34,6 @@ public class ImageCreateBindingModel extends BaseBindingModel {
         this.image = image;
     }
 
-    @NotNull
     public String getPublicID() {
         return publicID;
     }
