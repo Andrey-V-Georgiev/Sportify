@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 import static com.softuni.sportify.constants.RoleConstants.*;
 import static com.softuni.sportify.constants.ExceptionConstants.*;
-import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -129,13 +128,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = null;
-        try {
-            user = this.userRepository.findByUsername(username)
-                    .orElseThrow(() -> new ReadException(USER_READ_EXCEPTION_MSG));
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return user;
+        return  this.userRepository.findByUsername(username).orElse(null);
     }
 }

@@ -43,7 +43,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleServiceModel createSchedule(SportCenterServiceModel sportCenterServiceModel, String day, String month, String year) throws CreateException {
+    public ScheduleServiceModel createSchedule(SportCenterServiceModel sportCenterServiceModel,
+                                               String day, String month, String year) throws CreateException {
 
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
         ScheduleServiceModel scheduleServiceModel = new ScheduleServiceModel();
@@ -71,7 +72,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleServiceModel.setTime21(new ArrayList<>());
         scheduleServiceModel.setTime22(new ArrayList<>());
 
-        if(!validator.validate(scheduleServiceModel).isEmpty() ||
+        if (!validator.validate(scheduleServiceModel).isEmpty() ||
                 !validator.validate(sportCenterServiceModel).isEmpty()) {
             throw new CreateException(SCHEDULE_CREATE_EXCEPTION_MSG);
         }
@@ -88,7 +89,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         Schedule schedule = this.scheduleRepository.findById(scheduleID).orElse(null);
         ScheduleServiceModel scheduleServiceModel = this.modelMapper.map(schedule, ScheduleServiceModel.class);
-        if(!validator.validate(scheduleServiceModel).isEmpty()) {
+        if (!validator.validate(scheduleServiceModel).isEmpty()) {
             throw new ReadException(SCHEDULE_READ_EXCEPTION_MSG);
         }
         return scheduleServiceModel;
@@ -116,7 +117,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleServiceModel addEvent(ScheduleServiceModel scheduleServiceModel,
                                          EventServiceModel eventServiceModel) throws UpdateException {
-        if(!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
+        if (!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
             throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
         }
         switch (eventServiceModel.getStartTime()) {
@@ -182,7 +183,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void updateEvent(ScheduleServiceModel scheduleServiceModel,
                             EventServiceModel eventServiceModel) throws UpdateException {
 
-        if(!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
+        if (!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
             throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
         }
         EventServiceModel updatedEventServiceModel = this.eventService.updateEvent(eventServiceModel);
@@ -247,7 +248,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void deleteEvent(ScheduleServiceModel scheduleServiceModel,
                             EventServiceModel eventServiceModel) throws DeleteException, UpdateException {
 
-        if(!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
+        if (!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
             throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
         }
         switch (eventServiceModel.getStartTime()) {
@@ -309,7 +310,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void deleteSchedule(ScheduleServiceModel scheduleServiceModel) throws DeleteException {
 
-        if(!validator.validate(scheduleServiceModel).isEmpty()) {
+        if (!validator.validate(scheduleServiceModel).isEmpty()) {
             throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
         }
         Schedule schedule = this.modelMapper.map(scheduleServiceModel, Schedule.class);
@@ -317,23 +318,32 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void deleteScheduleByID(String id) {
+    public void deleteScheduleByID(String id) throws DeleteException {
 
-        this.scheduleRepository.deleteById(id);
+        try {
+            this.scheduleRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
+        }
     }
 
     @Override
-    public void deleteSchedulesByIDs(List<String> schedulesIDs) {
+    public void deleteSchedulesByIDs(List<String> schedulesIDs) throws DeleteException {
 
         for (String id : schedulesIDs) {
-            this.deleteScheduleByID(id);
+            try {
+                this.deleteScheduleByID(id);
+            } catch (DeleteException e) {
+                throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
+            }
         }
     }
 
     private List<EventServiceModel> deleteEventFromList(List<EventServiceModel> eventServiceModelList,
-                                                        EventServiceModel eventServiceModel) throws UpdateException, DeleteException {
+                                                        EventServiceModel eventServiceModel)
+            throws UpdateException, DeleteException {
 
-        if(!validator.validate(eventServiceModel).isEmpty()) {
+        if (!validator.validate(eventServiceModel).isEmpty()) {
             throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
         }
         this.eventService.deleteEvent(eventServiceModel);
@@ -347,7 +357,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private List<EventServiceModel> updateEventInList(List<EventServiceModel> eventServiceModelList,
                                                       EventServiceModel updatedEventServiceModel) throws UpdateException {
 
-        if(!validator.validate(updatedEventServiceModel).isEmpty()) {
+        if (!validator.validate(updatedEventServiceModel).isEmpty()) {
             throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
         }
         List<EventServiceModel> filteredEvents = eventServiceModelList

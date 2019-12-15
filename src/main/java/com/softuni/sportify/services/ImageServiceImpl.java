@@ -95,45 +95,31 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageServiceModel findImageByName(String name) throws ReadException {
-        Image image = this.imageRepository.findByName(name).orElse(null);
-        if (image == null) {
-            throw new ReadException(IMAGE_READ_EXCEPTION_MSG);
-        }
-        ImageServiceModel imageServiceModel = this.modelMapper.map(image, ImageServiceModel.class);
-        if(!validator.validate(imageServiceModel).isEmpty()) {
-            throw new ReadException(IMAGE_READ_EXCEPTION_MSG);
-        }
-        return imageServiceModel;
+
+        Image image = this.imageRepository.findByName(name)
+                .orElseThrow(()-> new ReadException(IMAGE_READ_EXCEPTION_MSG));
+        return this.modelMapper.map(image, ImageServiceModel.class);
     }
 
     @Override
     public ImageServiceModel findImageByID(String id) throws ReadException {
-        Image image = this.imageRepository.findById(id).orElse(null);
-        if (image == null) {
-            throw new ReadException(IMAGE_READ_EXCEPTION_MSG);
-        }
-        ImageServiceModel imageServiceModel = this.modelMapper.map(image, ImageServiceModel.class);
-        if(!validator.validate(imageServiceModel).isEmpty()) {
-            throw new ReadException(IMAGE_READ_EXCEPTION_MSG);
-        }
-        return imageServiceModel;
+
+        Image image = this.imageRepository.findById(id)
+                .orElseThrow(()-> new ReadException(IMAGE_READ_EXCEPTION_MSG));
+        return this.modelMapper.map(image, ImageServiceModel.class);
     }
 
     @Override
     public ImageServiceModel findByImageURL(String imageURL) throws ReadException {
-        Image image = this.imageRepository.findByImageURL(imageURL).orElse(null);
-        if (image == null) {
-            throw new ReadException(IMAGE_READ_EXCEPTION_MSG);
-        }
-        ImageServiceModel imageServiceModel = this.modelMapper.map(image, ImageServiceModel.class);
-        if(!validator.validate(imageServiceModel).isEmpty()) {
-            throw new ReadException(IMAGE_READ_EXCEPTION_MSG);
-        }
-        return imageServiceModel;
+
+        Image image = this.imageRepository.findByImageURL(imageURL)
+                .orElseThrow(()-> new ReadException(IMAGE_READ_EXCEPTION_MSG));
+        return this.modelMapper.map(image, ImageServiceModel.class);
     }
 
     @Override
     public List<ImageServiceModel> findAll() {
+
         List<Image> allImages = this.imageRepository.findAll();
         return allImages
                 .stream()

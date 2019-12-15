@@ -38,8 +38,8 @@ public interface ScheduleService {
 
     void deleteSchedule(ScheduleServiceModel scheduleServiceModel) throws DeleteException;
 
-    void deleteScheduleByID(String id);
+    void deleteScheduleByID(String id) throws DeleteException;
 
-    void deleteSchedulesByIDs(List<String> schedulesIDs);
+    void deleteSchedulesByIDs(List<String> schedulesIDs) throws DeleteException;
 
 }

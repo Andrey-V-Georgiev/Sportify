@@ -1,5 +1,6 @@
 package com.softuni.sportify.services;
 
+import com.softuni.sportify.domain.entities.BaseEntity;
 import com.softuni.sportify.domain.entities.Event;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
@@ -54,17 +55,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventServiceModel findByID(String eventID) throws ReadException {
 
-        Event event = this.eventRepository.findById(eventID).orElse(null);
-
-        EventServiceModel eventServiceModel = null;
-        try {
-            eventServiceModel = this.modelMapper.map(event, EventServiceModel.class);
-        } catch (Exception e) {
-            throw new ReadException(EVENT_READ_EXCEPTION_MSG);
-        }
-        if(!validator.validate(eventServiceModel).isEmpty()) {
-            throw new ReadException(EVENT_READ_EXCEPTION_MSG);
-        }
+        Event event = this.eventRepository.findById(eventID)
+                .orElseThrow(()-> new ReadException(EVENT_READ_EXCEPTION_MSG));
+        EventServiceModel eventServiceModel = this.modelMapper.map(event, EventServiceModel.class);
         return this.modelMapper.map(event, EventServiceModel.class);
     }
 
@@ -115,14 +108,12 @@ public class EventServiceImpl implements EventService {
         if(!validator.validate(sportServiceModel).isEmpty()) {
             throw new DeleteException(EVENT_DELETE_EXCEPTION_MSG);
         }
-        /* obtain events id's for the sport */
         List<String> eventsIDs = this.eventRepository.findAll()
                 .stream()
                 .filter(e -> e.getSport().getId().equals(sportServiceModel.getId()))
-                .map(e -> e.getId())
+                .map(BaseEntity::getId)
                 .collect(Collectors.toList());
 
-        /* delete those events from DB */
         for (String id : eventsIDs) {
             this.eventRepository.deleteById(id);
         }

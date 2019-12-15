@@ -161,6 +161,7 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public void deleteTheme(String id) throws DeleteException {
+
         try {
             this.themeRepository.deleteById(id);
         } catch (Exception e) {

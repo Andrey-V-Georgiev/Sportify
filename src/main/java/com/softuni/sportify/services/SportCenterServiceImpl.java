@@ -145,7 +145,8 @@ public class SportCenterServiceImpl implements SportCenterService {
     }
 
     @Override
-    public void deleteSportCenter(SportCenterServiceModel sportCenterServiceModel) throws DeleteException, UpdateException {
+    public void deleteSportCenter(SportCenterServiceModel sportCenterServiceModel)
+            throws DeleteException, UpdateException {
 
         if(!validator.validate(sportCenterServiceModel).isEmpty()) {
             throw new DeleteException(SPORT_CENTER_DELETE_EXCEPTION_MSG);
