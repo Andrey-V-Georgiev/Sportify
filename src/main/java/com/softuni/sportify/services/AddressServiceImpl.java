@@ -2,40 +2,50 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.entities.Address;
 import com.softuni.sportify.domain.models.service_models.AddressServiceModel;
+import com.softuni.sportify.exceptions.*;
 import com.softuni.sportify.repositories.AddressRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.validation.Validator;
+
+import static com.softuni.sportify.constants.ExceptionConstants.*;
 
 @Service
 public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
     private final ModelMapper modelMapper;
+    private final Validator validator;
 
     @Autowired
     public AddressServiceImpl(AddressRepository addressRepository,
-                              ModelMapper modelMapper) {
+                              ModelMapper modelMapper,
+                              Validator validator) {
         this.addressRepository = addressRepository;
         this.modelMapper = modelMapper;
+        this.validator = validator;
     }
 
     @Override
-    public AddressServiceModel createAddress(AddressServiceModel addressServiceModel) {
+    public AddressServiceModel createAddress(AddressServiceModel addressServiceModel) throws CreateException {
 
-        Address address = this.modelMapper.map(addressServiceModel, Address.class);
-        Address newAddress = null;
-        try {
-            newAddress = this.addressRepository.saveAndFlush(address);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!validator.validate(addressServiceModel).isEmpty()) {
+            throw new CreateException(ADDRESS_CREATE_EXCEPTION_MSG);
         }
+        Address address = this.modelMapper.map(addressServiceModel, Address.class);
+        Address newAddress = this.addressRepository.saveAndFlush(address);
+
         return this.modelMapper.map(newAddress, AddressServiceModel.class);
     }
 
     @Override
-    public AddressServiceModel editAddress(AddressServiceModel addressServiceModel) {
+    public AddressServiceModel editAddress(AddressServiceModel addressServiceModel) throws UpdateException {
 
+        if(!validator.validate(addressServiceModel).isEmpty()) {
+            throw new UpdateException(ADDRESS_UPDATE_EXCEPTION_MSG);
+        }
         Address address = this.modelMapper.map(addressServiceModel, Address.class);
         Address updatedAddress = this.addressRepository.saveAndFlush(address);
         return this.modelMapper.map(updatedAddress, AddressServiceModel.class);

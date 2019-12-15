@@ -1,11 +1,9 @@
 package com.softuni.sportify.domain.models.service_models;
 
-import com.softuni.sportify.domain.entities.Image;
-import com.softuni.sportify.domain.entities.SportCenter;
-
-import java.util.ArrayList;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Set;
 
 public class SportServiceModel extends BaseServiceModel {
 
@@ -18,6 +16,8 @@ public class SportServiceModel extends BaseServiceModel {
 
     }
 
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getName() {
         return name;
     }
@@ -34,6 +34,7 @@ public class SportServiceModel extends BaseServiceModel {
         this.sportDescription = sportDescription;
     }
 
+    @NotNull
     public ImageServiceModel getIconImage() {
         return iconImage;
     }
@@ -42,6 +43,7 @@ public class SportServiceModel extends BaseServiceModel {
         this.iconImage = iconImage;
     }
 
+    @NotNull
     public List<ImageServiceModel> getSportImages() {
         return sportImages;
     }

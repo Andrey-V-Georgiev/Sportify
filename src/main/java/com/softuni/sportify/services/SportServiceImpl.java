@@ -4,16 +4,23 @@ import com.softuni.sportify.domain.entities.Image;
 import com.softuni.sportify.domain.entities.Sport;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
+import com.softuni.sportify.exceptions.*;
 import com.softuni.sportify.repositories.ImageRepository;
 import com.softuni.sportify.repositories.SportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.softuni.sportify.constants.ExceptionConstants.*;
+import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @Service
 public class SportServiceImpl implements SportService {
@@ -23,7 +30,7 @@ public class SportServiceImpl implements SportService {
     private final ImageRepository imageRepository;
     private final SportCenterService sportCenterService;
     private final EventService eventService;
-    private final ScheduleService scheduleService;
+    private final Validator validator;
 
     @Autowired
     public SportServiceImpl(ModelMapper modelMapper,
@@ -31,50 +38,57 @@ public class SportServiceImpl implements SportService {
                             ImageRepository imageRepository,
                             SportCenterService sportCenterService,
                             EventService eventService,
-                            ScheduleService scheduleService) {
+                            Validator validator) {
         this.modelMapper = modelMapper;
         this.sportRepository = sportRepository;
         this.imageRepository = imageRepository;
         this.sportCenterService = sportCenterService;
         this.eventService = eventService;
-        this.scheduleService = scheduleService;
+        this.validator = validator;
     }
 
     @Override
     public SportServiceModel createSport(SportServiceModel sportServiceModel,
-                                         ImageServiceModel iconImageServiceModel) {
+                                         ImageServiceModel iconImageServiceModel) throws CreateException {
 
-        Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
-        sport.setSportDescription("");
-        sport.setIconImage(this.modelMapper.map(iconImageServiceModel, Image.class));
-
-        Sport newSport = null;
-        try {
-            newSport = this.sportRepository.saveAndFlush(sport);
-        } catch (Exception e) {
-            e.printStackTrace();
+        sportServiceModel.setSportDescription("");
+        sportServiceModel.setIconImage(iconImageServiceModel);
+        Set<ConstraintViolation<SportServiceModel>> validate = validator.validate(sportServiceModel);
+        if(!validate.isEmpty()) {
+            throw new CreateException(SPORT_CREATE_EXCEPTION_MSG);
         }
+        Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
+        Sport newSport = this.sportRepository.saveAndFlush(sport);
         return this.modelMapper.map(newSport, SportServiceModel.class);
     }
 
     @Override
-    public SportServiceModel findByID(String id) {
+    public SportServiceModel findByID(String id) throws ReadException {
 
-        Sport sport = this.sportRepository.findById(id).orElse(null);
+        Sport sport = this.sportRepository.findById(id)
+                .orElseThrow(()-> new ReadException(SPORT_READ_EXCEPTION_MSG));
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
 
     @Override
-    public SportServiceModel findByName(String name) {
+    public SportServiceModel findByName(String name) throws ReadException {
 
-        Sport sport = this.sportRepository.findByName(name);
+        Sport sport = null;
+        try {
+            sport = this.sportRepository.findByName(name);
+        } catch (Exception e) {
+            throw new ReadException(SPORT_READ_EXCEPTION_MSG);
+        }
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
 
 
     @Override
-    public SportServiceModel updateSportDescription(SportServiceModel sportServiceModel) {
+    public SportServiceModel updateSportDescription(SportServiceModel sportServiceModel) throws UpdateException {
 
+        if(!validator.validate(sportServiceModel).isEmpty()) {
+            throw new UpdateException(SPORT_UPDATE_EXCEPTION_MSG);
+        }
         Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
         Sport updatedSport = this.sportRepository.saveAndFlush(sport);
         return this.modelMapper.map(updatedSport, SportServiceModel.class);
@@ -82,8 +96,13 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public SportServiceModel addSportImage(SportServiceModel sportServiceModel,
-                                           ImageServiceModel imageServiceModel) {
+                                           ImageServiceModel imageServiceModel) throws UpdateException {
 
+        Set<ConstraintViolation<SportServiceModel>> validateSportServiceModel = validator.validate(sportServiceModel);
+        Set<ConstraintViolation<ImageServiceModel>> validateImageServiceModel = validator.validate(imageServiceModel);
+        if(!validateSportServiceModel.isEmpty() || !validateImageServiceModel.isEmpty()) {
+            throw new UpdateException(SPORT_UPDATE_EXCEPTION_MSG);
+        }
         Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
         Image image = this.modelMapper.map(imageServiceModel, Image.class);
         sport.getSportImages().add(image);
@@ -101,10 +120,12 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public void deleteSportImage(String sportID, String imageID) {
+    public void deleteSportImage(String sportID, String imageID) throws UpdateException {
 
-        Sport sport = this.sportRepository.findById(sportID).orElse(null);
-        Image image = this.imageRepository.findById(imageID).orElse(null);
+        Sport sport = this.sportRepository.findById(sportID)
+                .orElseThrow(()-> new UpdateException(SPORT_UPDATE_EXCEPTION_MSG));
+        Image image = this.imageRepository.findById(imageID)
+                .orElseThrow(()-> new UpdateException(SPORT_UPDATE_EXCEPTION_MSG));
 
         List<Image> sportImages = sport.getSportImages()
                 .stream()
@@ -116,8 +137,11 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public SportServiceModel editIconImage(SportServiceModel sportServiceModel) {
+    public SportServiceModel editIconImage(SportServiceModel sportServiceModel) throws UpdateException {
 
+        if(!validator.validate(sportServiceModel).isEmpty()) {
+            throw new UpdateException(SPORT_UPDATE_EXCEPTION_MSG);
+        }
         Sport sport = this.sportRepository.findById(sportServiceModel.getId()).orElse(null);
         sport.getIconImage().setName(sportServiceModel.getIconImage().getName());
         return this.modelMapper.map(this.sportRepository.saveAndFlush(sport), SportServiceModel.class);
@@ -162,14 +186,16 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public void deleteSport(SportServiceModel sportServiceModel) {
-        /* remove current sport from sport centers structures */
-        this.sportCenterService.removeCurrentSport(sportServiceModel);
-        /* delete all events of this sport */
-        this.eventService.deleteAllBySport(sportServiceModel);
-        /* empty images list */
-        sportServiceModel.setSportImages(new ArrayList<>());
+    public void deleteSport(SportServiceModel sportServiceModel) throws DeleteException, UpdateException {
 
+        if(!validator.validate(sportServiceModel).isEmpty()) {
+            throw new DeleteException(SPORT_DELETE_EXCEPTION_MSG);
+        }
+        this.sportCenterService.removeCurrentSport(sportServiceModel);
+        this.eventService.deleteAllBySport(sportServiceModel);
+        sportServiceModel.setSportImages(new ArrayList<>());
         this.sportRepository.delete(this.modelMapper.map(sportServiceModel, Sport.class));
     }
+
+
 }

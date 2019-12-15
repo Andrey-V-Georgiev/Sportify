@@ -1,5 +1,8 @@
 package com.softuni.sportify.domain.models.binding_models;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public abstract class BaseBindingModel {
 
     private String id;
@@ -7,6 +10,8 @@ public abstract class BaseBindingModel {
     BaseBindingModel() {
     }
 
+    @NotNull
+    @NotEmpty
     public String getId() {
         return id;
     }

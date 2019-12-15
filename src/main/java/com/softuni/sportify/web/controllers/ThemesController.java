@@ -7,6 +7,10 @@ import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.ThemeServiceModel;
 import com.softuni.sportify.domain.models.view_models.ImageViewModel;
 import com.softuni.sportify.domain.models.view_models.ThemeViewModel;
+import com.softuni.sportify.exceptions.CreateException;
+import com.softuni.sportify.exceptions.DeleteException;
+import com.softuni.sportify.exceptions.ReadException;
+import com.softuni.sportify.exceptions.UpdateException;
 import com.softuni.sportify.services.ImageService;
 import com.softuni.sportify.services.ThemeService;
 import org.modelmapper.ModelMapper;
@@ -57,13 +61,13 @@ public class ThemesController {
             @Valid
             @ModelAttribute ThemeCreateBindingModel themeCreateBindingModel,
             BindingResult themeBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, CreateException {
 
-        if(themeBindingResult.hasErrors()) {
-            modelAndView.addObject("themeCreateBindingModel", themeCreateBindingModel);
-            modelAndView.setViewName(VIEW_CREATE_NEW_THEME);
-            return modelAndView;
-        }
+//        if(themeBindingResult.hasErrors()) {
+//            modelAndView.addObject("themeCreateBindingModel", themeCreateBindingModel);
+//            modelAndView.setViewName(VIEW_CREATE_NEW_THEME);
+//            return modelAndView;
+//        }
 
         ThemeServiceModel themeServiceModel = this.modelMapper
                 .map(themeCreateBindingModel, ThemeServiceModel.class);
@@ -83,20 +87,20 @@ public class ThemesController {
             @Valid
             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
 
-        if(imageBindingResult.hasErrors()) {
-            ThemeViewModel themeViewModel = this.modelMapper
-                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-            themeViewModel.setSection(1);
-            modelAndView.addObject("themeViewModel", themeViewModel);
-            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-            modelAndView.setViewName(VIEW_THEME_DETAILS);
-            return modelAndView;
-        }
+//        if(imageBindingResult.hasErrors()) {
+//            ThemeViewModel themeViewModel = this.modelMapper
+//                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+//            themeViewModel.setSection(1);
+//            modelAndView.addObject("themeViewModel", themeViewModel);
+//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+//            modelAndView.setViewName(VIEW_THEME_DETAILS);
+//            return modelAndView;
+//        }
 
         ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
+                .createImageMultipartFile(imageCreateBindingModel.getImage(),imageCreateBindingModel.getName());
         ThemeServiceModel themeServiceModel = this.themeService.findByID(id);
         this.themeService.addIndexCarouselImage(themeServiceModel, imageServiceModel);
 
@@ -111,17 +115,17 @@ public class ThemesController {
             @Valid
             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
 
-        if(imageBindingResult.hasErrors()) {
-            ThemeViewModel themeViewModel = this.modelMapper
-                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-            themeViewModel.setSection(2);
-            modelAndView.addObject("themeViewModel", themeViewModel);
-            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-            modelAndView.setViewName(VIEW_THEME_DETAILS);
-            return modelAndView;
-        }
+//        if(imageBindingResult.hasErrors()) {
+//            ThemeViewModel themeViewModel = this.modelMapper
+//                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+//            themeViewModel.setSection(2);
+//            modelAndView.addObject("themeViewModel", themeViewModel);
+//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+//            modelAndView.setViewName(VIEW_THEME_DETAILS);
+//            return modelAndView;
+//        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -139,17 +143,17 @@ public class ThemesController {
             @Valid
             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
 
-        if(imageBindingResult.hasErrors()) {
-            ThemeViewModel themeViewModel = this.modelMapper
-                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-            themeViewModel.setSection(3);
-            modelAndView.addObject("themeViewModel", themeViewModel);
-            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-            modelAndView.setViewName(VIEW_THEME_DETAILS);
-            return modelAndView;
-        }
+//        if(imageBindingResult.hasErrors()) {
+//            ThemeViewModel themeViewModel = this.modelMapper
+//                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+//            themeViewModel.setSection(3);
+//            modelAndView.addObject("themeViewModel", themeViewModel);
+//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+//            modelAndView.setViewName(VIEW_THEME_DETAILS);
+//            return modelAndView;
+//        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -179,7 +183,7 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView showThemeDetails(
             @PathVariable String id,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         ThemeViewModel themeViewModel = this.modelMapper
                 .map(this.themeService.findByID(id), ThemeViewModel.class);
@@ -197,7 +201,7 @@ public class ThemesController {
     public ModelAndView editThemeImage(
             @PathVariable("themeID") String themeID,
             @PathVariable("imageID") String imageID,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         ThemeViewModel themeViewModel = this.modelMapper
                 .map(this.themeService.findByID(themeID), ThemeViewModel.class);
@@ -219,18 +223,18 @@ public class ThemesController {
             @Valid
             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, UpdateException {
 
-        if(imageBindingResult.hasErrors()) {
-            ThemeViewModel themeViewModel = this.modelMapper
-                    .map(this.themeService.findByID(themeID), ThemeViewModel.class);
-            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
-            modelAndView.addObject("themeViewModel", themeViewModel);
-            modelAndView.addObject("imageViewModel", imageViewModel);
-            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
-            modelAndView.setViewName(VIEW_EDIT_THEME_IMAGE);
-            return modelAndView;
-        }
+//        if(imageBindingResult.hasErrors()) {
+//            ThemeViewModel themeViewModel = this.modelMapper
+//                    .map(this.themeService.findByID(themeID), ThemeViewModel.class);
+//            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
+//            modelAndView.addObject("themeViewModel", themeViewModel);
+//            modelAndView.addObject("imageViewModel", imageViewModel);
+//            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+//            modelAndView.setViewName(VIEW_EDIT_THEME_IMAGE);
+//            return modelAndView;
+//        }
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
@@ -243,7 +247,7 @@ public class ThemesController {
     public ModelAndView deleteThemeImage(
             @PathVariable("themeID") String themeID,
             @PathVariable("imageID") String imageID,
-            ModelAndView modelAndView) throws Exception {
+            ModelAndView modelAndView) throws Exception, UpdateException, DeleteException {
 
         this.themeService.deleteThemeImage(themeID, imageID);
         this.imageService.deleteImage(imageID);
@@ -256,7 +260,7 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteAdminPanelImages(
             @PathVariable("id") String themeID,
-            ModelAndView modelAndView) throws Exception {
+            ModelAndView modelAndView) throws Exception, ReadException, UpdateException {
 
         ThemeServiceModel themeServiceModel = this.themeService.findByID(themeID);
         this.themeService.deleteAdminPanelImages(themeServiceModel);
@@ -269,7 +273,7 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteTheme(
             @PathVariable String id,
-            ModelAndView modelAndView) throws Exception {
+            ModelAndView modelAndView) throws Exception, DeleteException {
 
         this.themeService.deleteTheme(id);
 
@@ -281,7 +285,7 @@ public class ThemesController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView activateTheme(
             @PathVariable("id") String themeID,
-            ModelAndView modelAndView ) {
+            ModelAndView modelAndView ) throws ReadException, UpdateException {
 
         ThemeServiceModel themeServiceModel = this.themeService.findByID(themeID);
         ThemeServiceModel activeThemeServiceModel = this.themeService.activateTheme(themeServiceModel);

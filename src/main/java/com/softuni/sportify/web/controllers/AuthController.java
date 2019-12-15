@@ -2,6 +2,7 @@ package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.UserRegisterBindingModel;
 import com.softuni.sportify.domain.models.service_models.UserServiceModel;
+import com.softuni.sportify.exceptions.CreateException;
 import com.softuni.sportify.services.UserService;
 
 import org.modelmapper.ModelMapper;
@@ -47,13 +48,13 @@ public class AuthController {
             @Valid
             @ModelAttribute UserRegisterBindingModel userRegisterBindingModel,
             BindingResult userBindingResult,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws CreateException {
 
-        if(userBindingResult.hasErrors()) {
-            modelAndView.addObject("userRegisterBindingModel", userRegisterBindingModel);
-            modelAndView.setViewName(VIEW_REGISTER);
-            return modelAndView;
-        }
+//        if(userBindingResult.hasErrors()) {
+//            modelAndView.addObject("userRegisterBindingModel", userRegisterBindingModel);
+//            modelAndView.setViewName(VIEW_REGISTER);
+//            return modelAndView;
+//        }
 
         UserServiceModel userServiceModel = this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);

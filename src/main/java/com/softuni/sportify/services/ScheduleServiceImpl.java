@@ -7,15 +7,18 @@ import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
 import com.softuni.sportify.repositories.ScheduleRepository;
 import com.softuni.sportify.repositories.SportCenterRepository;
+import com.softuni.sportify.exceptions.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.softuni.sportify.constants.EventHoursConstants.*;
+import static com.softuni.sportify.constants.ExceptionConstants.*;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -24,20 +27,23 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final ModelMapper modelMapper;
     private final SportCenterRepository sportCenterRepository;
     private final EventService eventService;
+    private final Validator validator;
 
     @Autowired
     public ScheduleServiceImpl(ScheduleRepository scheduleRepository,
                                ModelMapper modelMapper,
                                SportCenterRepository sportCenterRepository,
-                               EventService eventService) {
+                               EventService eventService,
+                               Validator validator) {
         this.scheduleRepository = scheduleRepository;
         this.modelMapper = modelMapper;
         this.sportCenterRepository = sportCenterRepository;
         this.eventService = eventService;
+        this.validator = validator;
     }
 
     @Override
-    public ScheduleServiceModel createSchedule(SportCenterServiceModel sportCenterServiceModel, String day, String month, String year) {
+    public ScheduleServiceModel createSchedule(SportCenterServiceModel sportCenterServiceModel, String day, String month, String year) throws CreateException {
 
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
         ScheduleServiceModel scheduleServiceModel = new ScheduleServiceModel();
@@ -65,27 +71,31 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleServiceModel.setTime21(new ArrayList<>());
         scheduleServiceModel.setTime22(new ArrayList<>());
 
-        Schedule schedule = this.scheduleRepository.saveAndFlush(
-                this.modelMapper.map(scheduleServiceModel, Schedule.class));
-        try {
-            sportCenter.getCalendar().add(schedule);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!validator.validate(scheduleServiceModel).isEmpty() ||
+                !validator.validate(sportCenterServiceModel).isEmpty()) {
+            throw new CreateException(SCHEDULE_CREATE_EXCEPTION_MSG);
         }
+        Schedule schedule = this.modelMapper.map(scheduleServiceModel, Schedule.class);
+        Schedule savedSchedule = this.scheduleRepository.saveAndFlush(schedule);
+        sportCenter.getCalendar().add(schedule);
         this.sportCenterRepository.save(sportCenter);
 
         return this.modelMapper.map(schedule, ScheduleServiceModel.class);
     }
 
     @Override
-    public ScheduleServiceModel findByID(String scheduleID) {
+    public ScheduleServiceModel findByID(String scheduleID) throws ReadException {
 
         Schedule schedule = this.scheduleRepository.findById(scheduleID).orElse(null);
-        return this.modelMapper.map(schedule, ScheduleServiceModel.class);
+        ScheduleServiceModel scheduleServiceModel = this.modelMapper.map(schedule, ScheduleServiceModel.class);
+        if(!validator.validate(scheduleServiceModel).isEmpty()) {
+            throw new ReadException(SCHEDULE_READ_EXCEPTION_MSG);
+        }
+        return scheduleServiceModel;
     }
 
     @Override
-    public ScheduleServiceModel findByDetails(String sportCenterID, String day, String month, String year) {
+    public ScheduleServiceModel findByDetails(String sportCenterID, String day, String month, String year) throws ReadException {
 
         SportCenter sportCenter = this.sportCenterRepository.findById(sportCenterID).orElse(null);
         Schedule schedule = null;
@@ -98,16 +108,17 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .collect(Collectors.toList())
                     .get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ReadException(SCHEDULE_READ_EXCEPTION_MSG);
         }
-
         return this.modelMapper.map(schedule, ScheduleServiceModel.class);
     }
 
     @Override
     public ScheduleServiceModel addEvent(ScheduleServiceModel scheduleServiceModel,
-                                         EventServiceModel eventServiceModel) {
-
+                                         EventServiceModel eventServiceModel) throws UpdateException {
+        if(!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
+            throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
+        }
         switch (eventServiceModel.getStartTime()) {
             case SIX_OCLOCK:
                 scheduleServiceModel.getTime6().add(eventServiceModel);
@@ -169,8 +180,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void updateEvent(ScheduleServiceModel scheduleServiceModel,
-                            EventServiceModel eventServiceModel) {
+                            EventServiceModel eventServiceModel) throws UpdateException {
 
+        if(!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
+            throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
+        }
         EventServiceModel updatedEventServiceModel = this.eventService.updateEvent(eventServiceModel);
 
         switch (eventServiceModel.getStartTime()) {
@@ -231,9 +245,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void deleteEvent(ScheduleServiceModel scheduleServiceModel,
-                            EventServiceModel eventServiceModel) {
+                            EventServiceModel eventServiceModel) throws DeleteException, UpdateException {
 
-
+        if(!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
+            throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
+        }
         switch (eventServiceModel.getStartTime()) {
             case SIX_OCLOCK:
                 scheduleServiceModel.setTime6(deleteEventFromList(scheduleServiceModel.getTime6(), eventServiceModel));
@@ -291,8 +307,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void deleteSchedule(ScheduleServiceModel scheduleServiceModel) {
+    public void deleteSchedule(ScheduleServiceModel scheduleServiceModel) throws DeleteException {
 
+        if(!validator.validate(scheduleServiceModel).isEmpty()) {
+            throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
+        }
         Schedule schedule = this.modelMapper.map(scheduleServiceModel, Schedule.class);
         this.scheduleRepository.delete(schedule);
     }
@@ -312,8 +331,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     private List<EventServiceModel> deleteEventFromList(List<EventServiceModel> eventServiceModelList,
-                                                        EventServiceModel eventServiceModel) {
+                                                        EventServiceModel eventServiceModel) throws UpdateException, DeleteException {
 
+        if(!validator.validate(eventServiceModel).isEmpty()) {
+            throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
+        }
         this.eventService.deleteEvent(eventServiceModel);
         List<EventServiceModel> filteredEventServiceModels = eventServiceModelList
                 .stream()
@@ -323,8 +345,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     private List<EventServiceModel> updateEventInList(List<EventServiceModel> eventServiceModelList,
-                                                      EventServiceModel updatedEventServiceModel) {
+                                                      EventServiceModel updatedEventServiceModel) throws UpdateException {
 
+        if(!validator.validate(updatedEventServiceModel).isEmpty()) {
+            throw new UpdateException(SCHEDULE_UPDATE_EXCEPTION_MSG);
+        }
         List<EventServiceModel> filteredEvents = eventServiceModelList
                 .stream()
                 .filter(e -> !e.getId().equals(updatedEventServiceModel.getId()))

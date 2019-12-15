@@ -1,6 +1,7 @@
 package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class SportCenter extends BaseEntity {
     public SportCenter() {
     }
 
-    @Column(name = "name")
+    @Size(min = 2, max = 30)
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -38,7 +40,7 @@ public class SportCenter extends BaseEntity {
         this.address = address;
     }
 
-    @Column(name = "sport_center_description", columnDefinition = "TEXT")
+    @Column(name = "sport_center_description", columnDefinition = "TEXT", nullable = false)
     public String getDescription() {
         return description;
     }

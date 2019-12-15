@@ -18,7 +18,7 @@ public class AddressCreateBindingModel extends BaseBindingModel{
     }
 
     @NotNull
-    @Size(min=3)
+    @Size(min = 3, max = 40)
     public String getCountry() {
         return country;
     }
@@ -28,7 +28,7 @@ public class AddressCreateBindingModel extends BaseBindingModel{
     }
 
     @NotNull
-    @Size(min=2)
+    @Size(min = 2, max = 40)
     public String getCity() {
         return city;
     }
@@ -38,7 +38,7 @@ public class AddressCreateBindingModel extends BaseBindingModel{
     }
 
     @NotNull
-    @Size(min=2)
+    @Size(min = 2, max = 40)
     public String getStreet() {
         return street;
     }
@@ -48,7 +48,7 @@ public class AddressCreateBindingModel extends BaseBindingModel{
     }
 
     @NotNull
-    @Size(min=8)
+    @Size(min = 8, max = 200)
     public String getDetails() {
         return details;
     }

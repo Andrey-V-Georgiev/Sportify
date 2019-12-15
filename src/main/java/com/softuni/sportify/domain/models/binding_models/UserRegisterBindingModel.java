@@ -34,7 +34,7 @@ public class UserRegisterBindingModel {
     }
 
     @NotNull
-    @Size(min=1, max=30)
+    @Size(min=1, max=200)
     public String getPassword() {
         return password;
     }
@@ -43,7 +43,7 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
     @NotNull
-    @Size(min=1, max=30)
+    @Size(min=1, max=200)
     public String getConfirmPassword() {
         return confirmPassword;
     }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name ="images")
@@ -17,6 +18,7 @@ public class Image extends BaseEntity {
     }
 
     @Column(name = "name", nullable = false)
+    @Size(min = 2, max = 30)
     public String getName() {
         return name;
     }

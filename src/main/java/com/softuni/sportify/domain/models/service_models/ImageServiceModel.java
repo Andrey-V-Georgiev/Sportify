@@ -1,5 +1,9 @@
 package com.softuni.sportify.domain.models.service_models;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class ImageServiceModel extends BaseServiceModel {
 
     private String name;
@@ -9,6 +13,8 @@ public class ImageServiceModel extends BaseServiceModel {
     public ImageServiceModel() {
     }
 
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getName() {
         return name;
     }
@@ -17,6 +23,7 @@ public class ImageServiceModel extends BaseServiceModel {
         this.name = name;
     }
 
+    @NotNull
     public String getImageURL() {
         return imageURL;
     }
@@ -25,6 +32,7 @@ public class ImageServiceModel extends BaseServiceModel {
         this.imageURL = imageURL;
     }
 
+    @NotNull
     public String getPublicID() {
         return publicID;
     }

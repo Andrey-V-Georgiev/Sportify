@@ -8,6 +8,10 @@ import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.domain.models.view_models.ImageViewModel;
 import com.softuni.sportify.domain.models.view_models.SportViewModel;
+import com.softuni.sportify.exceptions.CreateException;
+import com.softuni.sportify.exceptions.DeleteException;
+import com.softuni.sportify.exceptions.ReadException;
+import com.softuni.sportify.exceptions.UpdateException;
 import com.softuni.sportify.services.ImageService;
 import com.softuni.sportify.services.SportService;
 import org.modelmapper.ModelMapper;
@@ -58,17 +62,18 @@ public class SportsController {
             @Valid
             @ModelAttribute SportCreateBindingModel sportCreateBindingModel,
             BindingResult sportBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, CreateException {
 
-        if(sportBindingResult.hasErrors()) {
-            modelAndView.addObject("sportCreateBindingModel", sportCreateBindingModel);
-            modelAndView.setViewName(VIEW_CREATE_SPORT);
-            return modelAndView;
-        }
+//        if(sportBindingResult.hasErrors()) {
+//            modelAndView.addObject("sportCreateBindingModel", sportCreateBindingModel);
+//            modelAndView.setViewName(VIEW_CREATE_SPORT);
+//            return modelAndView;
+//        }
 
-        SportServiceModel sportServiceModel = this.modelMapper.map(sportCreateBindingModel, SportServiceModel.class);
+        SportServiceModel sportServiceModel = this.modelMapper
+                .map(sportCreateBindingModel, SportServiceModel.class);
         ImageServiceModel iconImageServiceModel = this.imageService
-                .createImageMultipartFile(sportCreateBindingModel.getIconImage(), sportCreateBindingModel.getName());
+                .createImageMultipartFile(sportCreateBindingModel.getIconImage(),sportCreateBindingModel.getName());
         SportServiceModel newSportServiceModel = this.sportService
                 .createSport(sportServiceModel, iconImageServiceModel);
 
@@ -79,7 +84,7 @@ public class SportsController {
     @GetMapping("/sport-details/{id}")
     public ModelAndView sportDetails(
             @PathVariable String id,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         SportServiceModel sportServiceModel = this.sportService.findByID(id);
         SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
@@ -93,7 +98,7 @@ public class SportsController {
     @GetMapping("/guests-sport-details/{id}")
     public ModelAndView guestsSportDetails(
             @PathVariable String id,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         SportServiceModel sportServiceModel = this.sportService.findByID(id);
         SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
@@ -108,7 +113,7 @@ public class SportsController {
     public ModelAndView editDescription(
             @PathVariable("id") String sportID,
             SportEditBindingModel sportEditBindingModel,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException, UpdateException {
 
         SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
         sportServiceModel.setSportDescription(sportEditBindingModel.getSportDescription());
@@ -128,21 +133,21 @@ public class SportsController {
             @Valid
             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, ReadException, CreateException, UpdateException {
 
         SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
 
-        if(imageBindingResult.hasErrors()) {
-            SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
-            modelAndView.addObject("sportViewModel", sportViewModel);
-            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-
-            modelAndView.setViewName(VIEW_SPORT_DETAILS);
-            return modelAndView;
-        }
+//        if(imageBindingResult.hasErrors()) {
+//            SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
+//            modelAndView.addObject("sportViewModel", sportViewModel);
+//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+//
+//            modelAndView.setViewName(VIEW_SPORT_DETAILS);
+//            return modelAndView;
+//        }
 
         ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(imageCreateBindingModel.getImage(), sportServiceModel.getName());
+                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
         SportServiceModel updatedSportServiceModel = this.sportService
                 .addSportImage(sportServiceModel, imageServiceModel);
         SportViewModel sportViewModel = this.modelMapper.map(updatedSportServiceModel, SportViewModel.class);
@@ -172,7 +177,7 @@ public class SportsController {
     public ModelAndView editSportImage(
             @PathVariable("sportID") String sportID,
             @PathVariable("imageID") String imageID,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         SportViewModel sportViewModel = this.modelMapper
                 .map(this.sportService.findByID(sportID), SportViewModel.class);
@@ -194,19 +199,19 @@ public class SportsController {
             @Valid
             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException {
+            ModelAndView modelAndView) throws IOException, UpdateException {
 
-        if(imageBindingResult.hasErrors()) {
-            SportViewModel sportViewModel = this.modelMapper
-                    .map(this.sportService.findByID(sportID), SportViewModel.class);
-            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
-            modelAndView.addObject("sportViewModel", sportViewModel);
-            modelAndView.addObject("imageViewModel", imageViewModel);
-            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
-
-            modelAndView.setViewName(VIEW_EDIT_SPORT_IMAGE);
-            return modelAndView;
-        }
+//        if(imageBindingResult.hasErrors()) {
+//            SportViewModel sportViewModel = this.modelMapper
+//                    .map(this.sportService.findByID(sportID), SportViewModel.class);
+//            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
+//            modelAndView.addObject("sportViewModel", sportViewModel);
+//            modelAndView.addObject("imageViewModel", imageViewModel);
+//            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+//
+//            modelAndView.setViewName(VIEW_EDIT_SPORT_IMAGE);
+//            return modelAndView;
+//        }
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 
@@ -219,7 +224,7 @@ public class SportsController {
     public ModelAndView deleteSportImage(
             @PathVariable("sportID") String sportID,
             @PathVariable("imageID") String imageID,
-            ModelAndView modelAndView) throws Exception {
+            ModelAndView modelAndView) throws Exception, UpdateException, DeleteException {
 
         this.sportService.deleteSportImage(sportID, imageID);
         this.imageService.deleteImage(imageID);
@@ -232,7 +237,7 @@ public class SportsController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteSport(
             @PathVariable("sportID") String sportID,
-            ModelAndView modelAndView) throws Exception {
+            ModelAndView modelAndView) throws Exception, UpdateException, DeleteException, ReadException {
 
         SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
         this.sportService.deleteSport(sportServiceModel);

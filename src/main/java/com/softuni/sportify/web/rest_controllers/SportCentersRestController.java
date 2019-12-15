@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
+import com.softuni.sportify.exceptions.ReadException;
 import com.softuni.sportify.services.SportCenterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class SportCentersRestController {
 
     @GetMapping("/schedules-by-month/{scID}/{monthNum}")
     public String schedulesByMonth(@PathVariable("scID") String scID,
-                                   @PathVariable("monthNum") String monthNum) throws JsonProcessingException {
+                                   @PathVariable("monthNum") String monthNum) throws JsonProcessingException, ReadException {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(scID);
         List<ScheduleServiceModel> scheduleObjects = sportCenterServiceModel

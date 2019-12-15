@@ -1,8 +1,11 @@
 package com.softuni.sportify.domain.models.service_models;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
-public class UserServiceModel extends BaseServiceModel{
+public class UserServiceModel extends BaseServiceModel {
 
     private String username;
     private String password;
@@ -12,6 +15,8 @@ public class UserServiceModel extends BaseServiceModel{
     public UserServiceModel() {
     }
 
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getUsername() {
         return username;
     }
@@ -20,6 +25,8 @@ public class UserServiceModel extends BaseServiceModel{
         this.username = username;
     }
 
+    @NotNull
+    @Size(min = 1, max = 200)
     public String getPassword() {
         return password;
     }
@@ -28,6 +35,8 @@ public class UserServiceModel extends BaseServiceModel{
         this.password = password;
     }
 
+    @NotNull
+    @Size(min = 2, max = 60)
     public String getEmail() {
         return email;
     }
@@ -36,6 +45,7 @@ public class UserServiceModel extends BaseServiceModel{
         this.email = email;
     }
 
+    @NotNull
     public Set<RoleServiceModel> getAuthorities() {
         return authorities;
     }

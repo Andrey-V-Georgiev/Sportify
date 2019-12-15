@@ -1,6 +1,8 @@
 package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Entity
@@ -33,7 +35,7 @@ public class Schedule extends BaseEntity {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sport_center_id")
+    @JoinColumn(name = "sport_center_id", nullable = false)
     public SportCenter getSportCenter() {
         return sportCenter;
     }
@@ -42,7 +44,9 @@ public class Schedule extends BaseEntity {
         this.sportCenter = sportCenter;
     }
 
-    @Column(name = "day")
+    @Min(1)
+    @Max(31)
+    @Column(name = "day", nullable = false)
     public int getDay() {
         return day;
     }
@@ -51,7 +55,9 @@ public class Schedule extends BaseEntity {
         this.day = day;
     }
 
-    @Column(name = "month")
+    @Min(1)
+    @Max(12)
+    @Column(name = "month", nullable = false)
     public int getMonth() {
         return month;
     }
@@ -60,7 +66,9 @@ public class Schedule extends BaseEntity {
         this.month = month;
     }
 
-    @Column(name = "year")
+    @Min(1990)
+    @Max(2050)
+    @Column(name = "year", nullable = false)
     public int getYear() {
         return year;
     }

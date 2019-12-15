@@ -3,6 +3,7 @@ package com.softuni.sportify.domain.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "addresses")
@@ -17,6 +18,7 @@ public class Address extends BaseEntity {
     }
 
     @Column(name = "country", nullable = false)
+    @Size(min = 3, max = 40)
     public String getCountry() {
         return country;
     }
@@ -26,6 +28,7 @@ public class Address extends BaseEntity {
     }
 
     @Column(name = "city", nullable = false)
+    @Size(min = 2, max = 40)
     public String getCity() {
         return city;
     }
@@ -35,6 +38,7 @@ public class Address extends BaseEntity {
     }
 
     @Column(name = "street", nullable = false)
+    @Size(min = 2, max = 40)
     public String getStreet() {
         return street;
     }
@@ -44,6 +48,7 @@ public class Address extends BaseEntity {
     }
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    @Size(min = 8, max = 200)
     public String getDetails() {
         return details;
     }

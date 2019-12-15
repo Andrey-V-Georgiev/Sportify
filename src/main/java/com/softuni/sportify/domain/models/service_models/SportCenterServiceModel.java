@@ -1,5 +1,8 @@
 package com.softuni.sportify.domain.models.service_models;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class SportCenterServiceModel extends BaseServiceModel {
@@ -15,6 +18,8 @@ public class SportCenterServiceModel extends BaseServiceModel {
     public SportCenterServiceModel() {
     }
 
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getName() {
         return name;
     }
@@ -23,6 +28,7 @@ public class SportCenterServiceModel extends BaseServiceModel {
         this.name = name;
     }
 
+    @NotNull
     public AddressServiceModel getAddress() {
         return address;
     }
@@ -39,6 +45,7 @@ public class SportCenterServiceModel extends BaseServiceModel {
         this.description = description;
     }
 
+    @NotNull
     public ImageServiceModel getIconImage() {
         return iconImage;
     }
@@ -47,6 +54,7 @@ public class SportCenterServiceModel extends BaseServiceModel {
         this.iconImage = iconImage;
     }
 
+    @NotNull
     public List<ImageServiceModel> getSportCenterImages() {
         return sportCenterImages;
     }
@@ -55,6 +63,7 @@ public class SportCenterServiceModel extends BaseServiceModel {
         this.sportCenterImages = sportCenterImages;
     }
 
+    @NotNull
     public List<SportServiceModel> getSports() {
         return sports;
     }
@@ -63,6 +72,7 @@ public class SportCenterServiceModel extends BaseServiceModel {
         this.sports = sports;
     }
 
+    @NotNull
     public List<ScheduleServiceModel> getCalendar() {
         return calendar;
     }

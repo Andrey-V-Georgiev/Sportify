@@ -8,6 +8,10 @@ import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel
 import com.softuni.sportify.domain.models.view_models.EventViewModel;
 import com.softuni.sportify.domain.models.view_models.ScheduleViewModel;
 import com.softuni.sportify.domain.models.view_models.SportCenterViewModel;
+import com.softuni.sportify.exceptions.CreateException;
+import com.softuni.sportify.exceptions.DeleteException;
+import com.softuni.sportify.exceptions.ReadException;
+import com.softuni.sportify.exceptions.UpdateException;
 import com.softuni.sportify.services.EventService;
 import com.softuni.sportify.services.ScheduleService;
 import com.softuni.sportify.services.SportCenterService;
@@ -54,7 +58,7 @@ public class CalendarController {
     @GetMapping("/show-calendar/{id}")
     public ModelAndView showCalendar(
             @PathVariable("id") String sportCenterID,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService
                 .findByID(sportCenterID);
@@ -73,7 +77,7 @@ public class CalendarController {
             @PathVariable("day") String day,
             @PathVariable("month") String month,
             @PathVariable("year") String year,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException, CreateException {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
         ScheduleServiceModel scheduleServiceModel = this.scheduleService
@@ -88,7 +92,7 @@ public class CalendarController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView scheduleDetailsByID(
             @PathVariable("scheduleID") String scheduleID,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
         ScheduleViewModel scheduleViewModel = this.modelMapper
@@ -107,7 +111,7 @@ public class CalendarController {
             @PathVariable("day") String day,
             @PathVariable("month") String month,
             @PathVariable("year") String year,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService
                 .findByDetails(sportCenterID, day, month, year);
@@ -147,20 +151,20 @@ public class CalendarController {
             @Valid
             @ModelAttribute EventCreateBindingModel eventCreateBindingModel,
             BindingResult eventBindingResult,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException, CreateException, UpdateException {
 
-        if(eventBindingResult.hasErrors()) {
-            modelAndView.addObject("scheduleID", scheduleID);
-            /* for the hidden input - important */
-            modelAndView.addObject("hourStr", hourStr);
-            modelAndView.addObject("sportsNames", this.sportService.findAllSportsNames());
-            modelAndView.addObject("eventLevels", this.eventService.findAllLevels());
-
-
-            modelAndView.addObject("eventCreateBindingModel", eventCreateBindingModel);
-            modelAndView.setViewName(VIEW_CREATE_EVENT);
-            return modelAndView;
-        }
+//        if(eventBindingResult.hasErrors()) {
+//            modelAndView.addObject("scheduleID", scheduleID);
+//            /* for the hidden input - important */
+//            modelAndView.addObject("hourStr", hourStr);
+//            modelAndView.addObject("sportsNames", this.sportService.findAllSportsNames());
+//            modelAndView.addObject("eventLevels", this.eventService.findAllLevels());
+//
+//
+//            modelAndView.addObject("eventCreateBindingModel", eventCreateBindingModel);
+//            modelAndView.setViewName(VIEW_CREATE_EVENT);
+//            return modelAndView;
+//        }
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
 
@@ -185,7 +189,7 @@ public class CalendarController {
     public ModelAndView editScheduleEvent(
             @PathVariable("scheduleID") String scheduleID,
             @PathVariable("eventID") String eventID,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         ScheduleViewModel scheduleViewModel = this.modelMapper
                 .map(this.scheduleService.findByID(scheduleID), ScheduleViewModel.class);
@@ -213,29 +217,29 @@ public class CalendarController {
             @Valid
             @ModelAttribute EventEditBindingModel eventEditBindingModel,
             BindingResult eventBindingResult,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException, UpdateException {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
         EventServiceModel eventServiceModel = this.modelMapper.map(eventEditBindingModel, EventServiceModel.class);
         eventServiceModel.setId(eventID);
         eventServiceModel.setSport(this.sportService.findByName(eventEditBindingModel.getSport()));
 
-        if(eventBindingResult.hasErrors()) {
-            ScheduleViewModel scheduleViewModel = this.modelMapper
-                    .map(scheduleServiceModel, ScheduleViewModel.class);
-            EventViewModel eventViewModel = this.modelMapper
-                    .map(eventServiceModel, EventViewModel.class);
-            List<String> sportsNames = this.sportService
-                    .findAllSportsNamesStartsWith(eventServiceModel.getSport().getId());
-            List<String> eventLevels = this.eventService.findAllLevelsStartsWith(eventServiceModel);
-            modelAndView.addObject("scheduleViewModel", scheduleViewModel);
-            modelAndView.addObject("eventViewModel", eventViewModel);
-            modelAndView.addObject("sportsNames", sportsNames);
-            modelAndView.addObject("eventLevels", eventLevels);
-            modelAndView.addObject("eventEditBindingModel", eventEditBindingModel);
-            modelAndView.setViewName(VIEW_EDIT_SCHEDULE_EVENT);
-            return modelAndView;
-        }
+//        if(eventBindingResult.hasErrors()) {
+//            ScheduleViewModel scheduleViewModel = this.modelMapper
+//                    .map(scheduleServiceModel, ScheduleViewModel.class);
+//            EventViewModel eventViewModel = this.modelMapper
+//                    .map(eventServiceModel, EventViewModel.class);
+//            List<String> sportsNames = this.sportService
+//                    .findAllSportsNamesStartsWith(eventServiceModel.getSport().getId());
+//            List<String> eventLevels = this.eventService.findAllLevelsStartsWith(eventServiceModel);
+//            modelAndView.addObject("scheduleViewModel", scheduleViewModel);
+//            modelAndView.addObject("eventViewModel", eventViewModel);
+//            modelAndView.addObject("sportsNames", sportsNames);
+//            modelAndView.addObject("eventLevels", eventLevels);
+//            modelAndView.addObject("eventEditBindingModel", eventEditBindingModel);
+//            modelAndView.setViewName(VIEW_EDIT_SCHEDULE_EVENT);
+//            return modelAndView;
+//        }
 
         EventServiceModel updatedEventServiceModel = this.eventService.updateEvent(eventServiceModel);
         this.scheduleService.updateEvent(scheduleServiceModel, updatedEventServiceModel);
@@ -249,7 +253,7 @@ public class CalendarController {
     public ModelAndView deleteScheduleEvent(
             @PathVariable("scheduleID") String scheduleID,
             @PathVariable("eventID") String eventID,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException, UpdateException, DeleteException {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
         EventServiceModel eventServiceModel = this.eventService.findByID(eventID);

@@ -1,5 +1,9 @@
 package com.softuni.sportify.domain.models.service_models;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class AddressServiceModel extends BaseServiceModel {
 
     private String country;
@@ -10,6 +14,8 @@ public class AddressServiceModel extends BaseServiceModel {
     public AddressServiceModel() {
     }
 
+    @NotNull
+    @Size(min = 3, max = 40)
     public String getCountry() {
         return country;
     }
@@ -18,6 +24,8 @@ public class AddressServiceModel extends BaseServiceModel {
         this.country = country;
     }
 
+    @NotNull
+    @Size(min = 2, max = 40)
     public String getCity() {
         return city;
     }
@@ -26,6 +34,8 @@ public class AddressServiceModel extends BaseServiceModel {
         this.city = city;
     }
 
+    @NotNull
+    @Size(min = 2, max = 40)
     public String getStreet() {
         return street;
     }
@@ -34,6 +44,8 @@ public class AddressServiceModel extends BaseServiceModel {
         this.street = street;
     }
 
+    @NotNull
+    @Size(min = 8, max = 200)
     public String getDetails() {
         return details;
     }

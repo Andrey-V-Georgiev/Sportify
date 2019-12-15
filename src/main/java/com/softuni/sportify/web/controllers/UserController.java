@@ -2,6 +2,9 @@ package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.UserEditBindingModel;
 import com.softuni.sportify.domain.models.view_models.UserViewModel;
+import com.softuni.sportify.exceptions.DeleteException;
+import com.softuni.sportify.exceptions.ReadException;
+import com.softuni.sportify.exceptions.UpdateException;
 import com.softuni.sportify.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +54,7 @@ public class UserController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView editUser(
             @PathVariable String id,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException {
 
         UserViewModel userViewModel = this.modelMapper.map(this.userService.findById(id), UserViewModel.class);
         modelAndView.addObject("userViewModel", userViewModel);
@@ -67,17 +70,18 @@ public class UserController {
             @Valid
             @ModelAttribute UserEditBindingModel userEditBindingModel,
             BindingResult userBindingResult,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws ReadException, UpdateException {
 
-        if(userBindingResult.hasErrors()) {
-            UserViewModel userViewModel = this.modelMapper.map(this.userService.findById(id), UserViewModel.class);
-            modelAndView.addObject("userViewModel", userViewModel);
-            modelAndView.addObject("userEditBindingModel", userEditBindingModel);
-            modelAndView.setViewName(VIEW_EDIT_USER);
-            return modelAndView;
-        }
+//        if(userBindingResult.hasErrors()) {
+//            UserViewModel userViewModel = this.modelMapper.map(this.userService.findById(id), UserViewModel.class);
+//            modelAndView.addObject("userViewModel", userViewModel);
+//            modelAndView.addObject("userEditBindingModel", userEditBindingModel);
+//            modelAndView.setViewName(VIEW_EDIT_USER);
+//            return modelAndView;
+//        }
 
         this.userService.changeUserAuthorities(id, userEditBindingModel.getAuthority());
+
         modelAndView.setViewName(REDIRECT_TO_SHOW_ALL_USERS);
         return modelAndView;
     }
@@ -86,7 +90,7 @@ public class UserController {
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView deleteUser(
             @PathVariable String id,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView) throws DeleteException {
 
         this.userService.deleteUser(id);
 

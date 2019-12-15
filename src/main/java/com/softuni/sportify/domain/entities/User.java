@@ -3,6 +3,7 @@ package com.softuni.sportify.domain.entities;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
+    @Size(min = 2, max = 30)
     @Column(name = "username", nullable = false, unique = true, updatable = false)
     public String getUsername() {
         return username;
@@ -30,16 +32,7 @@ public class User extends BaseEntity implements UserDetails {
         this.username = username;
     }
 
-    @Override
-    @Column(name = "password", nullable = false)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    @Size(min = 2, max = 60)
     @Column(name = "email", nullable = false, unique = true)
     public String getEmail() {
         return email;
@@ -47,6 +40,17 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    @Size(min = 1, max = 200)
+    @Column(name = "password", nullable = false)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,

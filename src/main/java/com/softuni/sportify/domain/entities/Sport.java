@@ -1,6 +1,7 @@
 package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,7 @@ public class Sport extends BaseEntity {
     public Sport() {
     }
 
+    @Size(min = 2, max = 30)
     @Column(name = "name", nullable = false)
     public String getName() {
         return name;
@@ -34,7 +36,7 @@ public class Sport extends BaseEntity {
     }
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="sport_icon_image_id")
+    @JoinColumn(name = "sport_icon_image_id")
     public Image getIconImage() {
         return iconImage;
     }
@@ -45,9 +47,9 @@ public class Sport extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name="sport_images",
-            joinColumns = {@JoinColumn( name="sport_id")},
-            inverseJoinColumns = {@JoinColumn( name="image_id")}
+            name = "sport_images",
+            joinColumns = {@JoinColumn(name = "sport_id")},
+            inverseJoinColumns = {@JoinColumn(name = "image_id")}
     )
     public List<Image> getSportImages() {
         return sportImages;

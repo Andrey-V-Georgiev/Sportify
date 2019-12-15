@@ -4,15 +4,21 @@ import com.softuni.sportify.domain.entities.Image;
 import com.softuni.sportify.domain.entities.Theme;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.ThemeServiceModel;
+import com.softuni.sportify.exceptions.*;
 import com.softuni.sportify.repositories.ImageRepository;
 import com.softuni.sportify.repositories.ThemeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.softuni.sportify.constants.ExceptionConstants.*;
 
 @Service
 public class ThemeServiceImpl implements ThemeService {
@@ -20,26 +26,33 @@ public class ThemeServiceImpl implements ThemeService {
     private final ThemeRepository themeRepository;
     private final ModelMapper modelMapper;
     private final ImageRepository imageRepository;
+    private final Validator validator;
 
     @Autowired
     public ThemeServiceImpl(ThemeRepository themeRepository,
                             ModelMapper modelMapper,
-                            ImageRepository imageRepository) {
+                            ImageRepository imageRepository,
+                            Validator validator) {
         this.themeRepository = themeRepository;
         this.modelMapper = modelMapper;
         this.imageRepository = imageRepository;
+        this.validator = validator;
     }
 
     @Override
     public ThemeServiceModel createNewTheme(ThemeServiceModel themeServiceModel,
-                                            ImageServiceModel imageServiceModel) {
+                                            ImageServiceModel imageServiceModel) throws CreateException {
 
+        themeServiceModel.setActive(false);
+        themeServiceModel.setIconImage(imageServiceModel);
+        Set<ConstraintViolation<ThemeServiceModel>> validateThemeServiceModel = validator.validate(themeServiceModel);
+        Set<ConstraintViolation<ImageServiceModel>> validateImageServiceModel = validator.validate(imageServiceModel);
+
+        if(!validateThemeServiceModel.isEmpty() || !validateImageServiceModel.isEmpty()) {
+            throw new CreateException(THEME_CREATE_EXCEPTION_MSG);
+        }
         Theme theme = this.modelMapper.map(themeServiceModel, Theme.class);
-        Image image = this.modelMapper.map(imageServiceModel, Image.class);
-        theme.setIconImage(image);
-        theme.setActive(false);
         Theme savedTheme = this.themeRepository.saveAndFlush(theme);
-
         return this.modelMapper.map(savedTheme, ThemeServiceModel.class);
     }
 
@@ -53,16 +66,21 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public ThemeServiceModel findByID(String id) {
+    public ThemeServiceModel findByID(String id) throws ReadException {
 
         Theme theme = this.themeRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()-> new ReadException(THEME_READ_EXCEPTION_MSG));
         return this.modelMapper.map(theme, ThemeServiceModel.class);
     }
 
     @Override
-    public void addIndexCarouselImage(ThemeServiceModel themeServiceModel, ImageServiceModel imageServiceModel) {
+    public void addIndexCarouselImage(ThemeServiceModel themeServiceModel,
+                                      ImageServiceModel imageServiceModel) throws UpdateException {
 
+        if(!validator.validate(themeServiceModel).isEmpty() ||
+                !validator.validate(imageServiceModel).isEmpty()) {
+            throw new UpdateException(THEME_UPDATE_EXCEPTION_MSG);
+        }
         themeServiceModel.getIndexCarouselImages().add(imageServiceModel);
         Theme theme = this.modelMapper.map(themeServiceModel, Theme.class);
         List<Image> indexImages = themeServiceModel.getIndexCarouselImages()
@@ -74,8 +92,13 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public void addHomeCarouselImage(ThemeServiceModel themeServiceModel, ImageServiceModel imageServiceModel) {
+    public void addHomeCarouselImage(ThemeServiceModel themeServiceModel,
+                                     ImageServiceModel imageServiceModel) throws UpdateException {
 
+        if(!validator.validate(themeServiceModel).isEmpty() ||
+                !validator.validate(imageServiceModel).isEmpty()) {
+            throw new UpdateException(THEME_UPDATE_EXCEPTION_MSG);
+        }
         themeServiceModel.getHomeCarouselImages().add(imageServiceModel);
         Theme theme = this.modelMapper.map(themeServiceModel, Theme.class);
         List<Image> homeImages = themeServiceModel.getHomeCarouselImages()
@@ -87,8 +110,13 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public void addAdminPanelImages(ThemeServiceModel themeServiceModel, ImageServiceModel imageServiceModel) {
+    public void addAdminPanelImages(ThemeServiceModel themeServiceModel,
+                                    ImageServiceModel imageServiceModel) throws UpdateException {
 
+        if(!validator.validate(themeServiceModel).isEmpty() ||
+                !validator.validate(imageServiceModel).isEmpty()) {
+            throw new UpdateException(THEME_UPDATE_EXCEPTION_MSG);
+        }
         themeServiceModel.getAdminPanelImages().add(imageServiceModel);
         Theme theme = this.modelMapper.map(themeServiceModel, Theme.class);
         List<Image> adminPaneImages = themeServiceModel.getAdminPanelImages()
@@ -101,10 +129,13 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public void deleteThemeImage(String themeID, String imageID) {
+    public void deleteThemeImage(String themeID,
+                                 String imageID) throws UpdateException {
 
-        Theme theme = this.themeRepository.findById(themeID).orElse(null);
-        Image image = this.imageRepository.findById(imageID).orElse(null);
+        Theme theme = this.themeRepository.findById(themeID)
+                .orElseThrow(()-> new UpdateException(THEME_UPDATE_EXCEPTION_MSG));
+        Image image = this.imageRepository.findById(imageID)
+                .orElseThrow(()-> new UpdateException(THEME_UPDATE_EXCEPTION_MSG));
 
         List<Image> indexCarouselImages = theme.getIndexCarouselImages()
                 .stream()
@@ -129,25 +160,31 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public void deleteTheme(String id) {
+    public void deleteTheme(String id) throws DeleteException {
         try {
             this.themeRepository.deleteById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new DeleteException(THEME_DELETE_EXCEPTION_MSG);
         }
     }
 
     @Override
-    public void deleteAdminPanelImages(ThemeServiceModel themeServiceModel) {
+    public void deleteAdminPanelImages(ThemeServiceModel themeServiceModel) throws UpdateException {
 
+        if(!validator.validate(themeServiceModel).isEmpty()) {
+            throw new UpdateException(THEME_UPDATE_EXCEPTION_MSG);
+        }
         themeServiceModel.setAdminPanelImages(new ArrayList<>());
         Theme theme = this.modelMapper.map(themeServiceModel, Theme.class);
         this.themeRepository.save(theme);
     }
 
     @Override
-    public ThemeServiceModel activateTheme(ThemeServiceModel themeServiceModel) {
+    public ThemeServiceModel activateTheme(ThemeServiceModel themeServiceModel) throws UpdateException, ReadException {
 
+        if(!validator.validate(themeServiceModel).isEmpty()) {
+            throw new UpdateException(THEME_UPDATE_EXCEPTION_MSG);
+        }
         List<Theme> allThemes = this.themeRepository.findAll();
         allThemes.forEach(t -> {
             if(!t.getId().equals(themeServiceModel.getId())) {

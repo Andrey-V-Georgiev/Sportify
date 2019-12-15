@@ -1,5 +1,9 @@
 package com.softuni.sportify.domain.models.service_models;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class ScheduleServiceModel extends BaseServiceModel {
@@ -29,6 +33,8 @@ public class ScheduleServiceModel extends BaseServiceModel {
     public ScheduleServiceModel() {
     }
 
+
+    @NotNull
     public SportCenterServiceModel getSportCenter() {
         return sportCenter;
     }
@@ -37,6 +43,9 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.sportCenter = sportCenter;
     }
 
+    @NotNull
+    @Min(1)
+    @Max(31)
     public int getDay() {
         return day;
     }
@@ -45,6 +54,9 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.day = day;
     }
 
+    @NotNull
+    @Min(1)
+    @Max(12)
     public int getMonth() {
         return month;
     }
@@ -53,6 +65,9 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.month = month;
     }
 
+    @NotNull
+    @Min(1990)
+    @Max(2050)
     public int getYear() {
         return year;
     }
@@ -61,6 +76,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.year = year;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime6() {
         return time6;
     }
@@ -69,6 +85,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time6 = time6;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime7() {
         return time7;
     }
@@ -77,6 +94,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time7 = time7;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime8() {
         return time8;
     }
@@ -85,6 +103,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time8 = time8;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime9() {
         return time9;
     }
@@ -93,6 +112,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time9 = time9;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime10() {
         return time10;
     }
@@ -101,6 +121,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time10 = time10;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime11() {
         return time11;
     }
@@ -109,6 +130,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time11 = time11;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime12() {
         return time12;
     }
@@ -117,6 +139,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time12 = time12;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime13() {
         return time13;
     }
@@ -125,6 +148,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time13 = time13;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime14() {
         return time14;
     }
@@ -133,6 +157,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time14 = time14;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime15() {
         return time15;
     }
@@ -141,6 +166,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time15 = time15;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime16() {
         return time16;
     }
@@ -149,6 +175,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time16 = time16;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime17() {
         return time17;
     }
@@ -157,6 +184,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time17 = time17;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime18() {
         return time18;
     }
@@ -165,6 +193,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time18 = time18;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime19() {
         return time19;
     }
@@ -173,6 +202,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time19 = time19;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime20() {
         return time20;
     }
@@ -181,6 +211,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time20 = time20;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime21() {
         return time21;
     }
@@ -189,6 +220,7 @@ public class ScheduleServiceModel extends BaseServiceModel {
         this.time21 = time21;
     }
 
+    @NotNull
     public List<EventServiceModel> getTime22() {
         return time22;
     }

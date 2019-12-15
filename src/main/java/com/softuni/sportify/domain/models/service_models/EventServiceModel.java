@@ -1,5 +1,7 @@
 package com.softuni.sportify.domain.models.service_models;
 
+import javax.validation.constraints.*;
+
 public class EventServiceModel extends BaseServiceModel {
 
     private SportServiceModel sport;
@@ -15,6 +17,7 @@ public class EventServiceModel extends BaseServiceModel {
     public EventServiceModel() {
     }
 
+    @NotNull
     public SportServiceModel getSport() {
         return sport;
     }
@@ -23,6 +26,7 @@ public class EventServiceModel extends BaseServiceModel {
         this.sport = sport;
     }
 
+    @NotNull
     public String getLevel() {
         return level;
     }
@@ -31,6 +35,9 @@ public class EventServiceModel extends BaseServiceModel {
         this.level = level;
     }
 
+    @NotNull
+    @Min(-2)
+    @Max(10)
     public int getFloor() {
         return floor;
     }
@@ -39,6 +46,8 @@ public class EventServiceModel extends BaseServiceModel {
         this.floor = floor;
     }
 
+    @NotNull
+    @Size(min = 2, max = 30)
     public String getHall() {
         return hall;
     }
@@ -47,6 +56,7 @@ public class EventServiceModel extends BaseServiceModel {
         this.hall = hall;
     }
 
+    @NotNull
     public int getDayOfMonth() {
         return dayOfMonth;
     }
@@ -55,6 +65,7 @@ public class EventServiceModel extends BaseServiceModel {
         this.dayOfMonth = dayOfMonth;
     }
 
+    @NotNull
     public int getMonth() {
         return month;
     }
@@ -63,6 +74,7 @@ public class EventServiceModel extends BaseServiceModel {
         this.month = month;
     }
 
+    @NotNull
     public int getYear() {
         return year;
     }
@@ -71,6 +83,7 @@ public class EventServiceModel extends BaseServiceModel {
         this.year = year;
     }
 
+    @NotNull
     public String getStartTime() {
         return startTime;
     }
@@ -79,6 +92,9 @@ public class EventServiceModel extends BaseServiceModel {
         this.startTime = startTime;
     }
 
+    @NotNull
+    @Min(1)
+    @Max(100)
     public int getMaxCapacity() {
         return maxCapacity;
     }

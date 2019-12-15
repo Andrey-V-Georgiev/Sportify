@@ -1,6 +1,10 @@
 package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
+import com.softuni.sportify.exceptions.CreateException;
+import com.softuni.sportify.exceptions.DeleteException;
+import com.softuni.sportify.exceptions.ReadException;
+import com.softuni.sportify.exceptions.UpdateException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,19 +14,19 @@ import java.util.List;
 @Service
 public interface ImageService {
 
-    ImageServiceModel createImage(ImageServiceModel imageServiceModel);
+    ImageServiceModel createImage(ImageServiceModel imageServiceModel, String name) throws CreateException;
 
-    ImageServiceModel createImageMultipartFile(MultipartFile multipartFile, String name) throws IOException;
+    ImageServiceModel createImageMultipartFile(MultipartFile multipartFile, String name) throws IOException, CreateException;
 
-    ImageServiceModel editImage(ImageServiceModel imageServiceModel);
+    ImageServiceModel editImage(ImageServiceModel imageServiceModel) throws UpdateException;
 
-    void deleteImage(String id) throws Exception;
+    void deleteImage(String id) throws Exception, DeleteException;
 
-    ImageServiceModel findImageByName(String name);
+    ImageServiceModel findImageByName(String name) throws ReadException;
 
-    ImageServiceModel findImageByID(String id);
+    ImageServiceModel findImageByID(String id) throws ReadException;
 
-    ImageServiceModel findByImageURL(String imageURL);
+    ImageServiceModel findByImageURL(String imageURL) throws ReadException;
 
     List<ImageServiceModel> findAll();
 

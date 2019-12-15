@@ -1,6 +1,9 @@
 package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,7 +33,7 @@ public class Event extends BaseEntity {
         this.sport = sport;
     }
 
-    @Column(name = "level")
+    @Column(name = "level", nullable = false)
     public String getLevel() {
         return level;
     }
@@ -38,7 +41,11 @@ public class Event extends BaseEntity {
     public void setLevel(String level) {
         this.level = level;
     }
-    @Column(name = "floor")
+
+
+    @Min(-2)
+    @Max(10)
+    @Column(name = "floor", nullable = false)
     public int getFloor() {
         return floor;
     }
@@ -47,7 +54,8 @@ public class Event extends BaseEntity {
         this.floor = floor;
     }
 
-    @Column(name = "hall")
+    @Size(min = 2, max = 30)
+    @Column(name = "hall", nullable = false)
     public String getHall() {
         return hall;
     }
@@ -56,7 +64,7 @@ public class Event extends BaseEntity {
         this.hall = hall;
     }
 
-    @Column(name = "day_of_month")
+    @Column(name = "day_of_month", nullable = false)
     public int getDayOfMonth() {
         return dayOfMonth;
     }
@@ -65,7 +73,7 @@ public class Event extends BaseEntity {
         this.dayOfMonth = dayOfMonth;
     }
 
-    @Column(name = "month")
+    @Column(name = "month", nullable = false)
     public int getMonth() {
         return month;
     }
@@ -74,7 +82,7 @@ public class Event extends BaseEntity {
         this.month = month;
     }
 
-    @Column(name = "year")
+    @Column(name = "year", nullable = false)
     public int getYear() {
         return year;
     }
@@ -92,6 +100,9 @@ public class Event extends BaseEntity {
         this.startTime = startTime;
     }
 
+
+    @Min(1)
+    @Max(100)
     @Column(name = "max_capacity", nullable = false)
     public int getMaxCapacity() {
         return maxCapacity;

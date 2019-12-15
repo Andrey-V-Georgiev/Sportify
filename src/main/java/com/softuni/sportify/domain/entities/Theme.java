@@ -1,6 +1,7 @@
 package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,8 @@ public class Theme extends BaseEntity {
     public Theme() {
     }
 
-    @Column(name = "name")
+    @Size(min=2, max=30)
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -75,7 +77,7 @@ public class Theme extends BaseEntity {
         this.adminPanelImages = adminPanelImages;
     }
 
-    @Column(name = "active")
+    @Column(name = "active", nullable = false)
     public Boolean getActive() {
         return active;
     }

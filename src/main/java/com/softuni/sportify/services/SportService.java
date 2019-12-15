@@ -2,6 +2,10 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportServiceModel;
+import com.softuni.sportify.exceptions.CreateException;
+import com.softuni.sportify.exceptions.DeleteException;
+import com.softuni.sportify.exceptions.ReadException;
+import com.softuni.sportify.exceptions.UpdateException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,22 +14,22 @@ import java.util.List;
 public interface SportService {
 
     SportServiceModel createSport(SportServiceModel sportServiceModel,
-                                  ImageServiceModel iconImageServiceModel);
+                                  ImageServiceModel iconImageServiceModel) throws CreateException;
 
-    SportServiceModel findByID(String id);
+    SportServiceModel findByID(String id) throws ReadException;
 
-    SportServiceModel findByName(String name);
+    SportServiceModel findByName(String name) throws ReadException;
 
-    SportServiceModel updateSportDescription(SportServiceModel sportServiceModel);
+    SportServiceModel updateSportDescription(SportServiceModel sportServiceModel) throws UpdateException;
 
     SportServiceModel addSportImage(SportServiceModel sportServiceModel,
-                                    ImageServiceModel imageServiceModel);
+                                    ImageServiceModel imageServiceModel) throws UpdateException;
 
     List<SportServiceModel> findAllSports();
 
-    void deleteSportImage(String sportID, String imageID);
+    void deleteSportImage(String sportID, String imageID) throws UpdateException;
 
-    SportServiceModel editIconImage(SportServiceModel sportServiceModel);
+    SportServiceModel editIconImage(SportServiceModel sportServiceModel) throws UpdateException;
 
     List<String> findAllSportsNames();
 
@@ -33,6 +37,6 @@ public interface SportService {
 
     List<String> findAllSportsNamesStartsWith(String id);
 
-    void deleteSport(SportServiceModel sportServiceModel);
+    void deleteSport(SportServiceModel sportServiceModel) throws DeleteException, UpdateException;
 
 }
