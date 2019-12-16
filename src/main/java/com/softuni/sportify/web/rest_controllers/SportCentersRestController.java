@@ -2,7 +2,6 @@ package com.softuni.sportify.web.rest_controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
 import com.softuni.sportify.exceptions.ReadException;

@@ -72,8 +72,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleServiceModel.setTime21(new ArrayList<>());
         scheduleServiceModel.setTime22(new ArrayList<>());
 
-        if (!validator.validate(scheduleServiceModel).isEmpty() ||
-                !validator.validate(sportCenterServiceModel).isEmpty()) {
+        if (!validator.validate(scheduleServiceModel).isEmpty() ) {
             throw new CreateException(SCHEDULE_CREATE_EXCEPTION_MSG);
         }
         Schedule schedule = this.modelMapper.map(scheduleServiceModel, Schedule.class);

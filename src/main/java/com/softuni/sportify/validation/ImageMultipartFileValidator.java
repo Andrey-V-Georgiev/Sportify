@@ -1,5 +1,6 @@
 package com.softuni.sportify.validation;
 
+import com.softuni.sportify.validation.ImageMultipartFileConstraints;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintValidator;

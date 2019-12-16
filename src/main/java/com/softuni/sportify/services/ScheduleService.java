@@ -3,7 +3,6 @@ package com.softuni.sportify.services;
 import com.softuni.sportify.domain.models.service_models.EventServiceModel;
 import com.softuni.sportify.domain.models.service_models.ScheduleServiceModel;
 import com.softuni.sportify.domain.models.service_models.SportCenterServiceModel;
-import com.softuni.sportify.domain.models.service_models.SportServiceModel;
 import com.softuni.sportify.exceptions.CreateException;
 import com.softuni.sportify.exceptions.DeleteException;
 import com.softuni.sportify.exceptions.ReadException;

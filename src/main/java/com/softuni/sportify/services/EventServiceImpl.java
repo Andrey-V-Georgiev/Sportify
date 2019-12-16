@@ -44,6 +44,7 @@ public class EventServiceImpl implements EventService {
         eventServiceModel.setDayOfMonth(scheduleServiceModel.getDay());
         eventServiceModel.setMonth(scheduleServiceModel.getMonth());
         eventServiceModel.setYear(scheduleServiceModel.getYear());
+
         if(!validator.validate(eventServiceModel).isEmpty()) {
             throw new CreateException(EVENT_CREATE_EXCEPTION_MSG);
         }
@@ -105,9 +106,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteAllBySport(SportServiceModel sportServiceModel) throws DeleteException {
 
-        if(!validator.validate(sportServiceModel).isEmpty()) {
-            throw new DeleteException(EVENT_DELETE_EXCEPTION_MSG);
-        }
+//        if(!validator.validate(sportServiceModel).isEmpty()) {
+//            throw new DeleteException(EVENT_DELETE_EXCEPTION_MSG);
+//        }
         List<String> eventsIDs = this.eventRepository.findAll()
                 .stream()
                 .filter(e -> e.getSport().getId().equals(sportServiceModel.getId()))

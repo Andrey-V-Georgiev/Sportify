@@ -2,7 +2,6 @@ package com.softuni.sportify.web.controllers;
 
 import com.softuni.sportify.domain.models.binding_models.*;
 import com.softuni.sportify.domain.models.service_models.*;
-import com.softuni.sportify.domain.models.view_models.AddressViewModel;
 import com.softuni.sportify.domain.models.view_models.ImageViewModel;
 import com.softuni.sportify.domain.models.view_models.SportCenterViewModel;
 import com.softuni.sportify.exceptions.CreateException;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
