@@ -66,9 +66,17 @@ public class SportCenterServiceImpl implements SportCenterService {
     }
 
     @Override
-    public SportCenterServiceModel updateSportCenter(SportCenterServiceModel sportCenterServiceModel) throws UpdateException {
+    public List<SportCenterServiceModel> findAllSportCenters() {
+        return this.sportCenterRepository.findAll()
+                .stream()
+                .map(sc -> this.modelMapper.map(sc, SportCenterServiceModel.class))
+                .collect(Collectors.toList());
+    }
 
-        if (!validator.validate(sportCenterServiceModel).isEmpty()) {
+    @Override
+    public SportCenterServiceModel editSportCenterAddress(SportCenterServiceModel sportCenterServiceModel) throws UpdateException {
+
+        if(!validator.validate(sportCenterServiceModel).isEmpty()) {
             throw new UpdateException(SPORT_CENTER_UPDATE_EXCEPTION_MSG);
         }
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
@@ -92,22 +100,14 @@ public class SportCenterServiceImpl implements SportCenterService {
     }
 
     @Override
-    public SportCenterServiceModel editSportCenterAddress(SportCenterServiceModel sportCenterServiceModel) throws UpdateException {
+    public SportCenterServiceModel updateSportCenter(SportCenterServiceModel sportCenterServiceModel) throws UpdateException {
 
-        if(!validator.validate(sportCenterServiceModel).isEmpty()) {
+        if (!validator.validate(sportCenterServiceModel).isEmpty()) {
             throw new UpdateException(SPORT_CENTER_UPDATE_EXCEPTION_MSG);
         }
         SportCenter sportCenter = this.modelMapper.map(sportCenterServiceModel, SportCenter.class);
         SportCenter updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
         return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
-    }
-
-    @Override
-    public List<SportCenterServiceModel> findAllSportCenters() {
-        return this.sportCenterRepository.findAll()
-                .stream()
-                .map(sc -> this.modelMapper.map(sc, SportCenterServiceModel.class))
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -127,6 +127,23 @@ public class SportCenterServiceImpl implements SportCenterService {
         sportCenter.setSports(chosenSports);
         SportCenter updatedSportCenter = this.sportCenterRepository.saveAndFlush(sportCenter);
         return this.modelMapper.map(updatedSportCenter, SportCenterServiceModel.class);
+    }
+
+    @Override
+    public void removeCurrentSport(SportServiceModel sportServiceModel) throws UpdateException {
+
+        if(!validator.validate(sportServiceModel).isEmpty()) {
+            throw new UpdateException(SPORT_CENTER_UPDATE_EXCEPTION_MSG);
+        }
+        List<SportCenter> allSportCenters = this.sportCenterRepository.findAll();
+        for (SportCenter sc : allSportCenters) {
+            List<Sport> filteredSports = sc.getSports()
+                    .stream()
+                    .filter(s -> !s.getId().equals(sportServiceModel.getId()))
+                    .collect(Collectors.toList());
+            sc.setSports(filteredSports);
+            this.sportCenterRepository.save(sc);
+        }
     }
 
     @Override
@@ -155,22 +172,5 @@ public class SportCenterServiceImpl implements SportCenterService {
         sportCenterServiceModel.setSports(new ArrayList<>());
         SportCenterServiceModel updatedSportCenterServiceModel = this.updateSportCenter(sportCenterServiceModel);
         this.sportCenterRepository.delete(this.modelMapper.map(updatedSportCenterServiceModel, SportCenter.class));
-    }
-
-    @Override
-    public void removeCurrentSport(SportServiceModel sportServiceModel) throws UpdateException {
-
-        if(!validator.validate(sportServiceModel).isEmpty()) {
-            throw new UpdateException(SPORT_CENTER_UPDATE_EXCEPTION_MSG);
-        }
-        List<SportCenter> allSportCenters = this.sportCenterRepository.findAll();
-        for (SportCenter sc : allSportCenters) {
-            List<Sport> filteredSports = sc.getSports()
-                    .stream()
-                    .filter(s -> !s.getId().equals(sportServiceModel.getId()))
-                    .collect(Collectors.toList());
-            sc.setSports(filteredSports);
-            this.sportCenterRepository.save(sc);
-        }
     }
 }

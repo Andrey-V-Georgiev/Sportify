@@ -15,7 +15,6 @@ import com.softuni.sportify.services.ScheduleServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -26,9 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.softuni.sportify.factory.AddressFactory.*;
 import static com.softuni.sportify.factory.EventFactory.*;
@@ -70,7 +66,8 @@ public class ScheduleServiceTests {
     @Before
     public void init() {
         this.scheduleService = new ScheduleServiceImpl(
-                this.scheduleRepository, this.modelMapper, this.sportCenterRepository, this.eventService, this.validator);
+                this.scheduleRepository, this.modelMapper,
+                this.sportCenterRepository, this.eventService, this.validator);
 
         /* CREATE VALID SPORT CENTER SERVICE MODEL */
         SportCenter validSportCenter1 = createValidSportCenter();
