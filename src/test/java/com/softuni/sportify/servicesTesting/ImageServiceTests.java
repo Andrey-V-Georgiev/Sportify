@@ -25,7 +25,7 @@ import javax.validation.Validator;
 
 import static com.softuni.sportify.factory.ImageFactory.createValidImage;
 import static com.softuni.sportify.factory.ImageFactory.createValidImageServiceModel;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
