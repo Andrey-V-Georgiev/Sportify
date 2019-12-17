@@ -11,15 +11,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.softuni.sportify.constants.EventLevelConstants.*;
 import static com.softuni.sportify.constants.ExceptionConstants.*;
+
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -44,12 +43,13 @@ public class EventServiceImpl implements EventService {
         eventServiceModel.setDayOfMonth(scheduleServiceModel.getDay());
         eventServiceModel.setMonth(scheduleServiceModel.getMonth());
         eventServiceModel.setYear(scheduleServiceModel.getYear());
-
-        if(!validator.validate(eventServiceModel).isEmpty()) {
+        Set<ConstraintViolation<EventServiceModel>> validate = validator.validate(eventServiceModel);
+        if(!validate.isEmpty()) {
             throw new CreateException(EVENT_CREATE_EXCEPTION_MSG);
         }
         Event event = this.modelMapper.map(eventServiceModel, Event.class);
-        Event savedEvent = this.eventRepository.saveAndFlush(event);
+        Event savedEvent = savedEvent = this.eventRepository.saveAndFlush(event);
+
         return this.modelMapper.map(savedEvent, EventServiceModel.class);
     }
 

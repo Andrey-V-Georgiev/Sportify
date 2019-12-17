@@ -27,14 +27,11 @@ import static org.junit.Assert.*;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class AddressServiceTests {
 
-    private AddressService addressService;
-
     @Autowired
     private AddressRepository addressRepository;
-
     private ModelMapper modelMapper = new ModelMapper();
-
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private AddressService addressService;
 
     @Before
     public void init() {
