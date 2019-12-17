@@ -307,34 +307,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void deleteSchedule(ScheduleServiceModel scheduleServiceModel) throws DeleteException {
-
-        if (!validator.validate(scheduleServiceModel).isEmpty()) {
-            throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
-        }
-        Schedule schedule = this.modelMapper.map(scheduleServiceModel, Schedule.class);
-        this.scheduleRepository.delete(schedule);
-    }
-
-    @Override
     public void deleteScheduleByID(String id) throws DeleteException {
 
         try {
             this.scheduleRepository.deleteById(id);
         } catch (Exception e) {
             throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
-        }
-    }
-
-    @Override
-    public void deleteSchedulesByIDs(List<String> schedulesIDs) throws DeleteException {
-
-        for (String id : schedulesIDs) {
-            try {
-                this.deleteScheduleByID(id);
-            } catch (DeleteException e) {
-                throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
-            }
         }
     }
 

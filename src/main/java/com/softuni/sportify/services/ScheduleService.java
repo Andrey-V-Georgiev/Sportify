@@ -35,10 +35,6 @@ public interface ScheduleService {
     void deleteEvent(ScheduleServiceModel scheduleServiceModel,
                      EventServiceModel eventServiceModel) throws DeleteException, UpdateException;
 
-    void deleteSchedule(ScheduleServiceModel scheduleServiceModel) throws DeleteException;
-
     void deleteScheduleByID(String id) throws DeleteException;
-
-    void deleteSchedulesByIDs(List<String> schedulesIDs) throws DeleteException;
 
 }

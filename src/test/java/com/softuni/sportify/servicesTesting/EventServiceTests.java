@@ -47,8 +47,6 @@ public class EventServiceTests {
     @Autowired
     private ImageRepository imageRepository;
     @Autowired
-    private ScheduleRepository scheduleRepository;
-    @Autowired
     private AddressRepository addressRepository;
 
     private ModelMapper modelMapper = new ModelMapper();

@@ -29,11 +29,7 @@ public interface SportService {
 
     void deleteSportImage(String sportID, String imageID) throws UpdateException;
 
-    SportServiceModel editIconImage(SportServiceModel sportServiceModel) throws UpdateException;
-
     List<String> findAllSportsNames();
-
-    List<SportServiceModel> findAllSportsStartsWith(String id);
 
     List<String> findAllSportsNamesStartsWith(String id);
 

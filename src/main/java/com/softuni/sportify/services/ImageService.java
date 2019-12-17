@@ -20,13 +20,9 @@ public interface ImageService {
 
     ImageServiceModel editImage(ImageServiceModel imageServiceModel) throws UpdateException;
 
-    void deleteImage(String id) throws Exception, DeleteException;
-
-    ImageServiceModel findImageByName(String name) throws ReadException;
+    void deleteImage(String id) throws Exception;
 
     ImageServiceModel findImageByID(String id) throws ReadException;
-
-    ImageServiceModel findByImageURL(String imageURL) throws ReadException;
 
     List<ImageServiceModel> findAll();
 

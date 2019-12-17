@@ -136,37 +136,12 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public SportServiceModel editIconImage(SportServiceModel sportServiceModel) throws UpdateException {
-
-        if(!validator.validate(sportServiceModel).isEmpty()) {
-            throw new UpdateException(SPORT_UPDATE_EXCEPTION_MSG);
-        }
-        Sport sport = this.sportRepository.findById(sportServiceModel.getId()).orElse(null);
-        sport.getIconImage().setName(sportServiceModel.getIconImage().getName());
-        return this.modelMapper.map(this.sportRepository.saveAndFlush(sport), SportServiceModel.class);
-    }
-
-    @Override
     public List<String> findAllSportsNames() {
 
         return this.sportRepository.findAll()
                 .stream()
                 .map(Sport::getName)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<SportServiceModel> findAllSportsStartsWith(String id) {
-
-        List<SportServiceModel> allSportServiceModels = this.findAllSports();
-        Comparator<SportServiceModel> startsWithSport = Comparator
-                .comparing(s -> !s.getId().equals(id));
-        List<SportServiceModel> sortedSports = allSportServiceModels
-                .stream()
-                .sorted(startsWithSport)
-                .collect(Collectors.toList());
-
-        return sortedSports;
     }
 
     @Override
