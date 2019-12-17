@@ -81,17 +81,43 @@ public class SportServiceImpl implements SportService {
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
 
+    @Override
+    public List<SportServiceModel> findAllSports() {
+
+        return this.sportRepository.findAll()
+                .stream()
+                .map(s -> this.modelMapper.map(s, SportServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
 
     @Override
-    public SportServiceModel updateSportDescription(SportServiceModel sportServiceModel) throws UpdateException {
+    public List<String> findAllSportsNames() {
 
-        if(!validator.validate(sportServiceModel).isEmpty()) {
-            throw new UpdateException(SPORT_UPDATE_EXCEPTION_MSG);
-        }
-        Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
-        Sport updatedSport = this.sportRepository.saveAndFlush(sport);
-        return this.modelMapper.map(updatedSport, SportServiceModel.class);
+        return this.sportRepository.findAll()
+                .stream()
+                .map(Sport::getName)
+                .collect(Collectors.toList());
     }
+
+    @Override
+    public List<String> findAllSportsNamesStartsWith(String id) throws ReadException {
+
+        this.sportRepository.findById(id)
+                .orElseThrow(() -> new ReadException(SPORT_READ_EXCEPTION_MSG));
+
+        List<SportServiceModel> allSportServiceModels = this.findAllSports();
+        Comparator<SportServiceModel> startsWithSport = Comparator
+                .comparing(s -> !s.getId().equals(id));
+        List<String> sortedSportsNames = allSportServiceModels
+                .stream()
+                .sorted(startsWithSport)
+                .map(s -> s.getName())
+                .collect(Collectors.toList());
+
+        return sortedSportsNames;
+    }
+
 
     @Override
     public SportServiceModel addSportImage(SportServiceModel sportServiceModel,
@@ -110,12 +136,14 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public List<SportServiceModel> findAllSports() {
+    public SportServiceModel updateSportDescription(SportServiceModel sportServiceModel) throws UpdateException {
 
-        return this.sportRepository.findAll()
-                .stream()
-                .map(s -> this.modelMapper.map(s, SportServiceModel.class))
-                .collect(Collectors.toList());
+        if(!validator.validate(sportServiceModel).isEmpty()) {
+            throw new UpdateException(SPORT_UPDATE_EXCEPTION_MSG);
+        }
+        Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
+        Sport updatedSport = this.sportRepository.saveAndFlush(sport);
+        return this.modelMapper.map(updatedSport, SportServiceModel.class);
     }
 
     @Override
@@ -133,30 +161,6 @@ public class SportServiceImpl implements SportService {
         sport.setSportImages(sportImages);
 
         this.sportRepository.save(sport);
-    }
-
-    @Override
-    public List<String> findAllSportsNames() {
-
-        return this.sportRepository.findAll()
-                .stream()
-                .map(Sport::getName)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<String> findAllSportsNamesStartsWith(String id) {
-
-        List<SportServiceModel> allSportServiceModels = this.findAllSports();
-        Comparator<SportServiceModel> startsWithSport = Comparator
-                .comparing(s -> !s.getId().equals(id));
-        List<String> sortedSportsNames = allSportServiceModels
-                .stream()
-                .sorted(startsWithSport)
-                .map(s -> s.getName())
-                .collect(Collectors.toList());
-
-        return sortedSportsNames;
     }
 
     @Override

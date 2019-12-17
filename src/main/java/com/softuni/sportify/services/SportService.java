@@ -31,7 +31,7 @@ public interface SportService {
 
     List<String> findAllSportsNames();
 
-    List<String> findAllSportsNamesStartsWith(String id);
+    List<String> findAllSportsNamesStartsWith(String id) throws ReadException;
 
     void deleteSport(SportServiceModel sportServiceModel) throws DeleteException, UpdateException;
 

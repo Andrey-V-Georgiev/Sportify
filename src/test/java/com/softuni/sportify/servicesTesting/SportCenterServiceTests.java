@@ -65,7 +65,7 @@ public class SportCenterServiceTests {
                 this.modelMapper, this.sportCenterRepository,
                 this.sportRepository, this.imageRepository, this.validator);
 
-        /* CREATE VALID SPORT CENTER SERVICE MODEL */
+        /* CREATE SPORT CENTER SERVICE MODEL */
         SportCenter validSportCenter1 = createValidSportCenter();
         Address validAddress1 = createValidAddress();
         Address savedAddress1 = this.addressRepository.saveAndFlush(validAddress1);
@@ -75,7 +75,7 @@ public class SportCenterServiceTests {
         validSportCenter1.setIconImage(savedImage1);
         validSportCenterServiceModel1 = this.modelMapper.map(validSportCenter1, SportCenterServiceModel.class);
 
-        /* CREATE VALID SPORT CENTER SERVICE MODEL 2 */
+        /* CREATE SPORT CENTER SERVICE MODEL 2 */
         SportCenter validSportCenter2 = createValidSportCenter();
         Address validAddress2 = createValidAddress();
         Address savedAddress2 = this.addressRepository.saveAndFlush(validAddress2);
@@ -85,11 +85,11 @@ public class SportCenterServiceTests {
         validSportCenter2.setIconImage(savedImage2);
         validSportCenterServiceModel2 = this.modelMapper.map(validSportCenter2, SportCenterServiceModel.class);
 
-        /* CREATE VALID IMAGE SERVICE MODEL 3 */
+        /* CREATE IMAGE SERVICE MODEL 3 */
         Image validImage3 = createValidImage();
         validImageServiceModel3 = this.modelMapper.map(validImage3, ImageServiceModel.class);
 
-        /* CREATE VALID SPORT SERVICE MODEL 4 */
+        /* CREATE SPORT SERVICE MODEL 4 */
         Image validImage4 = createValidImage();
         Image savedImageSport4 = this.imageRepository.saveAndFlush(validImage4);
         Sport validSport4 = createValidSport();
@@ -165,6 +165,7 @@ public class SportCenterServiceTests {
 
         SportCenterServiceModel savedSportCenterServiceModel = this.sportCenterService
                 .createSportCenter(validSportCenterServiceModel1);
+
         int initialSize = savedSportCenterServiceModel.getSportCenterImages().size();
 
         this.sportCenterService.addSportCenterImage(savedSportCenterServiceModel, imageServiceModel);
