@@ -29,12 +29,10 @@ public interface ScheduleService {
     ScheduleServiceModel addEvent(ScheduleServiceModel scheduleServiceModel,
                                   EventServiceModel eventServiceModel) throws UpdateException;
 
-    void updateEvent(ScheduleServiceModel scheduleServiceModel,
+    ScheduleServiceModel updateEvent(ScheduleServiceModel scheduleServiceModel,
                      EventServiceModel eventServiceModel) throws UpdateException;
 
     void deleteEvent(ScheduleServiceModel scheduleServiceModel,
                      EventServiceModel eventServiceModel) throws DeleteException, UpdateException;
-
-    void deleteScheduleByID(String id) throws DeleteException;
 
 }

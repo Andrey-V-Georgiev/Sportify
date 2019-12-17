@@ -217,7 +217,7 @@ public class CalendarController {
             @Valid
             @ModelAttribute EventEditBindingModel eventEditBindingModel,
             BindingResult eventBindingResult,
-            ModelAndView modelAndView) throws ReadException, UpdateException {
+            ModelAndView modelAndView) throws ReadException, UpdateException, CreateException {
 
         ScheduleServiceModel scheduleServiceModel = this.scheduleService.findByID(scheduleID);
         EventServiceModel eventServiceModel = this.modelMapper.map(eventEditBindingModel, EventServiceModel.class);

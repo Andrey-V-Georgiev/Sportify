@@ -50,10 +50,10 @@ public class ImageServiceTests {
 
         this.imageService = new ImageServiceImpl(
                 this.modelMapper, this.imageRepository, this.cloudinaryService, this.validator);
-
+        /* CREATE IMAGE SERVICE MODEL*/
         Image validImage = createValidImage();
         validImageServiceModel = this.modelMapper.map(validImage, ImageServiceModel.class);
-
+        /* CREATE IMAGE 2 SERVICE MODEL*/
         Image validImage2 = createValidImage();
         validImageServiceModel2 = this.modelMapper.map(validImage2, ImageServiceModel.class);
     }

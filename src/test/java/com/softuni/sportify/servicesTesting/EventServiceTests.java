@@ -60,7 +60,7 @@ public class EventServiceTests {
     @Before
     public void init() {
         this.eventService = new EventServiceImpl(this.modelMapper, this.eventRepository, this.validator);
-        /* CREATE AND SAVE EVENT */
+        /* CREATE EVENT SERVICE MODEL*/
         Image validImage = createValidImage();
         Image savedImageSport = this.imageRepository.saveAndFlush(validImage);
         Sport validSport = createValidSport();
@@ -70,7 +70,7 @@ public class EventServiceTests {
         validEvent.setSport(savedSport);
         validEventServiceModel = this.modelMapper.map(validEvent, EventServiceModel.class);
 
-        /* CREATE AND SAVE EVENT 2 */
+        /* CREATE EVENT 2 SERVICE MODEL*/
         Image validImage2 = createValidImage();
         Image savedImageSport2 = this.imageRepository.saveAndFlush(validImage2);
         Sport validSport2 = createValidSport();
@@ -80,7 +80,7 @@ public class EventServiceTests {
         validEvent2.setSport(savedSport2);
         validEventServiceModel2 = this.modelMapper.map(validEvent2, EventServiceModel.class);
 
-        /* CREATE AND SAVE SCHEDULE */
+        /* CREATE SCHEDULE  SERVICE MODEL*/
         Schedule validSchedule = createValidSchedule();
         SportCenter validSportCenter = createValidSportCenter();
         Address savedAddress = this.addressRepository.saveAndFlush(createValidAddress());

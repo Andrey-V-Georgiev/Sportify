@@ -95,7 +95,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleServiceModel findByDetails(String sportCenterID, String day, String month, String year) throws ReadException {
+    public ScheduleServiceModel findByDetails(String sportCenterID,
+                                              String day, String month, String year) throws ReadException {
 
         SportCenter sportCenter = this.sportCenterRepository.findById(sportCenterID).orElse(null);
         Schedule schedule = null;
@@ -179,7 +180,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void updateEvent(ScheduleServiceModel scheduleServiceModel,
+    public ScheduleServiceModel updateEvent(ScheduleServiceModel scheduleServiceModel,
                             EventServiceModel eventServiceModel) throws UpdateException {
 
         if (!validator.validate(scheduleServiceModel).isEmpty() || !validator.validate(eventServiceModel).isEmpty()) {
@@ -201,7 +202,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 scheduleServiceModel.setTime9(updateEventInList(scheduleServiceModel.getTime9(), updatedEventServiceModel));
                 break;
             case TEN_OCLOCK:
-                scheduleServiceModel.setTime10(updateEventInList(scheduleServiceModel.getTime10(), updatedEventServiceModel));
+                    scheduleServiceModel.setTime10(updateEventInList(scheduleServiceModel.getTime10(), updatedEventServiceModel));
                 break;
             case ELEVEN_OCLOCK:
                 scheduleServiceModel.setTime11(updateEventInList(scheduleServiceModel.getTime11(), updatedEventServiceModel));
@@ -240,7 +241,9 @@ public class ScheduleServiceImpl implements ScheduleService {
                 scheduleServiceModel.setTime22(updateEventInList(scheduleServiceModel.getTime22(), updatedEventServiceModel));
                 break;
         }
-        this.scheduleRepository.save(this.modelMapper.map(scheduleServiceModel, Schedule.class));
+        Schedule updatedSchedule = this.scheduleRepository
+                .saveAndFlush(this.modelMapper.map(scheduleServiceModel, Schedule.class));
+        return this.modelMapper.map(updatedSchedule, ScheduleServiceModel.class);
     }
 
     @Override
@@ -304,16 +307,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                 break;
         }
         this.scheduleRepository.save(this.modelMapper.map(scheduleServiceModel, Schedule.class));
-    }
-
-    @Override
-    public void deleteScheduleByID(String id) throws DeleteException {
-
-        try {
-            this.scheduleRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new DeleteException(SCHEDULE_DELETE_EXCEPTION_MSG);
-        }
     }
 
     private List<EventServiceModel> deleteEventFromList(List<EventServiceModel> eventServiceModelList,
