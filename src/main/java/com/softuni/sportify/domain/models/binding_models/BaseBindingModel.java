@@ -10,8 +10,6 @@ public abstract class BaseBindingModel {
     BaseBindingModel() {
     }
 
-    @NotNull
-    @NotEmpty
     public String getId() {
         return id;
     }

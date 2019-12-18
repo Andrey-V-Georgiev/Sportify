@@ -11,7 +11,6 @@ import java.util.List;
 public class SportCenterCreateBindingModel extends BaseBindingModel {
 
     private String name;
-    private AddressCreateBindingModel address;
     private String description;
     private MultipartFile iconImage;
     private List<MultipartFile> sportCenterImages;
@@ -24,7 +23,6 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
 
     public SportCenterCreateBindingModel() {
         this.description = "";
-        this.address = new AddressCreateBindingModel();
         this.sportCenterImages = new ArrayList<>();
         this.sports = new ArrayList<>();
         this.calendar = new ArrayList<>();
@@ -55,14 +53,6 @@ public class SportCenterCreateBindingModel extends BaseBindingModel {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public AddressCreateBindingModel getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressCreateBindingModel address) {
-        this.address = address;
     }
 
     public List<MultipartFile> getSportCenterImages() {
