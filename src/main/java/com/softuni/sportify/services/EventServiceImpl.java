@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 import static com.softuni.sportify.constants.EventLevelConstants.*;
 import static com.softuni.sportify.constants.ExceptionConstants.*;
 
-
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -44,6 +43,7 @@ public class EventServiceImpl implements EventService {
         eventServiceModel.setMonth(scheduleServiceModel.getMonth());
         eventServiceModel.setYear(scheduleServiceModel.getYear());
         Set<ConstraintViolation<EventServiceModel>> validate = validator.validate(eventServiceModel);
+
         if(!validate.isEmpty()) {
             throw new CreateException(EVENT_CREATE_EXCEPTION_MSG);
         }
@@ -106,9 +106,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteAllBySport(SportServiceModel sportServiceModel) throws DeleteException {
 
-//        if(!validator.validate(sportServiceModel).isEmpty()) {
-//            throw new DeleteException(EVENT_DELETE_EXCEPTION_MSG);
-//        }
+        if(!validator.validate(sportServiceModel).isEmpty()) {
+            throw new DeleteException(EVENT_DELETE_EXCEPTION_MSG);
+        }
         List<String> eventsIDs = this.eventRepository.findAll()
                 .stream()
                 .filter(e -> e.getSport().getId().equals(sportServiceModel.getId()))

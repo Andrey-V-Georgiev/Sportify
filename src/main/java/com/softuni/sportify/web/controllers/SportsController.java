@@ -64,11 +64,11 @@ public class SportsController {
             BindingResult sportBindingResult,
             ModelAndView modelAndView) throws IOException, CreateException {
 
-//        if(sportBindingResult.hasErrors()) {
-//            modelAndView.addObject("sportCreateBindingModel", sportCreateBindingModel);
-//            modelAndView.setViewName(VIEW_CREATE_SPORT);
-//            return modelAndView;
-//        }
+        if(sportBindingResult.hasErrors()) {
+            modelAndView.addObject("sportCreateBindingModel", sportCreateBindingModel);
+            modelAndView.setViewName(VIEW_CREATE_SPORT);
+            return modelAndView;
+        }
 
         SportServiceModel sportServiceModel = this.modelMapper
                 .map(sportCreateBindingModel, SportServiceModel.class);
@@ -137,14 +137,14 @@ public class SportsController {
 
         SportServiceModel sportServiceModel = this.sportService.findByID(sportID);
 
-//        if(imageBindingResult.hasErrors()) {
-//            SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
-//            modelAndView.addObject("sportViewModel", sportViewModel);
-//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-//
-//            modelAndView.setViewName(VIEW_SPORT_DETAILS);
-//            return modelAndView;
-//        }
+        if(imageBindingResult.hasErrors()) {
+            SportViewModel sportViewModel = this.modelMapper.map(sportServiceModel, SportViewModel.class);
+            modelAndView.addObject("sportViewModel", sportViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+
+            modelAndView.setViewName(VIEW_SPORT_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -199,19 +199,19 @@ public class SportsController {
             @Valid
             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException, UpdateException {
+            ModelAndView modelAndView) throws IOException, UpdateException, ReadException {
 
-//        if(imageBindingResult.hasErrors()) {
-//            SportViewModel sportViewModel = this.modelMapper
-//                    .map(this.sportService.findByID(sportID), SportViewModel.class);
-//            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
-//            modelAndView.addObject("sportViewModel", sportViewModel);
-//            modelAndView.addObject("imageViewModel", imageViewModel);
-//            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
-//
-//            modelAndView.setViewName(VIEW_EDIT_SPORT_IMAGE);
-//            return modelAndView;
-//        }
+        if(imageBindingResult.hasErrors()) {
+            SportViewModel sportViewModel = this.modelMapper
+                    .map(this.sportService.findByID(sportID), SportViewModel.class);
+            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
+            modelAndView.addObject("sportViewModel", sportViewModel);
+            modelAndView.addObject("imageViewModel", imageViewModel);
+            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+
+            modelAndView.setViewName(VIEW_EDIT_SPORT_IMAGE);
+            return modelAndView;
+        }
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 

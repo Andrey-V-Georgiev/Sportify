@@ -63,11 +63,11 @@ public class ThemesController {
             BindingResult themeBindingResult,
             ModelAndView modelAndView) throws IOException, CreateException {
 
-//        if(themeBindingResult.hasErrors()) {
-//            modelAndView.addObject("themeCreateBindingModel", themeCreateBindingModel);
-//            modelAndView.setViewName(VIEW_CREATE_NEW_THEME);
-//            return modelAndView;
-//        }
+        if(themeBindingResult.hasErrors()) {
+            modelAndView.addObject("themeCreateBindingModel", themeCreateBindingModel);
+            modelAndView.setViewName(VIEW_CREATE_NEW_THEME);
+            return modelAndView;
+        }
 
         ThemeServiceModel themeServiceModel = this.modelMapper
                 .map(themeCreateBindingModel, ThemeServiceModel.class);
@@ -89,15 +89,15 @@ public class ThemesController {
             BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
 
-//        if(imageBindingResult.hasErrors()) {
-//            ThemeViewModel themeViewModel = this.modelMapper
-//                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-//            themeViewModel.setSection(1);
-//            modelAndView.addObject("themeViewModel", themeViewModel);
-//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-//            modelAndView.setViewName(VIEW_THEME_DETAILS);
-//            return modelAndView;
-//        }
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(1);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(),imageCreateBindingModel.getName());
@@ -117,15 +117,15 @@ public class ThemesController {
             BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
 
-//        if(imageBindingResult.hasErrors()) {
-//            ThemeViewModel themeViewModel = this.modelMapper
-//                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-//            themeViewModel.setSection(2);
-//            modelAndView.addObject("themeViewModel", themeViewModel);
-//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-//            modelAndView.setViewName(VIEW_THEME_DETAILS);
-//            return modelAndView;
-//        }
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(2);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -145,15 +145,15 @@ public class ThemesController {
             BindingResult imageBindingResult,
             ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
 
-//        if(imageBindingResult.hasErrors()) {
-//            ThemeViewModel themeViewModel = this.modelMapper
-//                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-//            themeViewModel.setSection(3);
-//            modelAndView.addObject("themeViewModel", themeViewModel);
-//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-//            modelAndView.setViewName(VIEW_THEME_DETAILS);
-//            return modelAndView;
-//        }
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(3);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -223,18 +223,18 @@ public class ThemesController {
             @Valid
             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException, UpdateException {
+            ModelAndView modelAndView) throws IOException, UpdateException, ReadException {
 
-//        if(imageBindingResult.hasErrors()) {
-//            ThemeViewModel themeViewModel = this.modelMapper
-//                    .map(this.themeService.findByID(themeID), ThemeViewModel.class);
-//            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
-//            modelAndView.addObject("themeViewModel", themeViewModel);
-//            modelAndView.addObject("imageViewModel", imageViewModel);
-//            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
-//            modelAndView.setViewName(VIEW_EDIT_THEME_IMAGE);
-//            return modelAndView;
-//        }
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(themeID), ThemeViewModel.class);
+            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageViewModel", imageViewModel);
+            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+            modelAndView.setViewName(VIEW_EDIT_THEME_IMAGE);
+            return modelAndView;
+        }
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 

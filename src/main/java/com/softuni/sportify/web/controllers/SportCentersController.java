@@ -65,11 +65,11 @@ public class SportCentersController {
             BindingResult sportCenterBindingResult,
             ModelAndView modelAndView) throws IOException, CreateException {
 
-//        if (sportCenterBindingResult.hasErrors()) {
-//            modelAndView.addObject("sportCenterCreateBindingModel", sportCenterCreateBindingModel);
-//            modelAndView.setViewName(VIEW_CREATE_SPORT_CENTER);
-//            return modelAndView;
-//        }
+        if (sportCenterBindingResult.hasErrors()) {
+            modelAndView.addObject("sportCenterCreateBindingModel", sportCenterCreateBindingModel);
+            modelAndView.setViewName(VIEW_CREATE_SPORT_CENTER);
+            return modelAndView;
+        }
 
         SportCenterServiceModel sportCenterServiceModel = this.modelMapper.map(
                 sportCenterCreateBindingModel, SportCenterServiceModel.class);
@@ -122,14 +122,14 @@ public class SportCentersController {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
 
-//        if (addressBindingResult.hasErrors()) {
-//            SportCenterViewModel sportCenterViewModel = this.modelMapper
-//                    .map(sportCenterServiceModel, SportCenterViewModel.class);
-//            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
-//            modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
-//            modelAndView.setViewName(VIEW_SPORT_CENTER_DETAILS);
-//            return modelAndView;
-//        }
+        if (addressBindingResult.hasErrors()) {
+            SportCenterViewModel sportCenterViewModel = this.modelMapper
+                    .map(sportCenterServiceModel, SportCenterViewModel.class);
+            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
+            modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+            modelAndView.setViewName(VIEW_SPORT_CENTER_DETAILS);
+            return modelAndView;
+        }
 
         addressEditBindingModel.setId(sportCenterServiceModel.getAddress().getId());
         AddressServiceModel addressServiceModel = this.modelMapper.map(
@@ -190,18 +190,18 @@ public class SportCentersController {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
 
-//        if (imageBindingResult.hasErrors()) {
-//            SportCenterViewModel sportCenterViewModel = this.modelMapper
-//                    .map(sportCenterServiceModel, SportCenterViewModel.class);
-//            AddressEditBindingModel addressEditBindingModel = this.modelMapper
-//                    .map(sportCenterServiceModel.getAddress(), AddressEditBindingModel.class);
-//            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
-//            modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
-//            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-//
-//            modelAndView.setViewName(VIEW_SPORT_CENTER_DETAILS);
-//            return modelAndView;
-//        }
+        if (imageBindingResult.hasErrors()) {
+            SportCenterViewModel sportCenterViewModel = this.modelMapper
+                    .map(sportCenterServiceModel, SportCenterViewModel.class);
+            AddressEditBindingModel addressEditBindingModel = this.modelMapper
+                    .map(sportCenterServiceModel.getAddress(), AddressEditBindingModel.class);
+            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
+            modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+
+            modelAndView.setViewName(VIEW_SPORT_CENTER_DETAILS);
+            return modelAndView;
+        }
 
         ImageServiceModel imageServiceModel = this.imageService
                 .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
@@ -244,22 +244,22 @@ public class SportCentersController {
             @Valid
             @ModelAttribute ImageEditBindingModel imageEditBindingModel,
             BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException, UpdateException {
+            ModelAndView modelAndView) throws IOException, UpdateException, ReadException {
 
-//        if (imageBindingResult.hasErrors()) {
-//            SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
-//            SportCenterViewModel sportCenterViewModel = this.modelMapper
-//                    .map(sportCenterServiceModel, SportCenterViewModel.class);
-//            AddressEditBindingModel addressEditBindingModel = this.modelMapper
-//                    .map(sportCenterViewModel.getAddress(), AddressEditBindingModel.class);
-//            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
-//            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
-//            modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
-//            modelAndView.addObject("imageViewModel", imageViewModel);
-//            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
-//            modelAndView.setViewName(VIEW_EDIT_SPORT_CENTER_IMAGE);
-//            return modelAndView;
-//        }
+        if (imageBindingResult.hasErrors()) {
+            SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
+            SportCenterViewModel sportCenterViewModel = this.modelMapper
+                    .map(sportCenterServiceModel, SportCenterViewModel.class);
+            AddressEditBindingModel addressEditBindingModel = this.modelMapper
+                    .map(sportCenterViewModel.getAddress(), AddressEditBindingModel.class);
+            ImageViewModel imageViewModel = this.modelMapper.map(imageEditBindingModel, ImageViewModel.class);
+            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
+            modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+            modelAndView.addObject("imageViewModel", imageViewModel);
+            modelAndView.addObject("imageEditBindingModel", imageEditBindingModel);
+            modelAndView.setViewName(VIEW_EDIT_SPORT_CENTER_IMAGE);
+            return modelAndView;
+        }
 
         this.imageService.editImage(this.modelMapper.map(imageEditBindingModel, ImageServiceModel.class));
 

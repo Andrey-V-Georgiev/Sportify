@@ -50,11 +50,11 @@ public class AuthController {
             BindingResult userBindingResult,
             ModelAndView modelAndView) throws CreateException {
 
-//        if(userBindingResult.hasErrors()) {
-//            modelAndView.addObject("userRegisterBindingModel", userRegisterBindingModel);
-//            modelAndView.setViewName(VIEW_REGISTER);
-//            return modelAndView;
-//        }
+        if(userBindingResult.hasErrors()) {
+            modelAndView.addObject("userRegisterBindingModel", userRegisterBindingModel);
+            modelAndView.setViewName(VIEW_REGISTER);
+            return modelAndView;
+        }
 
         UserServiceModel userServiceModel = this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
         this.userService.registerUser(userServiceModel);

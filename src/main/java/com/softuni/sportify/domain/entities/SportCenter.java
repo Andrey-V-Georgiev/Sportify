@@ -2,7 +2,6 @@ package com.softuni.sportify.domain.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

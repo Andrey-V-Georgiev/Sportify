@@ -72,13 +72,13 @@ public class UserController {
             BindingResult userBindingResult,
             ModelAndView modelAndView) throws ReadException, UpdateException {
 
-//        if(userBindingResult.hasErrors()) {
-//            UserViewModel userViewModel = this.modelMapper.map(this.userService.findById(id), UserViewModel.class);
-//            modelAndView.addObject("userViewModel", userViewModel);
-//            modelAndView.addObject("userEditBindingModel", userEditBindingModel);
-//            modelAndView.setViewName(VIEW_EDIT_USER);
-//            return modelAndView;
-//        }
+        if(userBindingResult.hasErrors()) {
+            UserViewModel userViewModel = this.modelMapper.map(this.userService.findById(id), UserViewModel.class);
+            modelAndView.addObject("userViewModel", userViewModel);
+            modelAndView.addObject("userEditBindingModel", userEditBindingModel);
+            modelAndView.setViewName(VIEW_EDIT_USER);
+            return modelAndView;
+        }
 
         this.userService.changeUserAuthorities(id, userEditBindingModel.getAuthority());
 

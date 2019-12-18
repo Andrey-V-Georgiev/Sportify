@@ -40,7 +40,8 @@ public class SportCenterServiceImpl implements SportCenterService {
     }
 
     @Override
-    public SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel) throws CreateException {
+    public SportCenterServiceModel createSportCenter(SportCenterServiceModel sportCenterServiceModel)
+            throws CreateException {
 
         if (!validator.validate(sportCenterServiceModel).isEmpty()) {
             throw new CreateException(SPORT_CENTER_CREATE_EXCEPTION_MSG);

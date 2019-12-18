@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
@@ -41,7 +40,6 @@ public class Event extends BaseEntity {
     public void setLevel(String level) {
         this.level = level;
     }
-
 
     @Min(-2)
     @Max(10)
@@ -99,7 +97,6 @@ public class Event extends BaseEntity {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
-
 
     @Min(1)
     @Max(100)

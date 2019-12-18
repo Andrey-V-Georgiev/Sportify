@@ -20,15 +20,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/sport-centers")
 public class SportCentersRestController {
 
-    private final ModelMapper modelMapper;
     private final ObjectMapper objectMapper;
     private final SportCenterService sportCenterService;
 
     @Autowired
-    public SportCentersRestController(ModelMapper modelMapper,
-                                      ObjectMapper objectMapper,
+    public SportCentersRestController(ObjectMapper objectMapper,
                                       SportCenterService sportCenterService) {
-        this.modelMapper = modelMapper;
         this.objectMapper = objectMapper;
         this.sportCenterService = sportCenterService;
     }

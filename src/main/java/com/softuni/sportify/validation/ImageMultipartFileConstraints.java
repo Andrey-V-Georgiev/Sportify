@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD })
 @Constraint(validatedBy = ImageMultipartFileValidator.class)
 public @interface ImageMultipartFileConstraints {
+
     String message() default "Image field is required and uploaded file must be up to 1.0MB!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

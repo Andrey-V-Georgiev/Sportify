@@ -17,17 +17,14 @@ public class SportsRestController {
     private final ImageService imageService;
     private final ModelMapper modelMapper;
     private final ObjectMapper objectMapper;
-    private final SportService sportService;
 
     @Autowired
     public SportsRestController(ImageService imageService,
                                 ModelMapper modelMapper,
-                                ObjectMapper objectMapper,
-                                SportService sportService) {
+                                ObjectMapper objectMapper) {
         this.imageService = imageService;
         this.modelMapper = modelMapper;
         this.objectMapper = objectMapper;
-        this.sportService = sportService;
     }
 
     @GetMapping("/load-icon-image/{id}")

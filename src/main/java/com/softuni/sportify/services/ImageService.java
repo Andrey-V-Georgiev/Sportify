@@ -2,7 +2,6 @@ package com.softuni.sportify.services;
 
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
 import com.softuni.sportify.exceptions.CreateException;
-import com.softuni.sportify.exceptions.DeleteException;
 import com.softuni.sportify.exceptions.ReadException;
 import com.softuni.sportify.exceptions.UpdateException;
 import org.springframework.stereotype.Service;

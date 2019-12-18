@@ -4,6 +4,9 @@ import com.softuni.sportify.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+
+import java.time.LocalDateTime;
 
 
 @Configuration
@@ -16,14 +19,14 @@ public class AppScheduleConfig {
     public AppScheduleConfig(EmailService emailService) {
         this.emailService = emailService;
     }
-//
-//    @Scheduled(fixedRate = 30000)
-//    private void sendEmail() {
-//
-//        LocalDateTime now = LocalDateTime.now();
-//        String address = "sportifyAppDiplomaDefence@gmail.com";
-//        String subject = String.format("%s:%s:%s",now.getHour() , now.getMinute(), now.getSecond());
-//        String text = now.toString();
-//        this.emailService.sendEmail(address, subject, text);
-//    }
+
+    @Scheduled(fixedRate = 3600000)
+    private void sendEmail() {
+
+        LocalDateTime now = LocalDateTime.now();
+        String address = "sportifyAppDiplomaDefence@gmail.com";
+        String subject = String.format("%s:%s:%s",now.getHour() , now.getMinute(), now.getSecond());
+        String text = now.toString();
+        this.emailService.sendEmail(address, subject, text);
+    }
 }

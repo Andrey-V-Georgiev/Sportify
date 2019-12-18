@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.softuni.sportify.constants.ExceptionConstants.*;
-import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @Service
 public class AddressServiceImpl implements AddressService {

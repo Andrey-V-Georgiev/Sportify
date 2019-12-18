@@ -1,7 +1,5 @@
 package com.softuni.sportify.domain.models.view_models;
 
-import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
-
 import java.util.List;
 
 public class SportViewModel extends BaseViewModel {

@@ -1,8 +1,6 @@
 package com.softuni.sportify.domain.models.binding_models;
 
-import com.softuni.sportify.domain.entities.SportCenter;
 import com.softuni.sportify.domain.models.service_models.ImageServiceModel;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

@@ -1,4 +1,5 @@
 package com.softuni.sportify.servicesTesting;
+
 import com.softuni.sportify.domain.entities.Role;
 import com.softuni.sportify.domain.entities.User;
 import com.softuni.sportify.domain.models.service_models.RoleServiceModel;
@@ -30,7 +31,6 @@ import javax.validation.Validator;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.softuni.sportify.constants.RoleConstants.*;
 import static com.softuni.sportify.factory.RoleFactory.createAdminRoleServiceModel;
 import static com.softuni.sportify.factory.RoleFactory.createUserRoleServiceModel;
 import static com.softuni.sportify.factory.UserFactory.createValidUserServiceModel;

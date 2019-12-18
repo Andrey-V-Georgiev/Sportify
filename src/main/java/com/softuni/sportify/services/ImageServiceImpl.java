@@ -45,6 +45,7 @@ public class ImageServiceImpl implements ImageService {
 
         imageServiceModel.setPublicID(this.obtainPublicID(imageServiceModel.getImageURL()));
         imageServiceModel.setName(name);
+
         if(!validator.validate(imageServiceModel).isEmpty()) {
             throw new CreateException(IMAGE_CREATE_EXCEPTION_MSG);
         }
@@ -82,6 +83,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void deleteImage(String id) throws Exception{
+
         Image image = this.imageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Image with this id is not found!"));
         ImageServiceModel imageServiceModel = this.modelMapper.map(image, ImageServiceModel.class);
