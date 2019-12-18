@@ -80,17 +80,17 @@ public class ImageServiceTests {
     @Test
     public void editImage_whenModelIsValid_correctEditResult() throws UpdateException {
 
-        Image image = this.modelMapper.map(validImageServiceModel, Image.class);
-        Image expectedImage = this.imageRepository.saveAndFlush(image);
-        String expectedPublicID = expectedImage.getPublicID();
+        Image image1 = this.modelMapper.map(validImageServiceModel, Image.class);
+        Image savedImage1 = this.imageRepository.saveAndFlush(image1);
+        String expectedPublicID = savedImage1.getPublicID();
 
-        validImageServiceModel2.setId(expectedImage.getId());
+        validImageServiceModel2.setId(savedImage1.getId());
         validImageServiceModel2.setPublicID("editedPublicID");
-        ImageServiceModel actualImage = this.imageService.editImage(validImageServiceModel2);
-        String actualPublicID = actualImage.getPublicID();
+        ImageServiceModel updatedImageServiceModel = this.imageService.editImage(validImageServiceModel2);
+        String actualPublicID = updatedImageServiceModel.getPublicID();
 
-        assertEquals(expectedImage.getId(), actualImage.getId());
-        assertEquals(expectedPublicID, "defaultPublicId");
+        assertEquals(savedImage1.getId(), updatedImageServiceModel.getId());
+        assertEquals(expectedPublicID, "publicId");
         assertEquals(actualPublicID, "editedPublicID");
     }
 

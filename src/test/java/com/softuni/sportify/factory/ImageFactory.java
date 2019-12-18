@@ -18,8 +18,8 @@ public abstract class ImageFactory {
 
         Image image = new Image();
         image.setName("name");
-        image.setPublicID("defaultPublicId");
-        image.setImageURL("http://res.cloudinary.com/ordnata/image/upload/v1576508775/aaaaaaaaaaaaaaaaaaaa.jpg");
+        image.setPublicID("publicId");
+        image.setImageURL("imageUrl");
         return image;
     }
 }

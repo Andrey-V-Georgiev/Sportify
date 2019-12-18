@@ -74,6 +74,45 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public ThemeServiceModel findTheActiveTheme() {
+
+        List<Theme> activeThemes = this.themeRepository.findAll()
+                .stream()
+                .filter(Theme::getActive)
+                .collect(Collectors.toList());
+
+        if(activeThemes.size() == 0) {
+            return null;
+        }
+        return this.modelMapper.map(activeThemes.get(0), ThemeServiceModel.class);
+    }
+
+
+    @Override
+    public ThemeServiceModel activateTheme(ThemeServiceModel themeServiceModel)
+            throws UpdateException, ReadException {
+
+        if(!validator.validate(themeServiceModel).isEmpty()) {
+            throw new UpdateException(THEME_UPDATE_EXCEPTION_MSG);
+        }
+        List<Theme> allThemes = this.themeRepository.findAll();
+        allThemes.forEach(t -> {
+            if(!t.getId().equals(themeServiceModel.getId())) {
+                t.setActive(false);
+            } else {
+                t.setActive(true);
+            }
+        });
+
+        for (Theme t : allThemes) {
+            this.themeRepository.save(t);
+        }
+
+        return this.modelMapper
+                .map(this.findByID(themeServiceModel.getId()), ThemeServiceModel.class);
+    }
+
+    @Override
     public void addIndexCarouselImage(ThemeServiceModel themeServiceModel,
                                       ImageServiceModel imageServiceModel) throws UpdateException {
 
@@ -180,40 +219,4 @@ public class ThemeServiceImpl implements ThemeService {
         this.themeRepository.save(theme);
     }
 
-    @Override
-    public ThemeServiceModel activateTheme(ThemeServiceModel themeServiceModel) throws UpdateException, ReadException {
-
-        if(!validator.validate(themeServiceModel).isEmpty()) {
-            throw new UpdateException(THEME_UPDATE_EXCEPTION_MSG);
-        }
-        List<Theme> allThemes = this.themeRepository.findAll();
-        allThemes.forEach(t -> {
-            if(!t.getId().equals(themeServiceModel.getId())) {
-                t.setActive(false);
-            } else {
-                t.setActive(true);
-            }
-        });
-
-        for (Theme t : allThemes) {
-            this.themeRepository.save(t);
-        }
-
-       return this.modelMapper
-               .map(this.findByID(themeServiceModel.getId()), ThemeServiceModel.class);
-    }
-
-    @Override
-    public ThemeServiceModel findTheActiveTheme() {
-
-        List<Theme> activeThemes = this.themeRepository.findAll()
-                .stream()
-                .filter(Theme::getActive)
-                .collect(Collectors.toList());
-
-        if(activeThemes.size() == 0) {
-            return null;
-        }
-        return this.modelMapper.map(activeThemes.get(0), ThemeServiceModel.class);
-    }
 }
