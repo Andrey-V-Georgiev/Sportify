@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 
 import static com.softuni.sportify.factory.ImageFactory.createValidImage;
 import static com.softuni.sportify.factory.ThemeFactory.createValidTheme;
-import static com.softuni.sportify.factory.ThemeFactory.createValidThemeServiceModel;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -49,7 +48,6 @@ public class ThemeServiceTests {
     private ThemeServiceModel validThemeServiceModel1;
     private ImageServiceModel validImageServiceModel2;
     private ImageServiceModel validImageServiceModel3;
-    private ImageServiceModel validImageServiceModel4;
 
     @Before
     public void init() {
@@ -68,10 +66,6 @@ public class ThemeServiceTests {
         /* CREATE IOMAGE SERVICE MODEL 3 */
         Image validImage3 = createValidImage();
         validImageServiceModel3 = this.modelMapper.map(validImage3, ImageServiceModel.class);
-
-        /* CREATE IOMAGE SERVICE MODEL 4 */
-        Image validImage4 = createValidImage();
-        validImageServiceModel4 = this.modelMapper.map(validImage4, ImageServiceModel.class);
     }
 
     /* ThemeServiceModel createNewTheme(ThemeServiceModel themeServiceModel,
