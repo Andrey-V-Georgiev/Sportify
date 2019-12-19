@@ -278,7 +278,7 @@ let buildTable = (monthObj, createScheduleModal, showScheduleModal, scheduleDays
 
             if (day == 0) {
                 $(`#${currentID}`)
-                    .append(`<div class='m-1 rounded rounded-sm border' style='width: 125px;height: 80px'>
+                    .append(`<div class='m-1 rounded rounded-sm border' style='width: 6vw; height: 7vh;'>
                              </div>`)
             } else {
                 if (scheduleDays.includes(day)) {
@@ -289,14 +289,16 @@ let buildTable = (monthObj, createScheduleModal, showScheduleModal, scheduleDays
             }
         }
     }
-    $(`#calendar`).append(`<hr><button onclick="goBack()" class="col-3 btn btn-md btn-outline-dark my-1 mr-2">
-                                            Go Back
-                                        </button>
-                                        <script>
-                                            function goBack() {
-                                                window.history.back();
-                                            }
-                                        </script>`)
+    $(`#calendar`).append(`<div class="row my-2">
+                               <button onclick="goBack()" class="col-3 btn btn-md btn-outline-dark ml-1">
+                                    Go Back
+                                </button>
+                                <script>
+                                    function goBack() {
+                                        window.history.back();
+                                    }
+                                </script>
+                            </div>`)
 };
 
 function findSportCenterSchedulesByMonth(monthNum, scID) {

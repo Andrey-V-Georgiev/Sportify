@@ -8,7 +8,7 @@
     <form th:action="@{/sport-centers/add-sport-center-images/{id}(id=${sportCenterViewModel.getId()})}"
           th:object="${imageCreateBindingModel}"
           class="w-100 mx-0 px-3"
-          th:method="post" nctype="multipart/form-data">
+          th:method="post" enctype="multipart/form-data">
 
         <div class="btn-group-vertical w-100">
             <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">
