@@ -12,67 +12,109 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 
-<main class="d-flex justify-content-center">
-    <div class="jumbotron col-8 shadow-lg bg-white pb-4">
+<main>
+    <div class="d-flex justify-content-center">
 
-        <div class="row">
-            <h2 class="ml-3 font-italic" th:text="${sportCenterViewModel.getName()}"></h2>
-        </div>
-        <hr>
-
-        <h5 class="font-italic">Icon image:</h5>
-        <div class="row">
-            <th:block th:include="~{fragments/sport_centers/sport-center-details-icon-image-modal}"></th:block>
-        </div>
-        <hr>
-
-        <h5 class="font-italic">Address:</h5>
-        <div class="row">
-            <th:block th:include="~{fragments/sport_centers/form-sport-center-address}"></th:block>
-        </div>
-        <hr>
-
-        <h5 class="font-italic">Description:</h5>
-        <div class="row">
-            <th:block th:include="~{fragments/sport_centers/form-sport-center-description}"></th:block>
-        </div>
-        <hr>
-
-        <h5 class="font-italic">Sport center images:</h5>
-        <div class="row">
-            <div class="col-3">
-                <th:block th:include="~{fragments/sport_centers/form-add-sport-center-images}"></th:block>
+        <div class="jumbotron col-9 shadow-lg bg-white pb-4">
+            <div class="row">
+                <h2 class="ml-3 font-italic" th:text="${sportCenterViewModel.getName()}"></h2>
             </div>
-            <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="image, iter : ${sportCenterViewModel.getSportCenterImages()}">
-                    <th:block th:include="~{fragments/sport_centers/sport-center-details-image-modal}"></th:block>
-                </th:block>
-            </div>
-        </div>
-        <hr>
+            <hr>
 
-        <h5 class="font-italic">Sports:</h5>
-        <div class="row">
-            <div class="col-3">
-                <th:block th:include="~{fragments/sport_centers/form-update-sport-center-sports}"></th:block>
+            <h5 class="font-italic">Icon image:</h5>
+            <div class="row">
+                <th:block th:include="~{fragments/sport_centers/sport-center-details-icon-image-modal}"></th:block>
             </div>
-            <div class="col d-flex flex-wrap pt-2 px-0">
-                <th:block th:each="sport, iter : ${sportCenterViewModel.getSports()}">
-                    <th:block th:include="~{fragments/sport_centers/sport-center-sport-image-modal}"></th:block>
-                </th:block>
+            <hr>
+
+            <h5 class="font-italic">Address:</h5>
+            <div class="row">
+<!--                <th:block th:include="~{fragments/sport_centers/form-sport-center-address}"></th:block>-->
+
+                <div class="mt-3 ml-3 mw-100 pt-4 pb-2 border rounded" style="width: 16vw;">
+
+                    <form th:action="@{/sport-centers/edit-sport-center-address/{id}(id=${sportCenterViewModel.getId()})}"
+                          class="w-100 mx-0 px-3"
+                          th:object="${addressEditBindingModel}"
+                          th:method="post" enctype="multipart/form-data">
+
+                        <div class="btn-group-vertical w-100" th:classappend="${#fields.hasErrors()} ? 'text-danger'">
+                            <input name="country" type="text" th:value="${sportCenterViewModel.getAddress().getCountry()}"
+                                   class="btn btn-block border text-left" placeholder="Country...">
+                            <small th:each="error : ${#fields.errors('country')}" th:text="${error}"></small>
+
+                            <input name="city" type="text" th:value="${sportCenterViewModel.getAddress().getCity()}"
+                                   class="btn btn-block border text-left" placeholder="City...">
+                            <small th:each="error : ${#fields.errors('city')}" th:text="${error}"></small>
+
+                            <input name="street" type="text" th:value="${sportCenterViewModel.getAddress().getStreet()}"
+                                   class="btn btn-block border text-left" placeholder="Street...">
+                            <small th:each="error : ${#fields.errors('street')}" th:text="${error}"></small>
+
+                            <input name="details" type="text" th:value="${sportCenterViewModel.getAddress().getDetails()}"
+                                   class="btn btn-block border text-left" placeholder="Details...">
+                            <small th:each="error : ${#fields.errors('details')}" th:text="${error}"></small>
+                        </div>
+
+                        <button type="submit" class="btn btn-lg btn-warning mt-3 mb-2 w-100">
+                            Edit address
+                        </button>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    </form>
+
+                </div>
             </div>
+            <hr>
+
+            <h5 class="font-italic">Description:</h5>
+            <div class="row">
+                <th:block th:include="~{fragments/sport_centers/form-sport-center-description}"></th:block>
+            </div>
+            <hr>
+
+            <h5 class="font-italic">Sport center images:</h5>
+            <div class="row">
+                <div class="col-3">
+                    <th:block th:include="~{fragments/sport_centers/form-add-sport-center-images}"></th:block>
+                </div>
+                <div class="col d-flex flex-wrap pt-2 px-0">
+                    <th:block th:each="image, iter : ${sportCenterViewModel.getSportCenterImages()}">
+                        <th:block th:include="~{fragments/sport_centers/sport-center-details-image-modal}"></th:block>
+                    </th:block>
+                </div>
+            </div>
+            <hr>
+
+            <h5 class="font-italic">Sports:</h5>
+            <div class="row">
+                <div class="col-3">
+                    <th:block th:include="~{fragments/sport_centers/form-update-sport-center-sports}"></th:block>
+                </div>
+                <div class="col d-flex flex-wrap pt-2 px-0">
+                    <th:block th:each="sport, iter : ${sportCenterViewModel.getSports()}">
+                        <th:block th:include="~{fragments/sport_centers/sport-center-sport-image-modal}"></th:block>
+                    </th:block>
+                </div>
+            </div>
+            <hr>
+            <form th:action="@{/calendar/show-calendar/{id}(id=${sportCenterViewModel.getId()})}"
+                  th:method="get" class="w-100">
+                <button class=" btn btn-lg btn-outline-dark" style="width: 16vw;">
+                    Show Calendar
+                </button>
+            </form>
+            <hr>
+            <a th:href="@{/sport-centers/show-all-sport-centers}"
+               class="btn btn-lg btn-outline-dark col-3" style="width: 16vw;">
+                Go back
+            </a>
+            <hr>
+            <th:block th:include="~{fragments/sport_centers/delete-sport-center-modal}"></th:block>
         </div>
-        <hr>
-        <form th:action="@{/calendar/show-calendar/{id}(id=${sportCenterViewModel.getId()})}"
-              th:method="get" class="w-100">
-            <button class="col-3 btn btn-lg btn-outline-dark">Show Calendar</button>
-        </form>
-        <hr>
-        <a th:href="@{/sport-centers/show-all-sport-centers}" class="btn btn-lg btn-outline-dark col-3">Go back</a>
-        <hr>
-        <th:block th:include="~{fragments/sport_centers/delete-sport-center-modal}"></th:block>
+
     </div>
 </main>
+
 <script type="text/javascript">
 
     $('#exampleModalCenter').on('shown.bs.modal', function () {

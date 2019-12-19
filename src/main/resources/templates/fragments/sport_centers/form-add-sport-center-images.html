@@ -3,11 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded" >
+<div class="mt-3 mw-100 pt-4 pb-2 border rounded" style="width: 16vw;">
 
     <form th:action="@{/sport-centers/add-sport-center-images/{id}(id=${sportCenterViewModel.getId()})}"
           th:object="${imageCreateBindingModel}"
-          th:method="post" class="w-100 mx-0" enctype="multipart/form-data">
+          class="w-100 mx-0 px-3"
+          th:method="post" nctype="multipart/form-data">
+
         <div class="btn-group-vertical w-100">
             <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">
             <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
@@ -17,14 +19,17 @@
             </div>
         </div>
 
-        <input name="image" type="file" class="my-2">
+        <input name="image" type="file" class="mt-3">
         <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
             <small th:each="error : ${#fields.errors('image')}"
                    th:text="${'Image is required and must be up to 1.0MB!'}">
             </small>
         </div>
         <hr>
-        <button type="submit" class="btn btn-lg btn-block btn-warning mb-2">Add image</button>
+
+        <button type="submit" class="btn btn-lg btn-warning mb-2 w-100">
+            Add image
+        </button>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
 

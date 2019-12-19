@@ -6,13 +6,17 @@
 <!-- Button trigger modal -->
 <div class="ml-3" id="mybtn" data-toggle="modal" th:data-target="'#a' + ${sportCenterViewModel.getIconImage().getId()}">
     <img th:src="${sportCenterViewModel.getIconImage().getImageURL()}"
-         class="rounded shadow-lg" style="height: 255px;" alt="...">
+         class="rounded shadow-lg" style="width: 71vw;" alt="...">
 </div>
 
 <!-- Modal -->
-<div class="modal fade" th:id="'a' + ${sportCenterViewModel.getIconImage().getId()}" tabindex="-1" role="dialog"
+<div class="modal fade"
+     th:id="'a' + ${sportCenterViewModel.getIconImage().getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+
+    <div class="modal-dialog modal-dialog-centered"
+         role="document" style="max-width: 71vw;">
+
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -24,9 +28,10 @@
                     <h2 class="col-8 mb-3 font-italic"
                         th:text="${sportCenterViewModel.getIconImage().getName()}"></h2>
                 </div>
-                <div class="wm-100 d-flex justify-content-center">
+
+                <div class="d-flex justify-content-center">
                     <img th:src="${sportCenterViewModel.getIconImage().getImageURL()}"
-                         class="mw-100 rounded" style="max-height: 500px;" alt="...">
+                         class="rounded" style="max-width: 69vw; max-height: 50vh;" alt="...">
                 </div>
 
             </div>

@@ -121,17 +121,18 @@ public class SportCentersController {
             ModelAndView modelAndView) throws IOException, ReadException, UpdateException {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
+        addressEditBindingModel.setId(sportCenterServiceModel.getAddress().getId());
 
         if (addressBindingResult.hasErrors()) {
             SportCenterViewModel sportCenterViewModel = this.modelMapper
                     .map(sportCenterServiceModel, SportCenterViewModel.class);
-            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
             modelAndView.addObject("sportCenterViewModel", sportCenterViewModel);
+            modelAndView.addObject("addressEditBindingModel", addressEditBindingModel);
+            modelAndView.addObject("imageCreateBindingModel", new ImageCreateBindingModel());
+
             modelAndView.setViewName(VIEW_SPORT_CENTER_DETAILS);
             return modelAndView;
         }
-
-        addressEditBindingModel.setId(sportCenterServiceModel.getAddress().getId());
         AddressServiceModel addressServiceModel = this.modelMapper.map(
                 addressEditBindingModel, AddressServiceModel.class);
         sportCenterServiceModel.setAddress(this.addressService.editAddress(addressServiceModel));
@@ -182,11 +183,12 @@ public class SportCentersController {
 
     @PostMapping("/add-sport-center-images/{id}")
     @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView addSportCenterImages(@PathVariable("id") String sportCenterID,
-                                             @Valid
-                                             @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
-                                             BindingResult imageBindingResult,
-                                             ModelAndView modelAndView) throws IOException, ReadException, CreateException, UpdateException {
+    public ModelAndView addSportCenterImages(
+            @PathVariable("id") String sportCenterID,
+            @Valid
+            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
+            ModelAndView modelAndView) throws IOException, ReadException, CreateException, UpdateException {
 
         SportCenterServiceModel sportCenterServiceModel = this.sportCenterService.findByID(sportCenterID);
 

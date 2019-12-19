@@ -20,13 +20,13 @@ public class AppScheduleConfig {
         this.emailService = emailService;
     }
 
-    @Scheduled(fixedRate = 3600000)
+    @Scheduled(fixedRate = 86400000)
     private void sendEmail() {
 
-        LocalDateTime now = LocalDateTime.now();
-        String address = "sportifyAppDiplomaDefence@gmail.com";
-        String subject = String.format("%s:%s:%s",now.getHour() , now.getMinute(), now.getSecond());
-        String text = now.toString();
-        this.emailService.sendEmail(address, subject, text);
+//        LocalDateTime now = LocalDateTime.now();
+//        String address = "sportifyAppDiplomaDefence@gmail.com";
+//        String subject = String.format("%s:%s:%s",now.getHour() , now.getMinute(), now.getSecond());
+//        String text = now.toString();
+//        this.emailService.sendEmail(address, subject, text);
     }
 }

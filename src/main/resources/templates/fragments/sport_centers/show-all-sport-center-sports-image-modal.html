@@ -24,6 +24,7 @@
 <!-- Modal -->
 <div class="modal fade" th:id="'a' + ${sport.getIconImage().getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -43,7 +44,7 @@
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${sport.getIconImage().getImageURL()}"
-                         class="mw-100 rounded" style="max-height: 500px;" alt="...">
+                         class="mw-100 rounded" style="height: 50vh;" alt="...">
                 </div>
             </div>
         </div>

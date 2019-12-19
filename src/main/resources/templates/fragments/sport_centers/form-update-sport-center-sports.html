@@ -3,13 +3,19 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-3 mt-3 mw-100 pt-3 py-4 border rounded" style="height: 187px;">
-    <hr>
+<div class="mt-3 mw-100 pt-4 pb-4 border rounded" style="width: 16vw;">
+
     <form th:action="@{/sport-centers/update-sport-center-sports/{id}(id=${sportCenterViewModel.getId()})}"
-          th:method="get" class="w-100 mx-0">
-        <button type="submit" class="btn btn-lg btn-block btn-warning my-4">Update sports</button>
+          th:method="get"
+          class="w-100 mx-0 px-3">
+
+        <hr>
+        <button type="submit" class="btn btn-lg btn-warning my-3 w-100">
+            Update sports
+        </button>
+        <hr>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
-    <hr>
+
 </div>
 </html>

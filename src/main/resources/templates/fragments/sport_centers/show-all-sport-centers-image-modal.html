@@ -17,6 +17,7 @@
 <!-- Modal -->
 <div class="modal fade" th:id="'a' + ${sc.getIconImage().getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -30,29 +31,29 @@
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${sc.getIconImage().getImageURL()}"
-                         class="mw-100 rounded" style="max-height: 500px;" alt="...">
+                         class="mw-100 rounded" style="max-width: 69vw; max-height: 50vh;" alt="...">
                 </div>
 
             </div>
             <div class="modal-footer w-100">
 
-                    <form th:action="@{/calendar/show-calendar/{id}(id=${sc.getId()})}"
-                          th:method="get" class="w-100">
-                        <button class="btn btn-block btn-outline-dark">Calendar</button>
-                    </form>
+                <form th:action="@{/sport-centers/guests-sport-center-details/{id}(id=${sc.getId()})}"
+                      th:method="get" class="w-100">
+                    <button class="btn btn-block btn-outline-dark">Learn more</button>
+                </form>
 
-                    <form th:action="@{/sport-centers/guests-sport-center-details/{id}(id=${sc.getId()})}"
-                          th:method="get" class="w-100">
-                        <button class="btn btn-block btn-outline-dark">Learn more</button>
-                    </form>
+                <form th:action="@{/calendar/show-calendar/{id}(id=${sc.getId()})}"
+                      th:method="get" class="w-100">
+                    <button class="btn btn-block btn-outline-dark">Calendar</button>
+                </form>
 
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                        <form th:action="@{/sport-centers/sport-center-details/{id}(id=${sc.getId()})}"
-                              th:method="get" class="w-100">
-                            <button class="btn btn-block btn-warning border border-dark font-weight-bold font-italic">
-                                Admin
-                            </button>
-                        </form>
+                    <form th:action="@{/sport-centers/sport-center-details/{id}(id=${sc.getId()})}"
+                          th:method="get" class="w-100">
+                        <button class="btn btn-block btn-warning font-weight-bold font-italic">
+                            Admin
+                        </button>
+                    </form>
                 </th:block>
 
             </div>

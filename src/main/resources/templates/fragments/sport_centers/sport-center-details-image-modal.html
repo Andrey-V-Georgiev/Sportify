@@ -24,7 +24,7 @@
                 </div>
                 <div class="wm-100 d-flex justify-content-center">
                     <img th:src="${image.getImageURL()}"
-                         class="mw-100 rounded" style="max-height: 500px;" alt="...">
+                         class="mw-100 rounded" style="height: 50vh;" alt="...">
                 </div>
 
             </div>
@@ -33,12 +33,12 @@
                     <form th:action="@{/sport-centers/edit-sport-center-image/{sportCenterID}/{imageID}
                 (sportCenterID=${sportCenterViewModel.getId()}, imageID=${image.getId()})}"
                           th:method="get">
-                        <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
+                        <button class="btn btn-md btn-warning">Edit image</button>
                     </form>
                     <form th:action="@{/sport-centers/delete-sport-center-image/{sportCenterID}/{imageID}
                 (sportCenterID=${sportCenterViewModel.getId()}, imageID=${image.getId()})}"
                           th:method="post">
-                        <button class="btn btn-lg btn-danger">Delete image</button>
+                        <button class="btn btn-md btn-danger">Delete image</button>
                     </form>
                 </th:block>
             </div>
