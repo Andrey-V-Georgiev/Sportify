@@ -11,7 +11,9 @@
           th:method="post" enctype="multipart/form-data">
 
         <div class="btn-group-vertical w-100">
-            <input name="name" type="text" class="btn btn-block border text-left" placeholder="Name...">
+            <input name="name" type="text"
+                   class="btn btn-block border text-left"
+                   placeholder="Name...">
             <div th:classappend="${#fields.hasErrors()} ? 'text-danger'">
                 <small th:each="error : ${#fields.errors('name')}"
                        th:text="${error}">

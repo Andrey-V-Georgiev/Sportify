@@ -261,8 +261,12 @@ let buildTable = (monthObj, createScheduleModal, showScheduleModal, scheduleDays
     $("#row4").remove();
     $("#row5").remove();
 
-    $("#menu").append(`<div id="month" class="col-2 ml-5"><h3>${mothsNames[monthObj.month - 1]}</h3></div>`);
-    $("#menu").append(`<div id="year" class="col-2"><h3>${monthObj.year}</h3></div>`);
+    $("#menu").append(`<div id="month" class="col-3 ml-5 text-right">
+                           <h4>${mothsNames[monthObj.month - 1]}</h4>
+                       </div>`);
+    $("#menu").append(`<div id="year" class="col-2 text-left">
+                           <h4>${monthObj.year}</h4>
+                       </div>`);
 
     let daysOfMonth = daysOfMonthCreator(monthObj);
     let counter = 0;

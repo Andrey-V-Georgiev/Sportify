@@ -80,90 +80,6 @@ public class ThemesController {
         return modelAndView;
     }
 
-    @PostMapping("/add-images-index-carousel/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView addImagesIndexCarouselConfirm(
-            @PathVariable String id,
-            @Valid
-            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
-            BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
-
-        if(imageBindingResult.hasErrors()) {
-            ThemeViewModel themeViewModel = this.modelMapper
-                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-            themeViewModel.setSection(1);
-            modelAndView.addObject("themeViewModel", themeViewModel);
-            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-            modelAndView.setViewName(VIEW_THEME_DETAILS);
-            return modelAndView;
-        }
-
-        ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(imageCreateBindingModel.getImage(),imageCreateBindingModel.getName());
-        ThemeServiceModel themeServiceModel = this.themeService.findByID(id);
-        this.themeService.addIndexCarouselImage(themeServiceModel, imageServiceModel);
-
-        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + themeServiceModel.getId());
-        return modelAndView;
-    }
-
-    @PostMapping("/add-images-home-carousel/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView addImagesHomeCarouselConfirm(
-            @PathVariable String id,
-            @Valid
-            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
-            BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
-
-        if(imageBindingResult.hasErrors()) {
-            ThemeViewModel themeViewModel = this.modelMapper
-                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-            themeViewModel.setSection(2);
-            modelAndView.addObject("themeViewModel", themeViewModel);
-            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-            modelAndView.setViewName(VIEW_THEME_DETAILS);
-            return modelAndView;
-        }
-
-        ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
-        ThemeServiceModel themeServiceModel = this.themeService.findByID(id);
-        this.themeService.addHomeCarouselImage(themeServiceModel, imageServiceModel);
-
-        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + themeServiceModel.getId());
-        return modelAndView;
-    }
-
-    @PostMapping("/add-admin-panel-images/{id}")
-    @PreAuthorize(HAS_ROLE_ADMIN)
-    public ModelAndView addAdminPanelImagesConfirm(
-            @PathVariable String id,
-            @Valid
-            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
-            BindingResult imageBindingResult,
-            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
-
-        if(imageBindingResult.hasErrors()) {
-            ThemeViewModel themeViewModel = this.modelMapper
-                    .map(this.themeService.findByID(id), ThemeViewModel.class);
-            themeViewModel.setSection(3);
-            modelAndView.addObject("themeViewModel", themeViewModel);
-            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
-            modelAndView.setViewName(VIEW_THEME_DETAILS);
-            return modelAndView;
-        }
-
-        ImageServiceModel imageServiceModel = this.imageService
-                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
-        ThemeServiceModel themeServiceModel = this.themeService.findByID(id);
-        this.themeService.addAdminPanelImages(themeServiceModel, imageServiceModel);
-
-        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + themeServiceModel.getId());
-        return modelAndView;
-    }
-
     @GetMapping("/show-all-themes")
     @PreAuthorize(HAS_ROLE_ADMIN)
     public ModelAndView showAllThemes(ModelAndView modelAndView) {
@@ -195,6 +111,104 @@ public class ThemesController {
         return modelAndView;
     }
 
+    @PostMapping("/add-images-index-carousel/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView addImagesIndexCarouselConfirm(
+            @PathVariable String id,
+            @Valid
+            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
+            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
+
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(1);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
+
+        if(this.themeService.findByID(id).getIndexCarouselImages().size() >= 3) {
+            modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + id);
+            return modelAndView;
+        }
+
+        ImageServiceModel imageServiceModel = this.imageService
+                .createImageMultipartFile(imageCreateBindingModel.getImage(),imageCreateBindingModel.getName());
+        ThemeServiceModel themeServiceModel = this.themeService.findByID(id);
+        this.themeService.addIndexCarouselImage(themeServiceModel, imageServiceModel);
+
+        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + themeServiceModel.getId());
+        return modelAndView;
+    }
+
+    @PostMapping("/add-images-home-carousel/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView addImagesHomeCarouselConfirm(
+            @PathVariable String id,
+            @Valid
+            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
+            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
+
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(2);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
+
+        if(this.themeService.findByID(id).getHomeCarouselImages().size() >= 3) {
+            modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + id);
+            return modelAndView;
+        }
+
+        ImageServiceModel imageServiceModel = this.imageService
+                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
+        ThemeServiceModel themeServiceModel = this.themeService.findByID(id);
+        this.themeService.addHomeCarouselImage(themeServiceModel, imageServiceModel);
+
+        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + themeServiceModel.getId());
+        return modelAndView;
+    }
+
+    @PostMapping("/add-admin-panel-images/{id}")
+    @PreAuthorize(HAS_ROLE_ADMIN)
+    public ModelAndView addAdminPanelImagesConfirm(
+            @PathVariable String id,
+            @Valid
+            @ModelAttribute ImageCreateBindingModel imageCreateBindingModel,
+            BindingResult imageBindingResult,
+            ModelAndView modelAndView) throws IOException, CreateException, ReadException, UpdateException {
+
+        if(imageBindingResult.hasErrors()) {
+            ThemeViewModel themeViewModel = this.modelMapper
+                    .map(this.themeService.findByID(id), ThemeViewModel.class);
+            themeViewModel.setSection(3);
+            modelAndView.addObject("themeViewModel", themeViewModel);
+            modelAndView.addObject("imageCreateBindingModel", imageCreateBindingModel);
+            modelAndView.setViewName(VIEW_THEME_DETAILS);
+            return modelAndView;
+        }
+
+        if(this.themeService.findByID(id).getAdminPanelImages().size() >= 4) {
+            modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + id);
+            return modelAndView;
+        }
+
+        ImageServiceModel imageServiceModel = this.imageService
+                .createImageMultipartFile(imageCreateBindingModel.getImage(), imageCreateBindingModel.getName());
+        ThemeServiceModel themeServiceModel = this.themeService.findByID(id);
+        this.themeService.addAdminPanelImages(themeServiceModel, imageServiceModel);
+
+        modelAndView.setViewName(REDIRECT_TO_THEME_DETAILS + themeServiceModel.getId());
+        return modelAndView;
+    }
 
     @GetMapping("/edit-theme-image/{themeID}/{imageID}")
     @PreAuthorize(HAS_ROLE_ADMIN)

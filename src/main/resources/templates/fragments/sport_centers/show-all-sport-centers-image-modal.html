@@ -18,20 +18,24 @@
 <div class="modal fade" th:id="'a' + ${sc.getIconImage().getId()}" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center"
+         role="document">
+
+        <div class="modal-content" style="width: 71vw;">
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <div class="modal-body justify-content-center">
                 <div class="row">
                     <h2 class="col-8 mb-3 font-italic" th:text="${sc.getIconImage().getName()}"></h2>
                 </div>
-                <div class="wm-100 d-flex justify-content-center">
+                <div class="d-flex justify-content-center">
                     <img th:src="${sc.getIconImage().getImageURL()}"
-                         class="mw-100 rounded" style="max-width: 69vw; max-height: 50vh;" alt="...">
+                         class="rounded" style="max-width: 69vw; max-height: 50vh;" alt="...">
                 </div>
 
             </div>

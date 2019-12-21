@@ -5,42 +5,53 @@
 
 <!-- Button trigger modal -->
 <div id="mybtn" data-toggle="modal" th:data-target="'#a' + ${image.getId()}">
+
     <img th:src="${image.getImageURL()}"
-         class="mw-100 mh-100 m-2 rounded shadow-lg" style="height: 240px;" alt="...">
+         class="w-100 m-2 rounded shadow-lg"
+         alt="...">
 </div>
 
 <!-- Modal -->
-<div class="modal fade" th:id="'a' + ${image.getId()}" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+<div class="modal fade" th:id="'a' + ${image.getId()}"
+     tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center"
+         role="document">
+
+        <div class="modal-content" style="width: 71vw;">
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <div class="modal-body justify-content-center">
                 <div class="row">
                     <h2 class="col-8 mb-3 font-italic" th:text="${image.getName()}"></h2>
                 </div>
-                <div class="wm-100 d-flex justify-content-center">
+                <div class="d-flex justify-content-center">
                     <img th:src="${image.getImageURL()}"
-                         class="mw-100 rounded" style="max-height: 500px;" alt="...">
+                         class="rounded" style="max-width: 69vw; max-height: 50vh;" alt="...">
+
                 </div>
 
-            </div>
-            <div class="modal-footer">
-                <form th:action="@{/themes/edit-theme-image/{themeID}/{imageID}
+                <div class="modal-footer">
+                    <form th:action="@{/themes/edit-theme-image/{themeID}/{imageID}
                 (themeID=${themeViewModel.getId()}, imageID=${image.getId()})}"
-                      th:method="get">
-                    <button class="btn btn-lg btn-warning border border-dark">Edit image</button>
-                </form>
-                <form th:action="@{/themes/delete-theme-image/{themeID}/{imageID}
+                          th:method="get">
+                        <button class="btn btn-lg btn-warning">Edit image</button>
+                    </form>
+                    <form th:action="@{/themes/delete-theme-image/{themeID}/{imageID}
                 (themeID=${themeViewModel.getId()}, imageID=${image.getId()})}"
-                      th:method="post">
-                    <button class="btn btn-lg btn-danger">Delete image</button>
-                </form>
+                          th:method="post">
+                        <button class="btn btn-lg btn-danger">Delete image</button>
+                    </form>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

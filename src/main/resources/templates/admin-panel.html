@@ -12,18 +12,18 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 
-<main class="d-flex justify-content-center">
+<main class="d-flex justify-content-center mt-3">
 
-    <div class="jumbotron col-8 shadow-lg bg-white">
+    <div class="jumbotron px-5 pb-5 pt-4 shadow-lg bg-white" style="width: 68vw; height: 75vh;">
         <h3 class="text-left mb-3 ml-4 font-italic">Admin panel</h3>
         <hr>
 
-        <div class="row my-3">
+        <div class="row my-3 pl-2">
             <th:block th:include="~{fragments/admin_panel/sport-centers-panel}"></th:block>
             <th:block th:include="~{fragments/admin_panel/users-panel}"></th:block>
         </div>
 
-        <div class="row my-3">
+        <div class="row my-3 pl-2">
             <th:block th:include="~{fragments/admin_panel/sports-panel}"></th:block>
             <th:block th:include="~{fragments/admin_panel/themes-panel}"></th:block>
         </div>

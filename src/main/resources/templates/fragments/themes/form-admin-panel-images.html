@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-3 mt-3 mw-100 pt-4 pb-2 border rounded">
+<div class="mt-3 ml-1 pt-4 pb-2 px-3 border rounded" style="width: 16vw;">
 
     <div th:if="${themeViewModel.getAdminPanelImages().size() < 4}">
         <form th:action="@{/themes/add-admin-panel-images/{id}(id=${themeViewModel.getId()})}"
@@ -63,5 +63,6 @@
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         </form>
     </div>
+
 </div>
 </html>

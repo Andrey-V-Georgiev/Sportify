@@ -30,10 +30,12 @@
             <div class="col-4">
                 <th:block th:include="~{fragments/themes/form-index-carousel-images}"></th:block>
             </div>
-            <div class="col d-flex flex-wrap pt-2">
-                <th:block th:each="image, iter : ${themeViewModel.getIndexCarouselImages()}">
-                    <th:block th:include="~{fragments/themes/theme-details-image-modal}"></th:block>
-                </th:block>
+            <div class="col-8">
+                <div class="d-flex align-content-start flex-wrap">
+                    <th:block th:each="image, iter : ${themeViewModel.getIndexCarouselImages()}">
+                        <th:block th:include="~{fragments/themes/theme-details-image-modal}"></th:block>
+                    </th:block>
+                </div>
             </div>
         </div>
         <hr>
@@ -43,7 +45,7 @@
             <div class="col-4">
                 <th:block th:include="~{fragments/themes/form-home-carousel-images}"></th:block>
             </div>
-            <div class="col d-flex flex-wrap pt-2">
+            <div class="col-8 d-flex flex-wrap pt-2">
                 <th:block th:each="image, iter : ${themeViewModel.getHomeCarouselImages()}">
                     <th:block th:include="~{fragments/themes/theme-details-image-modal}"></th:block>
                 </th:block>
@@ -56,24 +58,30 @@
             <div class="col-4">
                 <th:block th:include="~{fragments/themes/form-admin-panel-images}"></th:block>
             </div>
-            <div class="col d-flex flex-wrap pt-3">
+            <div class="col-8 d-flex flex-wrap pt-3">
                 <th:block th:each="image, iter : ${themeViewModel.getAdminPanelImages()}">
                     <th:block th:include="~{fragments/themes/admin-panel-image-modal}"></th:block>
                 </th:block>
             </div>
         </div>
+
         <hr>
         <div class="ml-1">
-            <th:block th:include="~{fragments/themes/activate-theme}"></th:block>
+            <th:block th:include="~{fragments/themes/activate-theme}">
+            </th:block>
         </div>
         <hr>
         <div class="ml-1">
-            <a th:href="@{/themes/show-all-themes}" class="btn btn-lg btn-outline-dark col-3">Go back</a>
+            <a th:href="@{/themes/show-all-themes}" class="btn btn-lg btn-outline-dark" style="width: 16vw;">
+                Go back
+            </a>
         </div>
         <hr>
         <div class="ml-1">
-            <th:block th:include="~{fragments/themes/delete-theme-modal}"></th:block>
+            <th:block th:include="~{fragments/themes/delete-theme-modal}">
+            </th:block>
         </div>
+
     </div>
 </main>
 <script type="text/javascript">

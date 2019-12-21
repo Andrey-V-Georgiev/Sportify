@@ -3,13 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="col-12 mt-3 mx-1 mw-100 pt-4 px-4 border rounded" style="height: 27vh;">
+<div class="col-12 mt-3 mx-1 mw-100 pt-4 px-4 border rounded">
     <form th:action="@{/sports/edit-description/{id}(id=${sportViewModel.getId()})}"
           th:method="post" id="sportDescription" class="w-100 mx-0">
 
         <div class="input-group">
             <textarea class="form-control" aria-label="With textarea"
-                      rows="6" name="description" th:text="${sportViewModel.getSportDescription()}"></textarea>
+                      rows="6" name="description" th:text="${sportViewModel.getSportDescription()}">
+            </textarea>
         </div>
 
         <button type="submit" class="btn btn-lg btn-block btn-warning my-3" style="width: 14vw">
